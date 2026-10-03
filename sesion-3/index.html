@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sesión 3 · La voz del dato — Fundación WWB Colombia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#192962; --amarillo:#D55947; --verde:#BEA4E8;
+  --beige:#F1EBFA; --hueso:#FAFAFA; --azulclaro:#BEA4E8; --rosa:#FBEAE6;
+  --tinta:#192962; --gris:#5B5E6E; --linea:#EDEEF2;
+  --lima:#BBEF7F; --lima-tint:#F1FADF; --lima-text:#173404;
+  --coral:#D55947; --coral-hover:#C24634; --coral-tint:#FBEAE6;
+  --sans:"Inter","Segoe UI",system-ui,sans-serif;
+  --display:"Space Grotesk","Inter",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--hueso);color:var(--tinta);font-family:var(--sans);
+  font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{margin:0;line-height:1.14;font-weight:500;font-family:var(--display);letter-spacing:-.01em}
+b,strong{font-weight:500}
+p{margin:0 0 .85em}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;background:var(--azul);color:#fff;overflow:hidden;
+  padding:52px 0 44px}
+.hero::after{content:"";position:absolute;right:-90px;top:-70px;width:420px;height:420px;
+  background:var(--amarillo);clip-path:polygon(38% 0,100% 0,62% 100%,0 100%);opacity:.16}
+.hero .wrap{position:relative;z-index:2}
+.eyebrow{font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;
+  color:var(--amarillo);margin-bottom:14px}
+.hero h1{font-size:clamp(34px,6vw,62px);letter-spacing:-.02em}
+.hero .sub{font-size:clamp(17px,2.2vw,21px);color:var(--verde);font-weight:500;margin-top:10px}
+.hilo{margin-top:24px;max-width:760px;border-left:5px solid var(--amarillo);
+  padding:4px 0 4px 18px;font-size:17px;color:#dfe4f5;line-height:1.6}
+.hilo b{color:#fff}
+
+/* ---------- DEMO PRISMA 3D ---------- */
+.demoHero{margin-top:34px;background:#fff;color:var(--tinta);border-radius:14px;
+  padding:24px;box-shadow:0 18px 40px rgba(10,20,60,.28)}
+.demoHero h3{font-size:21px;color:var(--azul)}
+.demoHero .hint{color:var(--gris);font-size:14.5px;margin:6px 0 16px}
+.notaDemo{margin-top:14px;font-size:14px;color:#5B5E6E;border-left:4px solid var(--verde);
+  padding:2px 0 2px 14px;line-height:1.5}
+.notaDemo b{color:var(--azul)}
+
+/* Escena 3D */
+.scene-3d {
+  position: relative;
+  background: #f4f6f9;
+  border-radius: 12px;
+  height: 380px;
+  perspective: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 2px dashed var(--linea);
+}
+.cube {
+  width: 260px;
+  height: 260px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.face {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  backface-visibility: hidden;
+  border-radius: 8px;
+}
+.face-front  { background: #fff; border: 2px solid var(--linea); transform: translateZ(130px); }
+.face-top    { background: var(--azul); color: #fff; transform: rotateX(90deg) translateZ(130px); border: 2px solid var(--amarillo);}
+.face-bottom { background: var(--azul); color: #fff; transform: rotateX(-90deg) translateZ(130px); border: 2px solid var(--verde);}
+.face-left   { background: var(--azul); color: #fff; transform: rotateY(-90deg) translateZ(130px); border: 2px solid var(--lima);}
+.face-right  { background: var(--azul); color: #fff; transform: rotateY(90deg) translateZ(130px); border: 2px solid var(--coral);}
+
+/* Zonas de control Hover */
+.ctrl-zone { position: absolute; z-index: 10; font-size:13px; font-weight:500; color:var(--hint); display:flex; transition:0.2s;}
+.ctrl-top { top:0; left:0; width:100%; height:25%; align-items:flex-start; justify-content:center; padding-top:14px; cursor:n-resize; }
+.ctrl-bottom { bottom:0; left:0; width:100%; height:25%; align-items:flex-end; justify-content:center; padding-bottom:14px; cursor:s-resize; }
+.ctrl-left { top:25%; left:0; width:25%; height:50%; align-items:center; justify-content:flex-start; padding-left:14px; cursor:w-resize; }
+.ctrl-right { top:25%; right:0; width:25%; height:50%; align-items:center; justify-content:flex-end; padding-right:14px; cursor:e-resize; text-align:right;}
+
+/* ---------- RAIL ---------- */
+.rail{position:sticky;top:0;z-index:40;background:rgba(250,250,250,.96);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--linea)}
+.railIn{display:flex;gap:6px;overflow-x:auto;padding:10px 22px;max-width:1080px;
+  margin:0 auto;scrollbar-width:none}
+.railIn::-webkit-scrollbar{display:none}
+.railIn a{flex:0 0 auto;text-decoration:none;font-size:12px;font-weight:500;font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;
+  color:var(--azul);background:#fff;border:1px solid var(--linea);
+  padding:8px 16px;border-radius:999px;white-space:nowrap;transition:.15s}
+.railIn a:hover,.railIn a.act{background:var(--lima);border-color:var(--lima);color:var(--lima-text)}
+
+/* ---------- SECCIONES ---------- */
+section{padding:56px 0 8px}
+.tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  font-weight:500;color:var(--tinta);background:var(--verde);padding:6px 16px;
+  border-radius:999px;margin-bottom:14px}
+.tag.az{background:var(--azul);color:#fff} .tag.am{background:var(--amarillo);color:#fff}
+h2.tit{font-size:clamp(26px,4vw,40px);color:var(--azul);letter-spacing:-.02em;margin-bottom:8px}
+.bajada{color:#5B5E6E;max-width:800px;font-size:17px;margin-bottom:26px}
+
+.cards{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(255px,1fr))}
+.card{background:#fff;border-radius:12px;padding:20px;border:1px solid var(--linea)}
+.card h4{color:var(--azul);font-size:16.5px;margin-bottom:8px}
+.card p{font-size:15px;color:#5B5E6E;margin:0}
+.card .num{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--verde);
+  letter-spacing:.1em;margin-bottom:6px}
+.card.ra{border-top:6px solid var(--amarillo)}
+
+/* ---------- LAB & TABS ---------- */
+.lab{background:#fff;border:1px solid var(--linea);border-radius:14px;padding:24px;
+  margin-bottom:20px}
+.lab h3{color:var(--azul);font-size:22px;margin-bottom:6px}
+.lab .porque{font-size:14.5px;color:var(--gris);margin-bottom:18px}
+select{font-family:var(--sans);font-size:15px;padding:9px 12px;border-radius:8px;
+  border:2px solid var(--linea);background:#fff;color:var(--tinta);font-weight:500}
+.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.tab{border:2px solid var(--linea);background:#fff;border-radius:999px;padding:8px 18px;
+  font-family:var(--sans);font-weight:500;font-size:14px;color:var(--gris);cursor:pointer}
+.tab.on{background:var(--azul);border-color:var(--azul);color:#fff}
+.rta{background:var(--beige);border-radius:10px;padding:14px 16px;font-size:15px;margin-top:14px}
+
+/* ---------- EQUIPOS ---------- */
+.eq{background:#fff;border:1px solid var(--linea);border-radius:12px;padding:20px;
+  display:grid;grid-template-columns:52px 1fr;gap:16px;align-items:start}
+.eqN{width:52px;height:52px;border-radius:50%;background:var(--azul);color:var(--amarillo);
+  display:flex;align-items:center;justify-content:center;font-family:var(--mono);
+  font-size:22px;font-weight:500}
+.eq h4{color:var(--azul);font-size:17px;margin-bottom:4px}
+.eq .preg{font-size:15.5px;margin:8px 0 12px}
+.pill{display:inline-block;font-size:12.5px;font-weight:500;padding:4px 11px;border-radius:99px;
+  background:var(--verde);color:#fff;margin-bottom:6px}
+.trampa{font-size:14px;background:#fff6e5;border-radius:8px;padding:10px 12px;color:#6b4c00}
+
+/* ---------- TIMELINE ---------- */
+.tl{display:grid;gap:8px}
+.blk{background:#fff;border:1px solid var(--linea);border-radius:11px;overflow:hidden;
+  transition:border-color .15s}
+.blk.open{border-color:var(--azul)}
+.blkH{display:grid;grid-template-columns:78px 1fr 26px;gap:14px;align-items:center;
+  padding:15px 18px;cursor:pointer;background:none;border:0;width:100%;text-align:left;
+  font-family:var(--sans)}
+.blkH:hover{background:#f6f8fc}
+.min{font-family:var(--mono);font-size:14px;font-weight:500;color:#fff;background:var(--azul);
+  border-radius:5px;padding:4px 0;text-align:center;letter-spacing:-.02em}
+.blk.prac .min{background:var(--verde)}
+.blkT{font-size:16.5px;font-weight:500;color:var(--tinta)}
+.blkK{font-size:13px;color:var(--gris);font-weight:400;display:block;margin-top:2px}
+.fle{width:11px;height:11px;border-right:2.5px solid var(--azul);border-bottom:2.5px solid var(--azul);
+  transform:rotate(45deg);transition:transform .2s;justify-self:center;margin-top:-4px}
+.blk.open .fle{transform:rotate(-135deg);margin-top:4px}
+.blkB{display:none;padding:0 18px 20px 110px;font-size:15.5px;color:#5B5E6E}
+.blk.open .blkB{display:block;animation:aparece .25s}
+.blkB p{margin:0 0 .7em}
+.blkB .como{background:var(--beige);border-radius:9px;padding:12px 14px;font-size:14.5px;
+  color:#4a4038;margin-top:10px}
+
+/* ---------- RETOS Y CHECK ---------- */
+.reto{background:#fff;border:1px solid var(--linea);border-left:6px solid var(--verde);
+  border-radius:10px;padding:16px 18px;margin-bottom:10px}
+.reto.obl{border-left-color:var(--amarillo)}
+.reto h4{font-size:16px;color:var(--azul);margin-bottom:5px}
+
+ul.check{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+ul.check li{background:#fff;border:1px solid var(--linea);border-radius:10px;
+  padding:13px 16px 13px 46px;position:relative;font-size:15.5px}
+ul.check li::before{content:"";position:absolute;left:16px;top:19px;width:12px;height:12px;
+  background:var(--lima);border-radius:4px}
+
+footer{background:var(--azul);color:#c3cbe8;margin-top:70px;padding:34px 0 30px;font-size:14px}
+@keyframes aparece { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Fundación WWB Colombia · Sesión de Cualitativa</div>
+    <h1>La voz<br>del dato</h1>
+    <div class="sub">Alquimia del significado, investigación cualitativa y co-construcción</div>
+    
+    <div class="hilo">Un dato cuantitativo es una pieza de evidencia general; la estadística es la estructura que nos muestra la magnitud de las brechas; la pregunta de investigación define qué queremos comprender a profundidad; y <b>lo cualitativo es el enfoque que nos permite recorrer el significado, los matices y la experiencia viva.</b></div>
+
+    <div class="demoHero">
+      <h3>Antes de leer nada: explora los matices del dato</h3>
+      <p class="hint">Pasa el cursor por los bordes (o tócalos) para girar el prisma y revelar el contexto que explica el dato cuantitativo.</p>
+      
+      <div class="scene-3d">
+         <!-- Zonas interactivas -->
+         <div class="ctrl-zone ctrl-top" data-rot="rotateX(-90deg)">⬆️ Ángulo de cuidado</div>
+         <div class="ctrl-zone ctrl-bottom" data-rot="rotateX(90deg)">⬇️ Ángulo territorial</div>
+         <div class="ctrl-zone ctrl-left" data-rot="rotateY(90deg)">⬅️ Ángulo<br>familiar</div>
+         <div class="ctrl-zone ctrl-right" data-rot="rotateY(-90deg)">Brecha<br>digital ➡️</div>
+
+         <!-- Prisma 3D -->
+         <div class="cube" id="prismaCube">
+            <div class="face face-front">
+              <div style="font-size:52px; margin-bottom:10px; line-height:1;">📉</div>
+              <h4 style="color:var(--azul); font-size:24px; line-height:1.2; margin-bottom:8px;">40% de deserción</h4>
+              <p style="color:var(--gris); font-size:15.5px; margin:0;">¿Por qué abandonaron el curso presencial las mujeres inscritas?</p>
+            </div>
+            <div class="face face-top">
+              <span style="background:var(--amarillo); font-size:11px; font-weight:bold; padding:4px 10px; border-radius:99px; text-transform:uppercase; margin-bottom:14px;">Trabajo de cuidado</span>
+              <p style="font-size:19px; font-family:var(--display); font-style:italic; line-height:1.3; margin:0;">«La baja participación responde a que no teníamos con quién dejar a nuestros hijos a esa hora.»</p>
+            </div>
+            <div class="face face-bottom">
+              <span style="background:var(--verde); color:var(--tinta); font-size:11px; font-weight:bold; padding:4px 10px; border-radius:99px; text-transform:uppercase; margin-bottom:14px;">Contexto territorial</span>
+              <p style="font-size:19px; font-family:var(--display); font-style:italic; line-height:1.3; margin:0;">«Me sentía insegura de ir al taller porque a esa hora ya no hay iluminación en mi barrio.»</p>
+            </div>
+            <div class="face face-left">
+              <span style="background:var(--lima); color:var(--tinta); font-size:11px; font-weight:bold; padding:4px 10px; border-radius:99px; text-transform:uppercase; margin-bottom:14px;">Relaciones de poder</span>
+              <p style="font-size:19px; font-family:var(--display); font-style:italic; line-height:1.3; margin:0;">«Mi esposo me cuestionaba cada vez que iba, decía que estaba descuidando la casa por perder el tiempo.»</p>
+            </div>
+            <div class="face face-right">
+              <span style="background:var(--coral); color:#fff; font-size:11px; font-weight:bold; padding:4px 10px; border-radius:99px; text-transform:uppercase; margin-bottom:14px;">Brecha digital</span>
+              <p style="font-size:19px; font-family:var(--display); font-style:italic; line-height:1.3; margin:0;">«Exigían llenar un formulario web para confirmar, y muchas solo tenemos WhatsApp en el celular.»</p>
+            </div>
+         </div>
+      </div>
+      
+      <div class="notaDemo" style="margin-top:20px;">
+        <b>El límite de la estadística.</b> Un dato panorámico nos advierte del volumen del problema (el 40%), pero girar la perspectiva hacia lo cualitativo nos revela que detrás de un mismo número existen distintas realidades, barreras y motivaciones.
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="rail"><div class="railIn">
+  <a href="#brujula">Objetivos y RAs</a>
+  <a href="#teoria">Teoría · 0–55</a>
+  <a href="#lab">Laboratorios</a>
+  <a href="#practica">Práctica · 55–110</a>
+  <a href="#equipos">Trabajo en grupos</a>
+  <a href="#retos">Reflexión y retos</a>
+</div></nav>
+
+<main class="wrap">
+
+<section id="brujula">
+  <span class="tag az">Hacia dónde vamos</span>
+  
+  <h2 class="tit">Hilo conductor</h2>
+  <p class="bajada">Un dato cuantitativo es una pieza de evidencia general; la estadística es la estructura que nos muestra la magnitud de las brechas; la pregunta de investigación define qué queremos comprender a profundidad; y lo cualitativo es el enfoque que nos permite recorrer el significado, los matices y la experiencia viva.</p>
+
+  <h2 class="tit" style="margin-top: 32px;">Objetivo de la sesión</h2>
+  <p class="bajada">Desarrollar en las personas participantes las capacidades iniciales para formular preguntas de investigación cualitativa, comprender la naturaleza y profundidad de los datos, identificar sesgos de representación mediante la reflexividad, y utilizar este paradigma analítico como una herramienta autónoma y rigurosa.</p>
+
+  <h3 style="margin:40px 0 16px;color:var(--azul);font-size:22px">Resultados de aprendizaje</h3>
+  <div class="cards">
+    <div class="card ra"><div class="num">RA 1</div><h4>Sustentar y argumentar</h4>
+      <p>La pertinencia de aproximaciones cualitativas (etnografía, revisión documental, IAP), argumentando su rigor interpretativo, naturaleza microsituada y validez autónoma.</p></div>
+    <div class="card ra"><div class="num">RA 2</div><h4>Analizar e interpretar</h4>
+      <p>Fragmentos de un grupo focal de Yarú Virtual, construyendo matrices de codificación basadas en la operacionalización de conceptos para interpretar significados.</p></div>
+    <div class="card ra"><div class="num">RA 3</div><h4>Fomentar reflexión</h4>
+      <p>Sobre los principios de rigor ético, reflexividad y relacionamiento horizontal, y su homologación en los procesos de intervención de la Fundación WWB.</p></div>
+  </div>
+</section>
+
+<section id="teoria">
+  <span class="tag">Bloque 1 · 55 minutos</span>
+  <h2 class="tit">Teoría: principios y métodos</h2>
+  <p class="bajada">Toca cada bloque para ver cómo se conduce. Los tiempos están ajustados para cubrir desde la problematización inicial hasta la ética participativa.</p>
+  <div class="tl" id="tlTeoria"></div>
+</section>
+
+<section id="lab">
+  <span class="tag am">Laboratorios</span>
+  <h2 class="tit">Experimentar el dato cualitativo</h2>
+  <p class="bajada">Estas piezas interactivas son para proyectar en clase. Facilitan la comprensión de los sesgos, la elección del método y el proceso de codificación.</p>
+
+  <div class="lab">
+    <h3>1 · Los 3 principios de lo cualitativo</h3>
+    <p class="porque">Se usa en el bloque de <b>Introducción conceptual (5-25)</b>. Elige un caso hipotético y descubre cómo influye en la recolección e interpretación de datos.</p>
+    <div class="tabs">
+      <button class="tab on" data-princ="vbg">Entrevistas sobre VBG</button>
+      <button class="tab" data-princ="contexto">Extrapolar conclusiones</button>
+      <button class="tab" data-princ="micro">El límite del cuestionario</button>
+    </div>
+    <div id="princOut"></div>
+  </div>
+
+  <div class="lab">
+    <h3>2 · El mapa metodológico</h3>
+    <p class="porque">Se usa en el bloque de <b>Métodos y técnicas (25-35)</b>. Elige qué quieres investigar; el mapa te sugiere la técnica cualitativa más idónea.</p>
+    <div style="display:flex;gap:14px;align-items:center;margin:16px 0;flex-wrap:wrap">
+      <label style="font-size:13.5px;font-weight:500;color:var(--azul)">Quiero&nbsp;
+        <select id="selObj">
+          <option value="obs" selected>capturar prácticas cotidianas en tiempo real</option>
+          <option value="ent">profundizar en la experiencia individual y significados</option>
+          <option value="etno">lograr una inmersión profunda en dinámicas sociales</option>
+          <option value="doc">rastrear antecedentes y discursos previos</option>
+        </select>
+      </label>
+    </div>
+    <div id="mapaOut"></div>
+  </div>
+
+  <div class="lab">
+    <h3>3 · La operacionalización de conceptos</h3>
+    <p class="porque">Se usa en la <b>Antesala práctica (55-75)</b>. ¿Cómo preguntamos por un concepto complejo sin usar la palabra teórica? Analiza estos tres contrastes.</p>
+    <div class="tabs">
+      <button class="tab on" data-op="mal">Preguntas abstractas (incorrectas)</button>
+      <button class="tab" data-op="bien">Preguntas situadas (correctas)</button>
+    </div>
+    <div id="opOut"></div>
+  </div>
+
+  <div class="lab">
+    <h3>4 · Codificación en vivo (nube de frecuencias)</h3>
+    <p class="porque">Lee el relato y <b>toca las frases resaltadas</b> para "codificarlas". Observa cómo se extraen las categorías de la experiencia viva y cómo el tamaño de las palabras refleja qué fenómeno se repite más.</p>
+    <div style="font-size:17.5px; line-height:1.6; padding:24px; background:var(--beige); border-radius:10px; color:var(--tinta); font-family:var(--display);">
+      «La verdad, <span class="codable" data-code="Carga de cuidado" style="border-bottom:2px dashed var(--azul); cursor:pointer; padding:2px; transition:0.2s;" title="Toca para codificar">yo me levanto a las 4 de la mañana a dejar el almuerzo listo para todos</span>. Luego intento ir al curso de la fundación, pero <span class="codable" data-code="Brecha digital" style="border-bottom:2px dashed var(--azul); cursor:pointer; padding:2px; transition:0.2s;" title="Toca para codificar">como nos mandaron la guía por un correo y yo no sé abrir eso</span>, me dio pena ir. Y para rematar, <span class="codable" data-code="Autonomía restringida" style="border-bottom:2px dashed var(--azul); cursor:pointer; padding:2px; transition:0.2s;" title="Toca para codificar">mi marido me dijo que si me daban plata, él la administraba para el negocio grande</span>. Además, <span class="codable" data-code="Carga de cuidado" style="border-bottom:2px dashed var(--azul); cursor:pointer; padding:2px; transition:0.2s;" title="Toca para codificar">apenas llego de trabajar, tengo que ponerme a lavar la ropa</span>, y a veces <span class="codable" data-code="Carga de cuidado" style="border-bottom:2px dashed var(--azul); cursor:pointer; padding:2px; transition:0.2s;" title="Toca para codificar">mi suegra me regaña si la casa está desordenada</span>. Otras veces, <span class="codable" data-code="Brecha digital" style="border-bottom:2px dashed var(--azul); cursor:pointer; padding:2px; transition:0.2s;" title="Toca para codificar">ni siquiera tengo datos en el celular para avisar que no voy a poder asistir</span>.»
+    </div>
+    <div id="nubeTags" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:16px; margin-top:20px; min-height:100px; padding:20px; border:1px solid var(--linea); border-radius:10px; background:#fff;">
+      <span style="color:var(--hint); font-size:14.5px; margin:auto;">Toca una frase arriba para generar los códigos...</span>
+    </div>
+  </div>
+</section>
+
+<section id="practica">
+  <span class="tag">Bloque 2 · 55 minutos</span>
+  <h2 class="tit">Práctica de codificación y análisis</h2>
+  <p class="bajada">Construcción colectiva y trabajo en grupos para enfrentar fragmentos reales de grupos focales, utilizando matrices en Excel.</p>
+  <div class="tl" id="tlPractica"></div>
+</section>
+
+<section id="equipos">
+  <span class="tag az">75–95 · Trabajo en grupos</span>
+  <h2 class="tit">Un concepto por equipo</h2>
+  <p class="bajada">Cada equipo recibe un concepto distinto para operacionalizar en la matriz de Excel y utilizarlo para codificar los fragmentos del grupo focal.</p>
+  <div class="cards" id="equiposOut" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr))"></div>
+</section>
+
+<section id="retos">
+  <span class="tag am">Entre sesiones</span>
+  <h2 class="tit">Reflexión y retos autónomos</h2>
+  <p class="bajada">Antes de irnos, evaluemos la jornada. Los retos autónomos se eligen según el rol de cada participante.</p>
+  
+  <div id="retosOut"></div>
+
+  <div class="lab" style="margin-top:34px; border-left:6px solid var(--amarillo);">
+    <h3>Antes de irte: el poder de operacionalizar</h3>
+    <p class="porque">Ahora que comprendimos cómo aterrizar un concepto abstracto a la realidad de los datos vivos, cerremos con una reflexión colectiva:</p>
+    <ul class="check">
+      <li><b>¿Para qué nos sirve este ejercicio?</b><br> <span style="color:var(--gris);font-size:14.5px;">Para construir un puente real entre la teoría y la experiencia de vida de las mujeres en los territorios. Evita que forcemos nuestra jerga institucional en la realidad de ellas.</span></li>
+      <li><b>¿Creen que ahora podremos entender mejor qué queremos investigar e intervenir?</b><br> <span style="color:var(--gris);font-size:14.5px;">Sí. Si logramos ver cómo se experimenta una "brecha" en la cotidianidad (quién hace el almuerzo, quién administra el dinero), el diseño de la intervención o formación será mucho más certero.</span></li>
+      <li><b>¿La operacionalización nos permite hacer mejores preguntas?</b><br> <span style="color:var(--gris);font-size:14.5px;">Absolutamente. Nos aleja del sesgo de deseabilidad social y nos entrega preguntas situadas, claras y humanas que las beneficiarias pueden responder desde su día a día.</span></li>
+      <li><b>¿Nos obliga a pensar en la realidad?</b><br> <span style="color:var(--gris);font-size:14.5px;">Nos exige bajarnos de nuestras suposiciones de escritorio y mirar de frente el contexto complejo, incómodo y contradictorio donde ocurren los fenómenos.</span></li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer><div class="wrap">
+  <div class="cierre">Se entrega a la siguiente sesión con su matriz de operacionalización diligenciada.</div>
+  <b>fundacionwwbcolombia.org</b>
+  Curso Introducción al análisis de datos · Sesión Cualitativa
+</div></footer>
+
+<script>
+/* ===================== DEMO PRISMA 3D ===================== */
+(function(){
+  const cube = document.getElementById('prismaCube');
+  const zonas = document.querySelectorAll('.ctrl-zone');
+
+  zonas.forEach(zona => {
+      // Rotar al hacer hover o tocar
+      ['mouseenter', 'touchstart'].forEach(evt => {
+          zona.addEventListener(evt, (e) => {
+              e.preventDefault();
+              const rot = e.target.dataset.rot || e.target.getAttribute('data-rot');
+              cube.style.transform = rot;
+              zonas.forEach(z => z.style.color = "var(--hint)");
+              e.target.style.color = "var(--azul)";
+          });
+      });
+      
+      // Volver a la cara principal al salir
+      ['mouseleave', 'touchend'].forEach(evt => {
+          zona.addEventListener(evt, (e) => {
+              cube.style.transform = 'rotateX(0) rotateY(0)';
+              e.target.style.color = "var(--hint)";
+          });
+      });
+  });
+})();
+
+/* ===================== LABORATORIO PRINCIPIOS ===================== */
+(function(){
+  const box=document.getElementById('princOut');
+  function pinta(modo){
+    let c = '';
+    if(modo === 'vbg'){
+      c = '<div style="font-size:17px; color:var(--azul); padding: 20px; border-radius:10px; background:#fff; border: 1px solid var(--linea);"><b>Caso:</b> Se envía a un hombre encuestador, externo a la comunidad, a indagar sobre Violencias Basadas en Género (VBG) en un barrio periférico.</div><div class="rta" style="margin-top:10px;"><b>Principio a prueba: reflexividad.</b> Quien investiga es el instrumento principal. El género, el cuerpo y la posición social del investigador influirán drásticamente en si la entrevistada siente confianza para hablar o si sus respuestas estarán mediadas por el miedo o el sesgo.</div>';
+    } else if(modo === 'contexto') {
+      c = '<div style="font-size:17px; color:var(--azul); padding: 20px; border-radius:10px; background:#fff; border: 1px solid var(--linea);"><b>Caso:</b> Se toma un estudio cualitativo sobre emprendimiento femenino de 2018 (ciudad capital) y se aplican exactamente sus conclusiones a un programa rural disperso en 2026.</div><div class="rta" style="margin-top:10px;"><b>Principio a prueba: contextualidad.</b> El principio alude a que los datos cualitativos siempre están situados en un tiempo y un espacio. No es posible entender el dato si lo sacamos de ese contexto, por eso al hacer comparaciones debemos fijarnos en que haya características de comparabilidad y no extrapolar ni forzar los casos.</div>';
+    } else {
+      c = '<div style="font-size:17px; color:var(--azul); padding: 20px; border-radius:10px; background:#fff; border: 1px solid var(--linea);"><b>Caso:</b> Una encuesta arroja que el 80% de las mujeres afirman tener "libertad para gastar". Pero al ir al campo, notamos que ese gasto es exclusivamente en pañales y comida del hogar, nunca en sí mismas.</div><div class="rta" style="margin-top:10px;"><b>Principio a prueba: naturaleza microsituada.</b> Mientras lo cuantitativo busca la generalidad (el "sí"), lo cualitativo se interesa en el detalle minucioso. Lo micro nos dice que esa aparente "libertad de gasto" está atrapada en la división sexual del trabajo.</div>';
+    }
+    box.innerHTML = c;
+  }
+  document.querySelectorAll('[data-princ]').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('[data-princ]').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on'); pinta(b.dataset.princ); }));
+  pinta('vbg');
+})();
+
+/* ===================== MAPA METODOLÓGICO ===================== */
+(function(){
+  const M={
+    obs:{g:'Observación (participante / no participante)',
+      p:'Permite documentar dinámicas espaciales y comportamientos en su entorno natural. Útil cuando lo que la gente hace difiere de lo que dice que hace.',
+      t:'Asumir que nuestra presencia no altera el comportamiento del grupo observado (Efecto Hawthorne).'},
+    ent:{g:'Entrevista (semiestructurada o a profundidad)',
+      p:'Ideal para explorar historias de vida, percepciones y significados. El guion es flexible para permitir que emerjan categorías no previstas.',
+      t:'Hacer preguntas cerradas (de sí/no) o inducir la respuesta según nuestros propios sesgos.'},
+    etno:{g:'Etnografía (tradicional o digital)',
+      p:'Implica una inmersión prolongada para comprender las lógicas de interacción, ya sea en un territorio fisico o en ecosistemas virtuales.',
+      t:'Falta de reflexividad: creer que quien investiga es un observador "neutral" sin un cuerpo o posición social que influya en el campo.'},
+    doc:{g:'Revisión documental',
+      p:'Técnica indispensable para el rastreo de archivos, normativas y análisis de discursos previos. Provee contexto histórico e institucional.',
+      t:'Descontextualizar el documento de su época o intención original de publicación.'}
+  };
+  const o=document.getElementById('selObj'), out=document.getElementById('mapaOut');
+  function pinta(){ const m=M[o.value];
+    out.innerHTML='<div style="background:#192962;color:#fff;border-radius:12px;padding:20px">'+
+      '<div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#BBEF7F;font-weight:500;margin-bottom:8px">Técnica recomendada</div>'+
+      '<div style="font-size:23px;font-weight:500;line-height:1.2;margin-bottom:12px">'+m.g+'</div>'+
+      '<p style="color:#d6dcf0;font-size:15px;margin:0">'+m.p+'</p></div>'+
+      '<div class="trampa" style="margin-top:10px"><b>Vigilancia epistemológica (riesgo).</b> '+m.t+'</div>'; }
+  o.addEventListener('change',pinta); pinta();
+})();
+
+/* ===================== OPERACIONALIZACIÓN LAB (Ampliado) ===================== */
+(function(){
+  const box=document.getElementById('opOut');
+  function pinta(modo){
+    let items = [];
+    if(modo==='mal'){
+       items = [
+         {q: "¿Usted considera que tiene autonomía económica en su hogar?", err: "Traslada un concepto académico (autonomía económica) directamente a la persona. Induce respuestas por deseabilidad social."},
+         {q: "¿Cómo es la división sexual del trabajo en su familia?", err: "Usa jerga sociológica que no hace parte del lenguaje cotidiano. Las personas no saben qué responder."},
+         {q: "¿Ha experimentado barreras interseccionales para emprender?", err: "Es completamente abstracto. Obliga a la persona a teorizar en lugar de narrar su experiencia vivida."}
+       ];
+       box.innerHTML = items.map(i => `<div style="font-size:16.5px; color:var(--azul); padding:16px; border:2px solid var(--amarillo); border-radius:10px; background:#fff; margin-bottom:10px;"><i>"${i.q}"</i><div style="margin-top:8px; font-size:14px; color:#D55947;"><b>Error:</b> ${i.err}</div></div>`).join('');
+    } else {
+       items = [
+         {q: "Cuando hay que decidir en qué gastar la ganancia del negocio, ¿cómo se decide eso en su casa?", err: "Observa la <b>autonomía económica</b> anclándola a una práctica concreta: la toma de decisiones sobre el dinero."},
+         {q: "Si usted se enferma un martes, ¿quién se encarga de hacer el almuerzo y despachar a los niños?", err: "Observa la <b>división sexual del trabajo</b> llevándola a un escenario cotidiano, real y específico."},
+         {q: "Cuénteme de alguna vez que sintió que le fue más difícil vender sus productos por ser mujer, o por el barrio donde vive.", err: "Observa la <b>interseccionalidad</b> preguntando por experiencias vividas (género y territorio) sin usar la palabra técnica."}
+       ];
+       box.innerHTML = items.map(i => `<div style="font-size:16.5px; color:var(--azul); padding:16px; border:2px solid var(--lima); border-radius:10px; background:#fff; margin-bottom:10px;"><i>"${i.q}"</i><div style="margin-top:8px; font-size:14px; color:var(--lima-text);"><b>Acierto:</b> ${i.err}</div></div>`).join('');
+    }
+  }
+  document.querySelectorAll('[data-op]').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('[data-op]').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on'); pinta(b.dataset.op); }));
+  pinta('mal');
+})();
+
+/* ===================== LAB CODIFICACIÓN (Nube Frecuencias) ===================== */
+(function(){
+  const codables = document.querySelectorAll('.codable');
+  const nubeOut = document.getElementById('nubeTags');
+  let codesMap = new Map();
+  
+  codables.forEach(el => {
+    el.addEventListener('click', function() {
+      if(this.style.pointerEvents === 'none') return;
+      
+      const code = this.getAttribute('data-code');
+      let freq = codesMap.get(code) || 0;
+      codesMap.set(code, freq + 1);
+      
+      this.style.backgroundColor = 'var(--verde)';
+      this.style.color = '#fff';
+      this.style.border = 'none';
+      this.style.borderRadius = '4px';
+      this.style.cursor = 'default';
+      this.style.pointerEvents = 'none';
+      
+      renderNube();
+    });
+  });
+
+  function renderNube() {
+    if(codesMap.size > 0) {
+      nubeOut.innerHTML = '';
+      
+      codesMap.forEach((freq, codeName) => {
+        const s = document.createElement('span');
+        s.style.display = 'inline-block';
+        s.style.background = 'var(--azul)';
+        s.style.color = '#fff';
+        s.style.padding = '8px 18px';
+        s.style.borderRadius = '999px';
+        s.style.fontWeight = '500';
+        s.style.animation = 'aparece 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+        s.style.boxShadow = '0 4px 10px rgba(25,41,98,0.15)';
+        
+        const calcSize = 14 + (freq * 4); 
+        s.style.fontSize = calcSize + 'px'; 
+        
+        s.innerHTML = `${codeName} <small style="opacity:0.7; font-size:0.8em; margin-left:4px;">(${freq})</small>`;
+        nubeOut.appendChild(s);
+      });
+    }
+  }
+})();
+
+/* ===================== TIMELINES (Teoría y Práctica) ===================== */
+const TEORIA=[
+ ['0–5','Bienvenida','El límite del porcentaje y la experiencia viva',
+  'Se inicia problematizando el análisis tradicional panorámico. Preguntas detonantes: ¿Cómo experimentan las beneficiarias las brechas de género? ¿Por qué persiste la brecha de ingresos si sus capacidades igualan a las de los hombres? Se aborda el prejuicio de que lo cualitativo es menos "científico".',
+  'Invita al grupo a cruzar la frontera metodológica. Pregunta al aula: "¿Qué es el análisis cualitativo y qué acercamiento han tenido?".'],
+ ['5–25','Introducción conceptual','Principios de la investigación cualitativa',
+  'Se explica que busca dar cuenta de las cualidades de los fenómenos. Se abordan los 3 principios: 1) Reflexividad, 2) Contextualidad, y 3) Naturaleza microsituada.',
+  'Usa casos hipotéticos para debatir sesgos: el género de quien investiga en temas de VBG, y la evaluación interna vs. la de una consultoría.'],
+ ['25–35','Métodos y técnicas','El abanico metodológico',
+  '¿Cuándo escoger una técnica frente a otra? Observación, Entrevista, Etnografía y Revisión documental. Se introduce la triangulación con métodos mixtos.',
+  'Enfatiza que lo cualitativo no compite con lo cuantitativo: dialogan.'],
+ ['35–50','Ética de la investigación','Responsabilidad, vigilancia y co-construcción',
+  'Principio de acción sin daño y vigilancia epistemológica para no forzar significados. Se introduce IAP, co-creación y co-teorización.',
+  'Guía la discusión usando imágenes de casos. Demuestra formas de validar la agencia de las beneficiarias.'],
+ ['50–55','Chequeo y puente','Hacia la operacionalización',
+  'Se abre espacio para dudas. Se introduce el concepto de "operacionalizar conceptos" como paso indispensable.',
+  'Aclara que la traducción analítica es clave antes de preguntar.']
+];
+const PRACTICA=[
+ ['55–75','Antesala práctica','Operacionalizar conceptos abstractos',
+  'Ejercicio de construcción colectiva. 1) Se construye una definición partiendo de saberes previos. 2) Se ancla a la realidad: ¿cómo se observa este concepto abstracto?',
+  'Detona con: "Si queremos saber si una emprendedora tiene autonomía, ¿se lo preguntamos directamente?".'],
+ ['75–95','Taller práctico','Enfrentar el dato vivo',
+  'Se divide al grupo en equipos. Reciben matriz de Excel y fragmentos de un grupo focal sobre división sexual del trabajo, cuidado e interseccionalidad.',
+  'El grupo debe aterrizar la teoría a la realidad, codificando e interpretando. El docente circula evaluando el rigor metodológico.'],
+ ['95–110','Puesta en común','Socialización y reflexión crítica',
+  'Espacio plenario. Exponen hallazgos analíticos y los retos metodológicos, éticos e interpretativos al interactuar con el dato cualitativo.',
+  'Cierra con las preguntas de reflexión final propuestas al pie del documento.']
+];
+function pintarTL(id,datos,clase){
+  document.getElementById(id).innerHTML = datos.map(([m,k,t,c,como])=>
+    '<div class="blk '+clase+'"><button class="blkH" aria-expanded="false">'+
+    '<span class="min">'+m+'</span>'+
+    '<span class="blkT">'+t+'<span class="blkK">'+k+'</span></span>'+
+    '<span class="fle"></span></button>'+
+    '<div class="blkB"><p>'+c+'</p><div class="como"><b>Cómo se conduce.</b> '+como+'</div></div></div>').join('');
+}
+pintarTL('tlTeoria',TEORIA,''); pintarTL('tlPractica',PRACTICA,'prac');
+document.querySelectorAll('.blkH').forEach(b=>b.addEventListener('click',()=>{
+  const blk=b.parentElement, ab=blk.classList.toggle('open');
+  b.setAttribute('aria-expanded',ab);
+}));
+
+/* ===================== EQUIPOS (4 Equipos) ===================== */
+const EQ=[
+ [1,'División sexual del trabajo','¿Cómo se distribuyen las tareas productivas y reproductivas en los relatos?','Categorizar menciones de quién hace qué en el hogar vs. en el negocio.','Asumir que si la mujer trabaja, ya no realiza labores domésticas.'],
+ [2,'Trabajo de cuidado','¿Qué cargas de cuidado invisibles emergen en las respuestas de las participantes?','Identificar expresiones relacionadas con carga mental, cuidado de mayores o niños.','Ignorar el cuidado emocional o logístico y centrarse solo en tareas físicas.'],
+ [3,'Interseccionalidad','¿Cómo se cruzan el género, nivel socioeconómico y zona de residencia en su experiencia?','Rastrear cómo diferentes vulnerabilidades potencian u obstaculizan el negocio.','Analizar el género de forma aislada sin considerar el contexto.'],
+ [4,'Agencia y toma de decisiones','¿De qué manera las beneficiarias expresan capacidad de decisión sobre sus ingresos?','Codificar relatos sobre negociación de gastos o inversiones propias.','Confundir "tener ingresos" con "tener control sobre los ingresos".']
+];
+document.getElementById('equiposOut').innerHTML = EQ.map(([n,pat,preg,sol,tr])=>
+ '<div class="eq"><div class="eqN">'+n+'</div><div>'+
+ '<span class="pill">'+pat+'</span>'+
+ '<p class="preg">'+preg+'</p>'+
+ '<h4>Objetivo de codificación</h4><p style="font-size:15px;margin-bottom:12px">'+sol+'</p>'+
+ '<div class="trampa"><b>Riesgo analítico (sesgo).</b> '+tr+'</div></div></div>').join('');
+
+/* ===================== RETOS ===================== */
+const RETOS=[
+ ['R1','Matriz completada','Terminar la operacionalización y codificación de los fragmentos del grupo focal en el Excel asignado.','Entregar la matriz con al menos 3 códigos extraídos de los datos empíricos.',true],
+ ['R2','Vigilancia epistemológica','Revisar un informe propio previo e identificar dónde se pudo haber sobre-interpretado una cita de un beneficiario.','Redactar un párrafo con la corrección reflexiva.',false],
+ ['R3','Triangulación','Tomar un dato cuantitativo (ej. % de aumento de ingresos) y proponer 2 preguntas cualitativas para entender el "por qué".','Las preguntas propuestas no deben ser cerradas.',false]
+];
+document.getElementById('retosOut').innerHTML = RETOS.map(([id,t,c,cr,ob])=>
+ '<div class="reto'+(ob?' obl':'')+'"><h4>'+id+' · '+t+(ob?'  <span style="color:#a06f00;font-size:12.5px">OBLIGATORIO</span>':'')+'</h4>'+
+ '<p>'+c+'</p><span class="cr"><b>Criterio de logro:</b> '+cr+'</span></div>').join('');
+
+/* ===================== RAIL ACTIVO ===================== */
+(function(){
+  const links=[...document.querySelectorAll('.railIn a')];
+  const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+  const io=new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){
+    const i=secs.indexOf(e.target); links.forEach(l=>l.classList.remove('act'));
+    if(i>=0) links[i].classList.add('act'); } }); }, {rootMargin:'-45% 0px -50% 0px'});
+  secs.forEach(s=>s&&io.observe(s));
+})();
+</script>
+</body>
+</html>

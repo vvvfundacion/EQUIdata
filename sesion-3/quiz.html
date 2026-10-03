@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quiz · Investigación cualitativa aplicada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#192962; --navy-hover:#0F1C4D; --lavanda:#BEA4E8; --lavanda-tint:#F1EBFA;
+  --hueso:#FAFAFA; --tinta:#192962; --gris:#5B5E6E; --hint:#9A9DAB; --linea:#EDEEF2;
+  --lima:#BBEF7F; --lima-tint:#F1FADF; --lima-text:#173404;
+  --coral:#D55947; --coral-hover:#C24634; --coral-tint:#FBEAE6;
+  --sans:"Inter","Segoe UI",system-ui,sans-serif;
+  --display:"Space Grotesk","Inter",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--hueso);color:var(--tinta);font-family:var(--sans);
+  font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3{margin:0;font-family:var(--display);font-weight:500;letter-spacing:-.01em;color:var(--azul)}
+p{margin:0}
+b,strong{font-weight:500}
+
+.top{background:var(--azul);color:#fff;padding:36px 24px 30px}
+.topIn{max-width:760px;margin:0 auto}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--lima);font-weight:500;margin-bottom:12px}
+.top h1{color:#fff;font-size:clamp(28px,5vw,38px)}
+.top .sub{color:var(--lavanda);font-size:17px;margin-top:8px;font-weight:500}
+
+.wrap{max-width:760px;margin:0 auto;padding:28px 24px 80px}
+
+/* barra de progreso */
+#progWrap{margin:26px 0 8px;display:flex;align-items:center;gap:14px}
+#progLabel{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--gris);white-space:nowrap}
+#progTrack{flex:1;height:6px;background:var(--linea);border-radius:99px;overflow:hidden}
+#progFill{height:100%;background:var(--lima);border-radius:99px;transition:width .35s ease;width:0%}
+
+/* tarjeta de pregunta */
+.card{background:#fff;border:0.5px solid var(--linea);border-radius:16px;padding:32px;
+  margin-top:22px}
+.qn{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--lavanda);font-weight:500;margin-bottom:14px}
+.prompt{font-family:var(--display);font-size:22px;font-weight:500;line-height:1.35;
+  color:var(--azul);margin-bottom:24px}
+
+.opt{display:block;width:100%;text-align:left;background:#fff;border:1.5px solid var(--linea);
+  border-radius:12px;padding:15px 18px;margin-bottom:10px;font-family:var(--sans);
+  font-size:16px;color:var(--tinta);cursor:pointer;transition:border-color .15s,background .15s;
+  line-height:1.4}
+.opt:hover{border-color:var(--lavanda)}
+.opt:disabled{cursor:default}
+.opt.correcta{border-color:var(--lima);background:var(--lima-tint);color:var(--lima-text);font-weight:500}
+.opt.incorrecta{border-color:var(--coral);background:var(--coral-tint);color:var(--coral-hover);font-weight:500}
+.opt.atenuada{opacity:.5}
+.opt .marca{font-family:var(--mono);font-size:13px;font-weight:500;margin-left:8px}
+
+.feedback{display:none;margin-top:18px;padding:18px 20px;border-radius:12px;font-size:15.5px;
+  line-height:1.5}
+.feedback.on{display:block;animation:aparece .3s ease}
+@keyframes aparece{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.feedback.ok{background:var(--lima-tint);color:var(--lima-text)}
+.feedback.mal{background:var(--coral-tint);color:#7a2318}
+.feedback b{font-weight:500}
+.veredicto{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  font-weight:500;display:block;margin-bottom:6px}
+
+.navBar{display:flex;justify-content:space-between;align-items:center;margin-top:26px}
+.btn{border:0;border-radius:999px;padding:13px 26px;font-family:var(--sans);font-weight:500;
+  font-size:15.5px;cursor:pointer;transition:transform .15s,filter .15s}
+.btn:active{transform:scale(.98)}
+.btn.primario{background:var(--azul);color:#fff}
+.btn.primario:hover{background:var(--navy-hover)}
+.btn.primario:disabled{background:var(--hint);cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--lavanda);border:0;font-weight:500;padding:13px 8px}
+.btn.ghost:hover{color:#534AB7}
+
+/* pantalla de resultado final */
+#resultado{display:none}
+#resultado.on{display:block}
+.scoreCard{background:var(--azul);color:#fff;border-radius:16px;padding:40px 32px;text-align:center;
+  margin-top:22px}
+.scoreCard .k{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--lima);margin-bottom:10px}
+.scoreCard .num{font-family:var(--mono);font-size:56px;font-weight:500;color:#fff;line-height:1}
+.scoreCard .msg{color:var(--lavanda);font-size:17px;margin-top:14px;max-width:480px;
+  margin-left:auto;margin-right:auto}
+.resumen{margin-top:24px;display:grid;gap:10px}
+.resItem{display:flex;gap:12px;align-items:flex-start;background:#fff;border:0.5px solid var(--linea);
+  border-radius:12px;padding:14px 16px;font-size:14.5px}
+.resItem .dot{width:22px;height:22px;border-radius:50%;flex:0 0 auto;display:flex;
+  align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:500;
+  margin-top:1px}
+.resItem .dot.ok{background:var(--lima);color:var(--lima-text)}
+.resItem .dot.mal{background:var(--coral);color:#fff}
+.resItem .txt b{display:block;color:var(--azul);margin-bottom:2px}
+
+footer{text-align:center;padding:24px;font-size:13px;color:var(--hint)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="top"><div class="topIn">
+  <div class="eyebrow">Fundación WWB Colombia · quiz de cierre</div>
+  <h1>Análisis cualitativo, reflexividad y ética</h1>
+  <div class="sub">6 preguntas para abordar los resultados de aprendizaje</div>
+</div></div>
+
+<div class="wrap">
+  <div id="progWrap">
+    <span id="progLabel">Pregunta 1 de 6</span>
+    <div id="progTrack"><div id="progFill"></div></div>
+  </div>
+
+  <div id="quizArea"></div>
+
+  <div id="resultado">
+    <div class="scoreCard">
+      <div class="k">Resultado</div>
+      <div class="num" id="scoreNum">0/6</div>
+      <div class="msg" id="scoreMsg"></div>
+    </div>
+    <div class="resumen" id="resumenList"></div>
+    <div class="navBar">
+      <button class="btn ghost" id="btnRepetir">Repetir el quiz</button>
+      <span></span>
+    </div>
+  </div>
+</div>
+
+<footer>fundacionwwbcolombia.org · Análisis cualitativo de datos</footer>
+
+<script>
+const PREGUNTAS = [
+{
+  prompt: "En la evaluación de un programa, la encuesta cuantitativa indica que el 85% de las usuarias están 'satisfechas'. Sin embargo, una revisión documental y una etnografía revelan que las usuarias modifican las herramientas dadas porque no encajan en sus rutinas. ¿Cuál es la principal justificación para validar este hallazgo cualitativo frente al dato numérico?",
+  opciones: [
+    "La etnografía debe descartarse porque su muestra es demasiado pequeña frente al 85% estadísticamente representativo.",
+    "El dato cualitativo tiene validez autónoma por su naturaleza microsituada, revelando el 'cómo' y 'por qué' de las prácticas reales.",
+    "Los hallazgos etnográficos demuestran que las usuarias no comprenden las instrucciones del programa.",
+    "El dato cualitativo sirve únicamente como fase exploratoria para luego ajustar la encuesta cuantitativa y volver a medir."
+  ],
+  correcta: 1,
+  explicacion: "La investigación cualitativa tiene validez porque permite ahondar en las prácticas reales de las personas. Nos ayuda a ver aspectos de la vida cotidiana y de la naturaleza microsituada que quizás quedaron ocultos en la encuesta, aportando un rigor interpretativo valioso para comprender la experiencia completa."
+},
+{
+  prompt: "Para investigar las barreras financieras de emprendedoras rurales, se propone un diseño mixto. ¿Cuál es el aporte específico de usar la Investigación Acción Participativa (IAP) en triangulación con modelos estadísticos de riesgo crediticio?",
+  opciones: [
+    "Extraer narrativas emotivas para adornar cualitativamente el informe del modelo de riesgo.",
+    "Confirmar estadísticamente si las opiniones del grupo focal coinciden con la probabilidad de impago de la base de datos.",
+    "Entrenar a las emprendedoras para que llenen mejor las encuestas financieras institucionales.",
+    "Permitir que las emprendedoras co-construyan soluciones a las barreras, trascendiendo la descripción extractiva del riesgo."
+  ],
+  correcta: 3,
+  explicacion: "La Investigación Acción Participativa (IAP) aporta una dimensión metodológica y política enfocada en la transformación social. Mediante este enfoque, las personas investigadas participan activamente como co-creadoras de soluciones a sus propias barreras, aportando un conocimiento práctico para resolver los problemas identificados."
+},
+{
+  prompt: "Fragmento de grupo focal (Yarú Virtual): 'Considero que uno de los aprendizajes más valiosos del proceso de formación en Yarú Virtual ha sido el desarrollo de mi autonomía y disciplina. La modalidad virtual me ha exigido organizar mejor mi tiempo, asumir con responsabilidad mis compromisos académicos y mantener la constancia para alcanzar mis metas. Esto me ha ayudado a fortalecer mi sentido de responsabilidad y mi capacidad de planificación, destaco el fortalecimiento de mis competencias digitales. A lo largo del proceso he aprendido a utilizar diferentes herramientas tecnológicas, lo cual no solo ha facilitado mi aprendizaje, este proceso no solo ha contribuido a mi formación académica, sino también a mi crecimiento personal. Me ha permitido confiar más en mis capacidades, adaptarme a nuevos retos y comprender que el aprendizaje continuo es fundamental para mi desarrollo'. Al construir la matriz de codificación, ¿qué código refleja una operacionalización ética de este fragmento?",
+  opciones: [
+    "Adaptación obligatoria a entornos virtuales por falta de opciones formativas presenciales.",
+    "Fortalecimiento de la autonomía, las competencias digitales y la confianza personal como resultado del proceso formativo.",
+    "Mejora en los indicadores de rendimiento académico y cumplimiento estricto de horarios.",
+    "Dificultades iniciales superadas en el uso de herramientas tecnológicas básicas."
+  ],
+  correcta: 1,
+  explicacion: "El fragmento resalta de manera directa cómo la participante reconoce su propio crecimiento en autonomía, disciplina y manejo de herramientas tecnológicas. Codificar esto resaltando su confianza personal y competencias digitales facilita una lectura ética que valora genuinamente su agencia, su desarrollo integral y la apropiación de los aprendizajes."
+},
+{
+  prompt: "En la matriz de codificación de Yarú Virtual cruzaste el concepto 'Apropiación tecnológica' con la cita: 'Mi hija me ayuda a subir las tareas a la plataforma'. Desde el rigor interpretativo cualitativo, ¿cuál es la lectura más profunda de este fragmento?",
+  opciones: [
+    "La usuaria no ha logrado verdadera apropiación tecnológica, pues depende de un tercero para tareas básicas.",
+    "La apropiación tecnológica ocurre y se sostiene como una práctica relacional, intergeneracional y familiar, no estrictamente individual.",
+    "Es necesario obligar a la usuaria a realizar la tarea sola en el futuro para garantizar la medición precisa del impacto.",
+    "El diseño de la plataforma tiene una usabilidad deficiente y debe simplificarse urgentemente."
+  ],
+  correcta: 1,
+  explicacion: "El rigor interpretativo cualitativo permite observar que, en diversos contextos socioculturales, la apropiación de la tecnología se desarrolla de manera mediada, comunitaria y familiar. Esta perspectiva nos ayuda a entender y valorar la red de apoyo que facilita el proceso de aprendizaje, reconociéndola como una forma válida de acercamiento a las plataformas."
+},
+{
+  prompt: "Como investigador de Fundación WWB, entrevistas a una mujer. Ella confiesa: 'Yo te digo que todo está muy bien porque ustedes son los que traen las capacitaciones'. ¿Qué principio cualitativo debe activarse para analizar este dato?",
+  opciones: [
+    "La triangulación de datos, para descartar esta entrevista y buscar a una participante que responda con la verdad objetiva.",
+    "La saturación teórica, entrevistando a más mujeres hasta que la mayoría critique abiertamente las capacitaciones.",
+    "El sesgo de deseabilidad social, tratándolo como un error de muestreo estadístico que anula el grupo focal.",
+    "La reflexividad."
+  ],
+  correcta: 3,
+  explicacion: "La reflexividad implica que el investigador examine su propia posición de poder, en este caso como representante de la institución. Este tipo de respuestas constituye un hallazgo invaluable sobre cómo el asistencialismo y el poder moldean el discurso de las comunidades; por tanto, es necesario que se incluya esta perspectiva en el análisis, para comprender finalmente cuál fue la respuesta y la intención comunicativa de la participante."
+},
+{
+  prompt: "Se busca homologar el principio cualitativo de 'relacionamiento horizontal' en un nuevo proceso de formación de Fundación WWB. ¿Qué acción pedagógica refleja una 'falsa horizontalidad' (una trampa ilusoria)?",
+  opciones: [
+    "Ajustar los horarios y canales de encuentro basándose genuinamente en las dinámicas de cuidado y trabajo de las participantes.",
+    "Permitir que las participantes decidan el orden de los temas de una malla curricular diseñada por expertos que es inmodificable.",
+    "Realizar un mapeo participativo donde las mujeres identifiquen sus propias necesidades de formación antes de diseñar los contenidos.",
+    "Validar conjuntamente las interpretaciones del análisis de datos con las mujeres antes de publicar un informe."
+  ],
+  correcta: 1,
+  explicacion: "Permitir elegir el orden de temas preestablecidos e inmodificables genera una ilusión de agencia que representa una falsa horizontalidad. La horizontalidad efectiva en metodologías participativas y pedagogía requiere la co-construcción real de los currículos, los tiempos y los significados, distribuyendo equitativamente el poder de decisión entre todas las personas involucradas."
+}
+];
+
+let actual = 0, respondida = false;
+const respuestas = []; // {elegida, correcta}
+
+function render(){
+  const q = PREGUNTAS[actual];
+  document.getElementById('progLabel').textContent = 'Pregunta ' + (actual+1) + ' de ' + PREGUNTAS.length;
+  document.getElementById('progFill').style.width = ((actual)/PREGUNTAS.length*100) + '%';
+
+  const opts = q.opciones.map((op,i) =>
+    '<button class="opt" data-i="'+i+'">'+op+'</button>'
+  ).join('');
+
+  document.getElementById('quizArea').innerHTML =
+    '<div class="card">'+
+      '<div class="qn">PREGUNTA '+(actual+1)+' · ANÁLISIS CUALITATIVO</div>'+
+      '<div class="prompt">'+q.prompt+'</div>'+
+      '<div id="opts">'+opts+'</div>'+
+      '<div class="feedback" id="feedback"></div>'+
+      '<div class="navBar">'+
+        '<span></span>'+
+        '<button class="btn primario" id="btnSiguiente" disabled>'+
+          (actual === PREGUNTAS.length-1 ? 'Ver resultado' : 'Siguiente')+
+        '</button>'+
+      '</div>'+
+    '</div>';
+
+  respondida = false;
+  document.querySelectorAll('.opt').forEach(b => b.addEventListener('click', elegir));
+}
+
+function elegir(e){
+  if(respondida) return;
+  respondida = true;
+  const i = +e.target.dataset.i;
+  const q = PREGUNTAS[actual];
+  const ok = i === q.correcta;
+  respuestas[actual] = {elegida: i, ok};
+
+  document.querySelectorAll('.opt').forEach((b,k) => {
+    b.disabled = true;
+    if(k === q.correcta) b.classList.add('correcta');
+    else if(k === i) b.classList.add('incorrecta');
+    else b.classList.add('atenuada');
+    if(k === q.correcta) b.innerHTML += ' <span class="marca">✓ correcta</span>';
+    else if(k === i) b.innerHTML += ' <span class="marca">tu respuesta</span>';
+  });
+
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback on ' + (ok ? 'ok' : 'mal');
+  fb.innerHTML = '<span class="veredicto">'+(ok ? '✓ Correcto' : '✕ Cuidado con la trampa metodológica')+'</span>'+q.explicacion;
+
+  document.getElementById('btnSiguiente').disabled = false;
+}
+
+function siguiente(){
+  if(actual < PREGUNTAS.length - 1){
+    actual++;
+    render();
+    window.scrollTo({top:0, behavior:'smooth'});
+  } else {
+    mostrarResultado();
+  }
+}
+
+function mostrarResultado(){
+  document.getElementById('progFill').style.width = '100%';
+  document.getElementById('progLabel').textContent = 'Quiz completo';
+  document.getElementById('quizArea').innerHTML = '';
+  const aciertos = respuestas.filter(r => r.ok).length;
+  document.getElementById('scoreNum').textContent = aciertos + '/' + PREGUNTAS.length;
+
+  let msg;
+  if(aciertos === PREGUNTAS.length) msg = '¡Rigor ético e interpretativo impecable! Identificas a la perfección las dinámicas del análisis cualitativo.';
+  else if(aciertos >= 4) msg = 'Buen manejo. Tienes una lectura reflexiva de los datos, continúa profundizando en los abordajes metodológicos.';
+  else msg = 'Te sugiero repasar los fundamentos de la postura epistemológica cualitativa y la reflexividad. ¡Ánimo con el estudio!';
+  document.getElementById('scoreMsg').textContent = msg;
+
+  document.getElementById('resumenList').innerHTML = respuestas.map((r,i) =>
+    '<div class="resItem"><div class="dot '+(r.ok?'ok':'mal')+'">'+(r.ok?'✓':'✕')+'</div>'+
+    '<div class="txt"><b>Pregunta '+(i+1)+'</b>'+PREGUNTAS[i].prompt+'</div></div>'
+  ).join('');
+
+  document.getElementById('resultado').classList.add('on');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function reiniciar(){
+  actual = 0; respuestas.length = 0;
+  document.getElementById('resultado').classList.remove('on');
+  render();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+document.addEventListener('click', e => {
+  if(e.target && e.target.id === 'btnSiguiente') siguiente();
+});
+document.getElementById('btnRepetir').addEventListener('click', reiniciar);
+
+render();
+</script>
+</body>
+</html>

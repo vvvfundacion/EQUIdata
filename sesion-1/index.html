@@ -1,0 +1,2208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sesión 1 · Guía de estudio — Anatomía del Dato e IA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Tokens marca e-learning (mismos de la Sesión 6) */
+            --navy: #192962;
+            --navy-hover: #0F1C4D;
+            --navy-tint: #EBEEF7;
+            --lavender: #BEA4E8;
+            --lavender-tint: #F1EBFA;
+            --lavender-text: #534AB7;
+            --bg: #FAFAFA;
+            --card: #FFFFFF;
+            --text-secondary: #5B5E6E;
+            --text-hint: #9A9DAB;
+            --divider: #EDEEF2;
+            --lime: #BBEF7F;
+            --lime-tint: #F1FADF;
+            --lime-text: #173404;
+            --coral: #D55947;
+            --coral-hover: #C24634;
+            --coral-tint: #FBEAE6;
+            --amber: #E8A93B;
+            --amber-tint: #FBF1DE;
+            --teal: #1FA6A6;
+            --teal-tint: #E3F5F5;
+
+            --font-head: 'Space Grotesk', Arial, sans-serif;
+            --font-body: 'Inter', Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+            --radius-s: 12px;
+            --radius-card: 16px;
+            --radius-pill: 999px;
+            --max-w: 720px;
+
+            /* Alias de los nombres anteriores (los usan estilos en línea y scripts) */
+            --navy-deep: #0F1C4D;
+            --navy-mid: #192962;
+            --paper: #FAFAFA;
+            --paper-hi: #FFFFFF;
+            --paper-dim: #F4F5FA;
+            --ink: #192962;
+            --ink-soft: #5B5E6E;
+            --lime-deep: #4E8A1C;
+            --coral-deep: #C24634;
+            --lavender-deep: #534AB7;
+            --line: #EDEEF2;
+            --disp: var(--font-head);
+            --body: var(--font-body);
+            --mono: var(--font-mono);
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--navy);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        img { max-width: 100%; display: block; }
+        [id] { scroll-margin-top: 120px; }
+
+        h1, h2, h3, h4, h5 { font-family: var(--font-head); font-weight: 500; margin: 0 0 12px; color: var(--navy); line-height: 1.25; }
+        p { margin: 0 0 14px; }
+        a { color: var(--lavender-text); }
+        strong, b { font-weight: 600; }
+        code { font-family: var(--font-mono); background: var(--navy-tint); padding: 2px 6px; border-radius: 4px; font-size: 0.88em; color: var(--navy); }
+        hr { border: none; border-top: 0.5px solid var(--divider); margin: 48px 0; }
+
+        .wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+        .mono-label { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; font-size: 12px; font-weight: 500; }
+
+        /* ===== BARRA DE PROGRESO ===== */
+        #progress-track { position: fixed; top: 0; left: 0; right: 0; height: 4px; background: var(--divider); z-index: 1000; }
+        #progress-fill { height: 100%; width: 0%; background: var(--lime); transition: width 0.08s linear; }
+
+        /* ===== LOGOS EN LA CABECERA ===== */
+        .hero-logos { display: flex; align-items: center; gap: 20px; margin-top: 28px; flex-wrap: wrap; }
+        .hero-logos img { width: auto; }
+        .hero-logo-wwb { height: 72px; margin-left: -14px; }
+        .hero-logo-equidata { height: 46px; }
+        .hero-logo-sep { width: 1px; height: 40px; background: rgba(255, 255, 255, 0.25); }
+
+        /* ===== HERO ===== */
+        .hero { position: relative; background: var(--navy); color: #fff; overflow: hidden; padding: 64px 24px 56px; }
+        .hero-deco { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+        .hero-inner { position: relative; max-width: var(--max-w); margin: 0 auto; }
+        .hero .mono-label { color: var(--lime); }
+        .hero h1 { color: #fff; font-size: clamp(34px, 8vw, 50px); line-height: 1.08; margin: 16px 0 0; max-width: 18ch; }
+        .hero h1 span { color: var(--lime); }
+        .hero p.lede { margin: 20px 0 0; max-width: 52ch; color: #C7CCE6; font-size: 16px; }
+        .hero-pill {
+            display: inline-flex; margin-top: 24px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em;
+            font-size: 11px; font-weight: 500; padding: 6px 14px; border-radius: var(--radius-pill); background: rgba(187, 239, 127, 0.14); color: var(--lime);
+        }
+
+        /* ===== NAVEGACIÓN RÁPIDA ===== */
+        .quicknav-outer { background: var(--card); border-bottom: 0.5px solid var(--divider); position: sticky; top: 4px; z-index: 900; }
+        .quicknav { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 12px 24px; max-width: var(--max-w); margin: 0 auto; }
+        @media (max-width: 560px) { .quicknav { grid-template-columns: repeat(2, 1fr); } }
+        .quicknav a {
+            font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; font-weight: 500;
+            color: var(--navy); background: var(--navy-tint); padding: 10px 14px; border-radius: var(--radius-s);
+            text-decoration: none; text-align: center; transition: background 0.2s; display: flex; align-items: center; justify-content: center;
+        }
+        .quicknav a:hover { background: var(--lavender-tint); }
+
+        /* ===== CONTENIDO ===== */
+        main.wrap { padding-top: 48px; }
+        main p { font-size: 15.5px; }
+        main > h2, main h2 { font-size: clamp(22px, 5vw, 26px); margin-top: 48px; }
+        main h3 { font-size: 21px; margin: 48px 0 12px; }
+        main h4 { font-size: 17px; margin: 28px 0 10px; }
+        main ul, main ol { padding-left: 20px; margin: 0 0 16px; }
+        main li { margin-bottom: 6px; font-size: 15px; }
+
+        ul.checklist { list-style: none; padding-left: 0; }
+        ul.checklist li { position: relative; padding-left: 22px; }
+        ul.checklist li::before { content: ''; position: absolute; left: 2px; top: 0.6em; width: 8px; height: 8px; border-radius: 50%; background: var(--lavender); }
+
+        .block-label { font-family: var(--font-mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin: 0 0 8px; }
+
+        /* Encabezado de bloque (estilo "Momento" de la Sesión 6) */
+        .chapter-header { background: var(--lavender-tint); border-radius: var(--radius-card); border-left: 5px solid var(--lavender); padding: 20px 24px; margin: 56px 0 28px; }
+        .chapter-header .chapter-num { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; font-size: 11.5px; color: var(--text-secondary); margin-bottom: 6px; display: block; }
+        .chapter-header h2 { font-size: 26px; color: var(--navy); margin: 0; }
+
+        /* ===== CALLOUTS ===== */
+        .callout { border-radius: var(--radius-card); padding: 20px 22px; margin: 24px 0; background: var(--navy-tint); }
+        .callout-title { font-family: var(--font-body); font-weight: 500; font-size: 15.5px; color: var(--navy); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .callout-title::before { content: ''; flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: var(--navy); }
+        .callout p { font-size: 14.5px; color: var(--navy); }
+        .callout p:last-child { margin-bottom: 0; }
+        .callout-lede { background: var(--lavender-tint); }
+        .callout-lede .callout-title { color: var(--lavender-text); }
+        .callout-lede .callout-title::before { background: var(--lavender-text); }
+        .callout-warning { background: var(--coral-tint); }
+        .callout-warning .callout-title { color: var(--coral-hover); }
+        .callout-warning .callout-title::before { background: var(--coral); }
+        .callout-practice { background: var(--lime-tint); }
+        .callout-practice .callout-title { color: var(--lime-text); }
+        .callout-practice .callout-title::before { background: #6FAF2A; }
+        .callout-check { background: var(--navy-tint); }
+
+        /* Ejercicios */
+        .result-check { background: var(--card); border: 0.5px solid var(--divider); border-radius: var(--radius-card); padding: 24px; margin: 20px 0 28px; font-size: 14.5px; }
+        .result-check p, .result-check li { font-size: 14.5px; color: var(--text-secondary); }
+        .result-check .rc-title { font-family: var(--font-body); font-weight: 500; font-size: 16.5px; color: var(--navy); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+        .result-check .rc-title::before { content: ''; flex: 0 0 auto; width: 10px; height: 10px; border-radius: 3px; background: var(--lime); }
+
+        /* ===== CÓDIGO / PROMPTS ===== */
+        .code-block, .prompt-box { background: var(--navy-hover); border-radius: var(--radius-s); padding: 18px 20px; margin: 14px 0 20px; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; }
+        .code-block { color: #D7FFB0; border-left: 3px solid var(--lime); }
+        .code-block .cm { color: rgba(255, 255, 255, 0.42); }
+        .prompt-box { color: #E7DEFC; border-left: 3px solid var(--lavender); }
+
+        /* ===== TABLAS ===== */
+        table { border-collapse: collapse; width: 100%; margin: 16px 0 22px; font-size: 14px; }
+        th, td { text-align: left; padding: 10px 12px; border: 0.5px solid var(--divider); vertical-align: top; }
+        th { background: var(--navy-tint); color: var(--navy); font-family: var(--font-mono); font-size: 11.5px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
+        select { font-family: var(--font-body); color: var(--navy); background: var(--card); }
+
+        /* ===== RESULTADOS DE APRENDIZAJE / TARJETAS ===== */
+        .ra-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 24px 0; }
+        .ra-card { background: var(--card); border: 0.5px solid var(--divider); border-radius: var(--radius-card); padding: 24px; }
+        .ra-badge {
+            display: inline-flex; width: fit-content; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em;
+            font-size: 11px; font-weight: 500; color: #fff; background: var(--navy); padding: 6px 14px; border-radius: var(--radius-pill); margin-bottom: 12px;
+        }
+        .ra-card p { margin: 0; font-size: 14.5px; color: var(--text-secondary); line-height: 1.55; }
+        .ra-card p strong { color: var(--navy); }
+
+        /* ===== FLIP CARDS (Diccionario) ===== */
+        .cards-container { display: flex; flex-wrap: wrap; gap: 16px; margin: 24px 0 32px; }
+        .flip-card { width: 208px; height: 180px; perspective: 1200px; cursor: pointer; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform .5s; transform-style: preserve-3d; border-radius: var(--radius-card); }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; inset: 0; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: var(--radius-card); padding: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .flip-card-front { background: var(--navy); color: #fff; }
+        .flip-card-front h3 { color: #fff; margin: 0; font-size: 19px; }
+        .click-hint { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; font-size: 10.5px; margin-top: 12px; color: var(--lime); }
+        .flip-card-back { background: var(--lime-tint); color: var(--navy); transform: rotateY(180deg); }
+        .flip-card-back p { font-size: 13px; margin: 0; line-height: 1.45; color: var(--navy); }
+        .flip-card-back strong { color: var(--navy); }
+
+        /* ===== RETOS ===== */
+        .challenges-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 24px 0; }
+        .challenge-card { background: var(--card); border: 0.5px solid var(--divider); border-radius: var(--radius-card); padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+        .challenge-card p { font-size: 14.5px; color: var(--text-secondary); margin: 0; }
+        main .challenge-title { font-family: var(--font-body); font-size: 17px; font-weight: 500; margin: 0; display: flex; align-items: center; gap: 8px; }
+        .entregable-box { background: var(--lavender-tint); padding: 12px 16px; border-radius: var(--radius-s); font-size: 13.5px; margin-top: auto; }
+        .entregable-box b { color: var(--lavender-text); display: block; margin-bottom: 4px; font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+
+        /* ===== BOTONES ===== */
+        .btn-run {
+            background: var(--navy); color: #fff; border: none; padding: 12px 24px; border-radius: var(--radius-pill);
+            font-family: var(--font-body); font-weight: 500; font-size: 14px; cursor: pointer; margin-top: 20px;
+            transition: background 0.2s, transform 0.1s; display: inline-flex; align-items: center; gap: 8px;
+        }
+        .btn-run:hover { background: var(--navy-hover); }
+        .btn-run:active { transform: scale(0.98); }
+        .btn-run:disabled { opacity: 0.6; cursor: not-allowed; }
+        .reset-btn {
+            background: transparent; border: 0.5px solid var(--navy); color: var(--navy); padding: 8px 16px; border-radius: var(--radius-pill);
+            font-family: var(--font-mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; cursor: pointer; transition: background 0.2s;
+        }
+        .reset-btn:hover { background: var(--navy-tint); }
+        .spinner { animation: spin 1s linear infinite; font-size: 16px; display: inline-block; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ===== SIMULADOR C-T-F-R ===== */
+        .ctfr-simulator { background: var(--card); border: 0.5px solid var(--divider); border-radius: var(--radius-card); padding: 24px; margin: 20px 0; box-shadow: 0 4px 20px rgba(25, 41, 98, 0.06); }
+        main .ctfr-simulator h4 { margin-top: 0; font-size: 18px; display: flex; align-items: center; gap: 8px; }
+        .ctfr-simulator label { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; color: var(--text-secondary); text-transform: uppercase; display: block; margin: 16px 0 6px; }
+        .ctfr-simulator textarea { width: 100%; min-height: 60px; padding: 12px; border: 0.5px solid #D9DBE3; border-radius: var(--radius-s); font-family: var(--font-mono); font-size: 13.5px; background: var(--bg); color: var(--navy); resize: vertical; line-height: 1.5; overflow: hidden; }
+        .ctfr-simulator textarea:focus, .token-calculator textarea:focus { outline: none; box-shadow: 0 0 0 2px var(--lavender); }
+        .ctfr-result-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 8px 40px 0 0; }
+        .modal-box .ctfr-result-head h3 { margin: 0; }
+        .modal-box .block-label { font-size: 11px; color: var(--text-secondary); }
+        .modal-box .ctfr-hint { font-size: 12.5px; color: var(--text-hint); margin: 14px 0 0; }
+        .ctfr-output { margin: 10px 0 0; }
+        .ctfr-copy {
+            display: inline-flex; align-items: center; gap: 6px; background: var(--navy-tint); color: var(--navy); border: none;
+            padding: 8px 14px; border-radius: var(--radius-pill); font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.06em; cursor: pointer; transition: background 0.2s;
+        }
+        .ctfr-copy:hover { background: var(--lavender-tint); }
+        .ctfr-copy.copied { background: var(--lime); color: var(--lime-text); }
+        .ai-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        @media (max-width: 560px) { .ai-links { grid-template-columns: 1fr; } }
+        .ai-link {
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: var(--card); color: var(--navy);
+            border: 0.5px solid var(--navy); padding: 11px 16px; border-radius: var(--radius-pill); font-family: var(--font-body);
+            font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.2s, transform 0.1s;
+        }
+        .ai-link:hover { background: var(--navy-tint); }
+        .ai-link:active { transform: scale(0.98); }
+        .modal-box .ctfr-status, .ctfr-status { font-size: 13.5px; color: var(--lime-text); background: var(--lime-tint); border-radius: var(--radius-s); padding: 10px 14px; margin: 14px 0 0; display: none; }
+        .ctfr-status.show { display: block; }
+        .ctfr-status.warn { color: var(--coral-hover); background: var(--coral-tint); }
+
+        /* ===== DEMO DE PREDICCIÓN ===== */
+        .prediction-demo { background: var(--navy); border-radius: var(--radius-card); padding: 28px; margin: 20px 0; color: #fff; font-size: 18px; line-height: 1.6; }
+        .prediction-demo .sentence { min-height: 60px; margin-bottom: 20px; border-bottom: 0.5px solid rgba(255,255,255,0.2); padding-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-family: var(--font-head); }
+        .prediction-demo .sentence span { display: inline-block; }
+        .prediction-demo .sentence span.added { color: var(--lime); animation: fadeIn 0.3s ease-in; }
+        .prediction-demo .options { display: flex; flex-direction: column; gap: 10px; }
+        .prediction-demo .options-title { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--lavender); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+        .prediction-demo .option-btn { background: rgba(255,255,255,0.08); border: 0.5px solid rgba(255,255,255,0.22); color: #fff; padding: 12px 16px; border-radius: var(--radius-s); cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-body); font-size: 15px; transition: background 0.2s, border-color 0.2s; }
+        .prediction-demo .option-btn:hover { background: rgba(255,255,255,0.16); border-color: var(--lime); }
+        .prediction-demo .option-btn .prob { font-family: var(--font-mono); color: var(--lime); font-size: 12.5px; background: rgba(0,0,0,0.25); padding: 2px 8px; border-radius: var(--radius-pill); }
+        .prediction-demo .prediction-note { background: rgba(255,255,255,0.06); border-left: 3px solid var(--lime); padding: 14px 18px; border-radius: 0 var(--radius-s) var(--radius-s) 0; margin-top: 20px; font-size: 14.5px; line-height: 1.55; color: #E4E7F4; }
+        .prediction-demo .reset-btn { margin-top: 20px; border-color: rgba(255,255,255,0.4); color: #fff; }
+        .prediction-demo .reset-btn:hover { background: rgba(255,255,255,0.1); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ===== CALCULADORA DE TOKENS ===== */
+        .token-calculator { background: var(--card); border: 0.5px solid var(--divider); border-radius: var(--radius-card); padding: 24px; margin: 20px 0; }
+        .token-calculator textarea { border-radius: var(--radius-s) !important; border: 0.5px solid #D9DBE3 !important; background: var(--bg); color: var(--navy); }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-top: 20px; }
+        .stat-box { background: var(--navy-tint); padding: 16px; border-radius: var(--radius-s); text-align: center; }
+        .stat-value { font-family: var(--font-head); font-size: 26px; font-weight: 500; color: var(--navy); font-variant-numeric: tabular-nums; }
+        .stat-label { font-size: 10.5px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; font-family: var(--font-mono); margin-top: 4px; }
+
+        /* ===== GRÁFICO DE EMBEDDINGS (SVG ANIMADO) ===== */
+        .emb-card { background: var(--card); border: 0.5px solid var(--divider); border-radius: var(--radius-card); padding: 24px; margin: 20px 0; text-align: center; }
+        .emb-card h5 { margin: 0 0 12px; font-size: 15px; color: var(--navy); }
+        .emb-chart { width: 100%; max-width: 480px; height: auto; margin: 0 auto; display: block; overflow: visible; }
+        .emb-grid line { stroke: var(--divider); stroke-width: 1; }
+        .emb-axes line { stroke: var(--navy); stroke-width: 1.5; }
+        .emb-ticks text { font-family: var(--font-mono); font-size: 10px; fill: var(--text-hint); text-anchor: middle; }
+        .emb-ticks-y text { text-anchor: end; }
+        .emb-axis-title { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; fill: var(--text-secondary); text-anchor: middle; }
+        .emb-origin { fill: var(--navy); }
+        .emb-vec { stroke-width: 2; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+        .emb-vec.animal { stroke: #6FAF2A; }
+        .emb-vec.food { stroke: var(--coral); }
+        .emb-pt { opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(0.3); }
+        .emb-pt circle { fill: #fff; stroke-width: 2; }
+        .emb-pt.animal circle { stroke: #6FAF2A; }
+        .emb-pt.food circle { stroke: var(--coral); }
+        .emb-emoji { font-size: 18px; text-anchor: middle; dominant-baseline: central; }
+        .emb-lbl { opacity: 0; font-family: var(--font-body); font-size: 12.5px; font-weight: 600; fill: var(--navy); }
+        .emb-coord { font-family: var(--font-mono); font-weight: 400; fill: var(--text-secondary); }
+        .emb-cluster { fill: var(--lime-tint); stroke: #6FAF2A; stroke-width: 1.5; stroke-dasharray: 5 5; opacity: 0; }
+        .emb-chart.play .emb-vec { animation: embDraw 0.8s ease-out var(--d) forwards; }
+        .emb-chart.play .emb-pt { animation: embPop 0.45s cubic-bezier(.34, 1.56, .64, 1) var(--d) forwards; }
+        .emb-chart.play .emb-lbl { animation: embFade 0.4s ease-out var(--d) forwards; }
+        .emb-chart.play .emb-cluster { animation: embFade 0.6s ease-out 2.1s forwards; }
+        @keyframes embDraw { to { stroke-dashoffset: 0; } }
+        @keyframes embPop { to { opacity: 1; transform: scale(1); } }
+        @keyframes embFade { to { opacity: 1; } }
+        .emb-note { font-size: 12.5px; color: var(--text-secondary); margin: 12px 0 0; }
+
+        /* ===== CARRUSEL DE EJEMPLOS (PREGUNTAS ANALÍTICAS) ===== */
+        .q-carousel { margin: 20px 0 28px; outline: none; }
+        .q-carousel:focus-visible { box-shadow: 0 0 0 2px var(--lavender); border-radius: var(--radius-card); }
+        .q-slide {
+            display: none; background: var(--card); border: 0.5px solid var(--divider); border-top: 4px solid var(--accent);
+            border-radius: var(--radius-card); padding: 28px; min-height: 360px;
+        }
+        .q-slide.active { display: block; animation: qIn 0.35s ease; }
+        .q-slide.active.from-left { animation-name: qInLeft; }
+        @keyframes qIn { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+        @keyframes qInLeft { from { opacity: 0; transform: translateX(-24px); } to { opacity: 1; transform: none; } }
+        .q-slide p { color: var(--navy); }
+        .q-controls { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
+        .q-btn {
+            width: 44px; height: 44px; border-radius: 50%; border: none; background: var(--navy); color: #fff; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; transition: background 0.2s, transform 0.1s; flex: 0 0 auto;
+        }
+        .q-btn:hover { background: var(--navy-hover); }
+        .q-btn:active { transform: scale(0.95); }
+        .q-dots { display: flex; gap: 8px; margin-left: auto; }
+        .q-dot { width: 10px; height: 10px; border-radius: var(--radius-pill); border: none; padding: 0; background: var(--divider); cursor: pointer; transition: width 0.25s, background 0.25s; }
+        .q-dot.active { width: 28px; background: var(--lime); }
+        .q-count { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; color: var(--text-secondary); margin-right: auto; min-width: 44px; text-align: left; }
+
+        /* ===== NIVELES DE PREGUNTA: APARECEN UNO A UNO CON EL SCROLL ===== */
+        .q-steps.js-reveal .q-step { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .q-steps.js-reveal .q-step.in { opacity: 1; transform: none; }
+
+        /* ===== PROMPTS EDITABLES DE LA PRÁCTICA ===== */
+        .prompt-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin: 18px 0 8px; }
+        .prompt-toolbar-label { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); }
+        .prompt-toolbar-actions { display: flex; gap: 8px; }
+        .prompt-reset {
+            background: transparent; border: 0.5px solid var(--navy); color: var(--navy); padding: 8px 14px; border-radius: var(--radius-pill);
+            font-family: var(--font-mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; cursor: pointer; transition: background 0.2s;
+        }
+        .prompt-reset:hover { background: var(--navy-tint); }
+        .prompt-box.prompt-editable { margin-top: 0; cursor: text; transition: box-shadow 0.2s; }
+        .prompt-box.prompt-editable:hover { box-shadow: 0 0 0 1px rgba(190, 164, 232, 0.5); }
+        .prompt-box.prompt-editable:focus { outline: none; box-shadow: 0 0 0 2px var(--lavender); }
+
+        /* ===== DESCARGA DE LA BASE DE DATOS ===== */
+        .download-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+        .result-check .download-hint { font-size: 12.5px; color: var(--text-hint); margin: 10px 0 4px; }
+
+        /* ===== RESPUESTAS OCULTAS TRAS UN BOTÓN ===== */
+        .reveal-toggle {
+            width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+            background: none; border: none; padding: 0; cursor: pointer; text-align: left;
+            font-family: var(--font-body); font-weight: 500; font-size: 16.5px; color: var(--lavender-text);
+        }
+        .reveal-action {
+            display: inline-flex; align-items: center; gap: 6px; background: var(--card); color: var(--navy);
+            padding: 8px 14px; border-radius: var(--radius-pill); font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.06em; transition: background 0.2s;
+        }
+        .reveal-toggle:hover .reveal-action { background: var(--navy-tint); }
+        .reveal-action svg { transition: transform 0.25s; }
+        .reveal-toggle[aria-expanded="true"] .reveal-action svg { transform: rotate(180deg); }
+        .reveal-panel:not([hidden]) { animation: fadeIn 0.3s ease; }
+
+        /* ===== TÉRMINO CON DEFINICIÓN (VENTANA EMERGENTE) ===== */
+        .term-link {
+            background: none; border: none; padding: 0; font: inherit; color: var(--lavender-text); cursor: pointer;
+            text-decoration: underline; text-decoration-style: dotted; text-decoration-thickness: 1.5px; text-underline-offset: 3px;
+        }
+        .term-link:hover { color: var(--navy); text-decoration-style: solid; }
+        .modal-overlay {
+            display: none; position: fixed; inset: 0; background: rgba(25, 41, 98, 0.55);
+            z-index: 2000; align-items: center; justify-content: center; padding: 24px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-box {
+            background: var(--card); border-radius: var(--radius-card); padding: 32px 24px 24px;
+            max-width: 560px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative;
+            box-shadow: 0 20px 60px rgba(25, 41, 98, 0.25);
+        }
+        .modal-box .mono-label { color: var(--lavender-text); }
+        .modal-box h3 { font-size: 22px; margin: 8px 0 14px; }
+        .modal-box p, .modal-box li { font-size: 15px; color: var(--text-secondary); }
+        .modal-box ul, .modal-box ol { padding-left: 20px; margin: 8px 0 0; }
+        .modal-box li { margin-bottom: 6px; }
+        .modal-box ol li { margin-bottom: 12px; }
+        .modal-box li strong { color: var(--navy); }
+        .modal-box.wide { max-width: 680px; }
+        .modal-box .modal-subtitle { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; font-size: 11.5px; font-weight: 500; color: var(--lavender-text); margin: 22px 0 4px; }
+        .modal-close {
+            position: absolute; top: 16px; right: 16px; background: var(--navy-tint); color: var(--navy);
+            border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 16px;
+            line-height: 1; display: flex; align-items: center; justify-content: center; transition: background 0.2s;
+        }
+        .modal-close:hover { background: var(--divider); }
+
+        /* ===== PIE ===== */
+        footer.site-footer { background: var(--navy); color: #9AA2C6; padding: 40px 24px; text-align: center; margin-top: 64px; font-size: 13.5px; line-height: 1.7; }
+        footer.site-footer code { background: rgba(255,255,255,0.1); color: #fff; }
+        .footer-logos { display: flex; align-items: center; justify-content: center; gap: 24px; margin-bottom: 20px; flex-wrap: wrap; }
+        .footer-logos img { width: auto; }
+        .footer-logo-wwb { height: 72px; }
+        .footer-logo-equidata { height: 46px; }
+        .footer-sep { width: 1px; height: 40px; background: rgba(255, 255, 255, 0.25); }
+
+        @media (max-width: 560px) {
+            .hero-logo-wwb { height: 60px; }
+            .hero-logo-equidata { height: 38px; }
+            .hero { padding: 48px 24px 44px; }
+            .chapter-header h2 { font-size: 22px; }
+            .flip-card { width: calc(50% - 8px); }
+        }
+    </style>
+</head>
+<body>
+
+<div id="progress-track"><div id="progress-fill"></div></div>
+
+<header class="hero" id="inicio">
+    <svg class="hero-deco" viewBox="0 0 400 340" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
+        <circle cx="430" cy="90" r="150" fill="#25316f" opacity="0.55"/>
+        <circle cx="370" cy="230" r="110" fill="#2b3a7d" opacity="0.5"/>
+    </svg>
+    <div class="hero-inner">
+        <span class="mono-label">Guía de estudio</span>
+        <h1>Anatomía del dato<br><span>y de la Inteligencia Artificial</span></h1>
+        <p class="lede">Fundamentos técnicos, estructuras y el rigor en el análisis de datos.</p>
+        <span class="hero-pill">Sesión 1 de 8</span>
+        <div class="hero-logos">
+            <img src="../assets/logo/WWB_Logotipo_Negativo.png" alt="Fundación WWB Colombia" class="hero-logo-wwb">
+            <span class="hero-logo-sep" aria-hidden="true"></span>
+            <img src="../assets/logo/monocromatico%20negativo.png" alt="EQUIdata" class="hero-logo-equidata">
+        </div>
+    </div>
+</header>
+
+<div class="quicknav-outer">
+    <nav class="quicknav">
+        <a href="#objetivo">Objetivo</a>
+        <a href="#bloque-a">IA como copiloto</a>
+        <a href="#bloque-b">Preguntas de negocio</a>
+        <a href="#bloque-c">Anatomía del dato</a>
+        <a href="#practica">Práctica</a>
+        <a href="#retos">Retos autónomos</a>
+    </nav>
+</div>
+
+<main class="wrap">
+
+    <div class="callout callout-lede">
+        <div class="callout-title">💡 Hilo conductor</div>
+        <p>Un dato es una pieza de evidencia; una base de datos es la estructura que permite relacionar esas piezas; una pregunta de negocio define qué queremos saber; y la IA es un copiloto que puede ayudarnos a recorrer el camino.</p>
+    </div>
+
+    <h2 id="objetivo">Objetivo de la sesión</h2>
+    <p>Desarrollar en los participantes las capacidades iniciales para formular preguntas de negocio, comprender la anatomía y estructura de los datos, identificar problemas básicos de calidad y utilizar la inteligencia artificial como copiloto analítico mediante prompts efectivos.</p>
+
+    <div class="ra-grid">
+        <div class="ra-card">
+            <div class="ra-badge">RA 1</div>
+            <p>Escribir prompts efectivos incorporando contexto, tarea, formato de salida y restricciones, e iterar sobre respuestas de IA para resolver problemas de analítica.</p>
+        </div>
+        <div class="ra-card">
+            <div class="ra-badge">RA 2</div>
+            <p>Formular preguntas de negocio acordes a los lineamientos estratégicos, diferenciando descriptivas, diagnósticas y las que la base no contiene.</p>
+        </div>
+        <div class="ra-card">
+            <div class="ra-badge">RA 3</div>
+            <p>Analizar la estructura y calidad de un dataset, clasificando variables e identificando anomalías, faltantes y errores de validación mediante auditoría.</p>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="chapter-header" id="bloque-a">
+        <h2>¿Qué es un LLM y cómo nos ayuda en la Fundación?</h2>
+    </div>
+    <p>En esta sección desmitificaremos la Inteligencia Artificial. Entenderemos que un modelo de lenguaje (como ChatGPT, Claude o Gemini) no es un "cerebro que todo lo sabe", sino un poderoso motor estadístico que puede ayudarnos a analizar datos, <strong>siempre y cuando sepamos preguntarle.</strong></p>
+
+    <div class="callout callout-warning">
+        <div class="callout-title">⚠️ Chequeo de realidad</div>
+        <p>Lee el siguiente fragmento de respuesta generada por una IA:</p>
+        <p><em>"El programa Yarú logró sacar de la pobreza al 87% de sus participantes en 2025, aumentando sus ingresos a $2.500.000 mensuales."</em></p>
+        <p><strong>Discusión:</strong> ¿Debemos aceptarla, revisarla o verificarla? ¿La IA tiene acceso a la línea base? ¿A la línea de comparación? ¿Se conecta con los datos automáticamente? </p>
+    </div>
+
+    <h3 id="metafora">1. La metáfora del "salón oscuro"</h3>
+    <div class="callout callout-check">
+        <div class="callout-title">💡 Concepto clave: ¿La IA sabe cuántas emprendedoras tiene Yarú?</div>
+        <p>Imagina que entras a un salón completamente oscuro. No ves nada. Avanzas palpando: tocas un sofá… y de alguna manera sabes que muy probablemente lo siguiente que vas a encontrar es una mesa de centro. ¿Por qué lo sabes? Porque has estado en miles de salones en tu vida. Nadie te dictó la regla “después del sofá viene la mesa”: la aprendiste de tanto ver salas organizadas de manera parecida.</p>
+        <p>Ahora imagina que ese salón oscuro es una inteligencia artificial.</p>
+        <p>La IA ha sido entrenada con una enorme cantidad de información. A partir de esa información, aprende patrones: qué palabras suelen aparecer juntas, cómo se construyen las frases, qué conceptos suelen relacionarse y qué respuestas suelen ser coherentes frente a determinadas preguntas.</p>
+        <p>Por eso, cuando le hacemos una pregunta, la IA no “recuerda” necesariamente una respuesta como lo haría una persona que conoce el dato. Su funcionamiento consiste, de manera simplificada, en predecir qué respuesta es más probable dadas las instrucciones y la información que tiene disponible.</p>
+        <p>Si le preguntamos:“¿Cuántas emprendedoras tiene Yarú?”, la IA no puede saberlo simplemente porque sea una IA. Puede intentar responder a partir de información que haya encontrado o incluso producir una cifra que parezca razonable. Pero esa cifra no necesariamente corresponde a la realidad.</p>
+    </div>
+
+    <h3 id="diccionario" style="margin-top: 40px;">2. Aprendamos algunos conceptos sobre LLM</h3>
+    <p>Conoce los 10 conceptos fundamentales que hacen funcionar a un modelo de lenguaje y cómo aplican a nuestro análisis de datos.</p>
+    
+    <div class="cards-container">
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="flip-card-front"><h3>LLM</h3><div class="click-hint">👆 Haz clic</div></div>
+                <div class="flip-card-back"><p><strong>Modelo de gran escala.</strong><br><br>Programa entrenado con cantidades enormes de texto cuya tarea es predecir la siguiente palabra.</p></div>
+            </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="flip-card-front"><h3>Tokens</h3><div class="click-hint">👆 Haz clic</div></div>
+                <div class="flip-card-back"><p><strong>Ladrillos del lenguaje.</strong><br><br>La IA lee fragmentos (sílabas o letras). Ej: <em>"Emprendedora"</em> se divide en 3 tokens matemáticos.</p></div>
+            </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="flip-card-front"><h3>Embeddings</h3><div class="click-hint">👆 Haz clic</div></div>
+                <div class="flip-card-back"><p><strong>Coordenadas semánticas.</strong><br><br>Es cómo la IA sabe qué palabras se relacionan ("Crédito" y "Ahorro" están cerca en su mapa).</p></div>
+            </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="flip-card-front"><h3>Atención</h3><div class="click-hint">👆 Haz clic</div></div>
+                <div class="flip-card-back"><p><strong>El foco de lectura.</strong><br><br>Permite a la IA saber qué importa más. Si decimos <em>"Venta cayó porque llovió"</em>, presta "atención" a llovió.</p></div>
+            </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="flip-card-front"><h3>Ventana contexto</h3><div class="click-hint">👆 Haz clic</div></div>
+                <div class="flip-card-back"><p><strong>La "encimera" de trabajo.</strong><br><br>Memoria de corto plazo. Si pegas 5,000 registros, los del centro se pierden ("Lost in the middle").</p></div>
+            </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="flip-card-front"><h3>Fecha de corte</h3><div class="click-hint">👆 Haz clic</div></div>
+                <div class="flip-card-back"><p><strong>Límite de conocimiento.</strong><br><br>El momento hasta el cual llegan los textos de entrenamiento. Lo que pasó después, el modelo no lo vio.</p></div>
+            </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="flip-card-front"><h3>Alucinaciones</h3><div class="click-hint">👆 Haz clic</div></div>
+                <div class="flip-card-back"><p><strong>Mentiras convincentes.</strong><br><br>Ocurren cuando el modelo intenta predecir texto sin datos reales. Ej: Inventarse una cifra.</p></div>
+            </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="flip-card-front"><h3>RLHF</h3><div class="click-hint">👆 Haz clic</div></div>
+                <div class="flip-card-back"><p><strong>Feedback humano.</strong><br><br>Técnica en la que humanos califican respuestas para enseñarle al modelo qué es una "buena" respuesta.</p></div>
+            </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="flip-card-front"><h3>Prompt</h3><div class="click-hint">👆 Haz clic</div></div>
+                <div class="flip-card-back"><p><strong>Tu instrucción.</strong><br><br>La pregunta que le escribes al modelo. Escribir buenos prompts es nuestra habilidad clave.</p></div>
+            </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="flip-card-front"><h3>Esfuerzo (Effort)</h3><div class="click-hint">👆 Haz clic</div></div>
+                <div class="flip-card-back"><p><strong>Nivel de razonamiento.</strong><br><br>Cuánto "piensa" antes de responder. Más esfuerzo = respuestas elaboradas, pero más demora.</p></div>
+            </div>
+        </div>
+    </div>
+
+    <h3 id="que-es-llm">3. ¿Qué es un LLM? </h3>
+    <p>Un LLM o Large Language Model (Modelo de Lenguaje Grande) aprende el lenguaje a partir de enormes cantidades de texto. Al leer tantos ejemplos, aprende patrones: qué palabras suelen aparecer juntas, cómo se relacionan las ideas y cómo se construyen diferentes tipos de textos.</p>
+    <p>Cuando le hacemos una pregunta, toma el contexto que tiene disponible y predice qué debería venir a continuación. Genera una palabra o fragmento, lo incorpora al contexto y vuelve a predecir. Repite este proceso una y otra vez hasta construir una respuesta.</p>
+    <p>Por eso decimos que la IA generativa predice: <strong>no empieza necesariamente con una respuesta que “sabe” y luego la escribe; va construyendo una respuesta a partir de predicciones sucesivas.</strong></p>
+    
+    <div class="callout callout-practice">
+        <div class="callout-title"> 💡 La idea más importante:</div>
+        <p>Un LLM no busca la respuesta en ninguna parte: la construye palabra por palabra, por probabilidad. No consulta una base de datos, no ejecuta una búsqueda tipo SQL y, por defecto, tampoco navega por internet. Es un motor de predicción de texto extraordinariamente sofisticado.</p>
+    </div>
+
+   <h4 style="margin-top: 30px;">✍️ Pruébalo tú mismo:</h4>
+    <p>Así se ve el mundo desde adentro del modelo. Cada botón muestra una posible continuación con la probabilidad que el modelo le asigna. Escoge una y mira cómo la frase se construye paso a paso:</p>
+
+    <div class="prediction-demo" id="prediction-app">
+        <div class="sentence" id="sentence-container">
+            <span>Las</span> <span>ventas</span> <span>de</span> <span>las</span> <span>mujeres</span> <span>del</span> <span>programa</span> <span>Yarú</span> <span>Semipresencial</span> <span>en</span> <span>la</span> <span>Fundación</span>
+        </div>
+        <div id="options-container" class="options">
+            <div class="options-title">El LLM predice la siguiente palabra (elige una):</div>
+            <!-- Botones inyectados vía JS -->
+        </div>
+        
+        <div class="prediction-note">
+            ✅ Así, palabra por palabra (mejor dicho: token por token), el modelo construye párrafos enteros. No hay una base de datos con la respuesta guardada: solo predicción encadenada. Reinicia y prueba escoger las opciones raras, a ver qué sale.
+        </div>
+
+        <button class="reset-btn" onclick="resetPrediction()">↻ Reiniciar simulación</button>
+    </div>
+
+    <h3 id="como-funciona" style="margin-top: 50px;">4. ¿Cómo funciona la IA?</h3>
+    <p>Quiero empezar con una pregunta muy sencilla: ¿Qué creen que ve ChatGPT cuando yo escribo una frase?</p>
+    <p class="block-label">Por ejemplo:</p>
+    <div class="code-block" style="text-align: center; font-size: 16px;">“El banco está lleno.”</div>
+    <p>Probablemente pensamos que la IA ve exactamente lo mismo que nosotros: una frase compuesta por palabras. Pero no. Y aquí empieza una de las ideas más importantes para entender cómo funciona la inteligencia artificial generativa. La IA no ve directamente palabras. No ve ideas. No ve significados. <strong>Primero ve números.</strong></p>
+
+    <h4 style="margin-top: 30px;">Paso 1: La IA no lee palabras, lee Tokens</h4>
+    <p>Para un modelo de lenguaje, una frase no se compone de palabras como unidades absolutas. El modelo trabaja con piezas llamadas <strong>tokens</strong>. Un token puede ser una palabra completa (<code>la</code>), parte de una palabra (<code>inteli</code> + <code>gencia</code>), o un signo de puntuación (<code>.</code>).</p>
+    <div class="callout callout-lede">
+        <div class="callout-title">🧠 Concepto</div>
+        <p>Nosotros pensamos en palabras. El modelo procesa tokens.</p>
+    </div>
+
+    <div class="result-check">
+        <div class="rc-title">Ejercicio — ¿Dónde cortarías una palabra?</div>
+        <p style="margin-bottom: 10px;">En parejas, intenten dividir estas palabras en piezas de manera que puedan reutilizar esas piezas en otras palabras:</p>
+        <ul style="margin: 0; font-family: var(--mono); font-size: 13.5px; color: var(--navy);">
+            <li>internacionalización</li>
+            <li>emprendimiento</li>
+            <li>analítica</li>
+        </ul>
+        <p style="margin-top: 10px;"><em>¿Por qué sería útil para una IA trabajar con pedazos de palabras en lugar de palabras completas?</em> Porque reduce drásticamente el tamaño de su "diccionario" de vocabulario (conjugaciones, plurales, palabras nuevas) permitiendo reutilizar piezas comunes.</p>
+    </div>
+
+    <h4 style="margin-top: 30px;">Paso 2: Embeddings (Convertir palabras en coordenadas)</h4>
+    <p>Supongamos que el modelo ya tiene los tokens de "El banco está cerrado". Pero una computadora no entiende el significado de la palabra "banco". Para una <button type="button" class="term-link" onclick="openModal('modal-red-neuronal')" aria-haspopup="dialog">red neuronal</button>, necesitamos números. Aquí aparecen los <strong>embeddings</strong>.</p>
+    <div class="code-block" style="text-align: center; color: var(--lavender);">Texto &rarr; Tokens &rarr; Números</div>
+    <p>Un embedding es una lista de números que representa un token dentro de un espacio matemático. Imaginemos un mapa con dos ejes: X (relacionado con comida) e Y (relacionado con animales).</p>
+    <ul class="checklist">
+        <li><code>perro</code> &rarr; (8, 9)</li>
+        <li><code>gato</code> &rarr; (7, 9)</li>
+        <li><code>hamburguesa</code> &rarr; (8, 2)</li>
+    </ul>
+
+    <div class="emb-card">
+        <h5>Representación Visual de Embeddings (2D)</h5>
+        <svg id="emb-chart" class="emb-chart" viewBox="0 0 480 430" role="img" aria-label="Plano cartesiano de embeddings: perro (8, 9) y gato (7, 9) quedan juntos arriba a la derecha; hamburguesa (8, 2) queda abajo a la derecha, lejos de los animales.">
+            <!-- Cuadrícula -->
+            <g class="emb-grid">
+                <line x1="108" y1="30" x2="108" y2="370"/><line x1="146" y1="30" x2="146" y2="370"/><line x1="184" y1="30" x2="184" y2="370"/>
+                <line x1="222" y1="30" x2="222" y2="370"/><line x1="260" y1="30" x2="260" y2="370"/><line x1="298" y1="30" x2="298" y2="370"/>
+                <line x1="336" y1="30" x2="336" y2="370"/><line x1="374" y1="30" x2="374" y2="370"/><line x1="412" y1="30" x2="412" y2="370"/>
+                <line x1="450" y1="30" x2="450" y2="370"/>
+                <line x1="70" y1="336" x2="450" y2="336"/><line x1="70" y1="302" x2="450" y2="302"/><line x1="70" y1="268" x2="450" y2="268"/>
+                <line x1="70" y1="234" x2="450" y2="234"/><line x1="70" y1="200" x2="450" y2="200"/><line x1="70" y1="166" x2="450" y2="166"/>
+                <line x1="70" y1="132" x2="450" y2="132"/><line x1="70" y1="98" x2="450" y2="98"/><line x1="70" y1="64" x2="450" y2="64"/>
+                <line x1="70" y1="30" x2="450" y2="30"/>
+            </g>
+
+            <!-- Marcas de los ejes -->
+            <g class="emb-ticks">
+                <text x="108" y="390">1</text><text x="146" y="390">2</text><text x="184" y="390">3</text><text x="222" y="390">4</text><text x="260" y="390">5</text>
+                <text x="298" y="390">6</text><text x="336" y="390">7</text><text x="374" y="390">8</text><text x="412" y="390">9</text><text x="450" y="390">10</text>
+            </g>
+            <g class="emb-ticks emb-ticks-y">
+                <text x="60" y="340">1</text><text x="60" y="306">2</text><text x="60" y="272">3</text><text x="60" y="238">4</text><text x="60" y="204">5</text>
+                <text x="60" y="170">6</text><text x="60" y="136">7</text><text x="60" y="102">8</text><text x="60" y="68">9</text><text x="60" y="34">10</text>
+            </g>
+
+            <!-- Ejes -->
+            <g class="emb-axes">
+                <line x1="70" y1="370" x2="458" y2="370"/>
+                <line x1="70" y1="370" x2="70" y2="22"/>
+            </g>
+            <text class="emb-axis-title" x="260" y="420">Eje X: Relacionado con comida</text>
+            <text class="emb-axis-title" x="20" y="200" transform="rotate(-90 20 200)">Eje Y: Relacionado con animales</text>
+
+            <!-- Clúster de animales -->
+            <ellipse class="emb-cluster" cx="355" cy="64" rx="46" ry="28"/>
+
+            <!-- Vectores desde el origen -->
+            <line class="emb-vec animal" style="--d:0.2s" x1="70" y1="370" x2="358.5" y2="79.6" pathLength="1"/>
+            <line class="emb-vec animal" style="--d:0.5s" x1="70" y1="370" x2="321.6" y2="80.6" pathLength="1"/>
+            <line class="emb-vec food" style="--d:0.8s" x1="70" y1="370" x2="352.6" y2="306.8" pathLength="1"/>
+            <circle class="emb-origin" cx="70" cy="370" r="3.5"/>
+
+            <!-- Puntos -->
+            <g class="emb-pt animal" style="--d:1.0s">
+                <circle cx="374" cy="64" r="18"/>
+                <text class="emb-emoji" x="374" y="65">🐶</text>
+            </g>
+            <g class="emb-pt animal" style="--d:1.3s">
+                <circle cx="336" cy="64" r="18"/>
+                <text class="emb-emoji" x="336" y="65">🐱</text>
+            </g>
+            <g class="emb-pt food" style="--d:1.6s">
+                <circle cx="374" cy="302" r="18"/>
+                <text class="emb-emoji" x="374" y="303">🍔</text>
+            </g>
+
+            <!-- Etiquetas (a lados opuestos para que no se crucen) -->
+            <text class="emb-lbl" style="--d:1.2s" x="408" y="68" text-anchor="start">perro <tspan class="emb-coord">(8, 9)</tspan></text>
+            <text class="emb-lbl" style="--d:1.5s" x="302" y="68" text-anchor="end">gato <tspan class="emb-coord">(7, 9)</tspan></text>
+            <text class="emb-lbl" style="--d:1.8s" x="350" y="306" text-anchor="end">hamburguesa <tspan class="emb-coord">(8, 2)</tspan></text>
+        </svg>
+        <p class="emb-note">Nota: Observa cómo los animales forman un 'clúster' (agrupación) lejos de la comida.</p>
+    </div>
+
+    <p>Cosas que aparecen en contextos similares tienden a tener coordenadas similares. Por eso "perro" estará más cerca de "gato" que de "impuesto".</p>
+
+    <div class="result-check">
+        <div class="rc-title">Ejercicio — Construyamos nuestro propio embedding</div>
+        <p>Imagina un mapa bidimensional. El Eje X es "¿Qué tan relacionado está con tecnología?". El Eje Y es "¿Qué tan relacionado está con naturaleza?". ¿Dónde ubicarías: <em>computador, árbol, celular, perro, montaña</em>?</p>
+        <p style="margin-bottom:0;">Miren lo que acabamos de construir: No tenemos una definición de cada palabra. Tenemos un mapa. Y ese mapa nos permite medir distancias y relaciones semánticas entre conceptos.</p>
+    </div>
+
+    <h4 style="margin-top: 30px;">Paso 3: Mecanismo de atención</h4>
+    <p>Volvamos a nuestra palabra "BANCO". ¿Significa entidad financiera o un asiento en el parque? La respuesta es que <strong>depende del contexto</strong>. Aquí entra el mecanismo de atención.</p>
+
+    <div class="result-check">
+        <div class="rc-title">Ejercicio — El experimento del "banco"</div>
+        <p>Compara estas dos frases:</p>
+        <ul style="font-family: var(--mono); font-size: 13.5px; color: var(--navy);">
+            <li>Frase A: "Fui al banco a consignar el cheque."</li>
+            <li>Frase B: "Me senté en el banco del parque."</li>
+        </ul>
+        <p style="margin-bottom:0; margin-top: 10px;">La palabra "banco" es exactamente la misma. La atención es el mecanismo matemático que permite que el token "banco" en la Frase A asigne un peso inmenso a las palabras "consignar" y "cheque", ajustando sus coordenadas numéricas (embedding contextualizado) hacia el mundo financiero.</p>
+    </div>
+
+    <h4 style="margin-top: 30px;">Paso 4: Predicción</h4>
+    <p>El modelo transforma nuestro texto en tokens, representa esos tokens numéricamente mediante embeddings, utiliza mecanismos de atención para incorporar el contexto y finalmente predice qué tokens deberían venir a continuación.</p>
+
+    <h3 id="costos-ia" style="margin-top: 50px;">5. Los costos de la IA</h3>
+    <p>Como vimos en la sección del diccionario técnico, el lenguaje tiene una representación computacional llamada <strong>token</strong>. Pero los tokens no son solo una unidad de medida matemática: son la moneda de cambio de la Inteligencia Artificial.</p>
+    <p>Procesar tokens requiere enormes cantidades de poder computacional (servidores, tarjetas gráficas, electricidad). Por lo tanto, cada vez que le enviamos un documento largo a una IA o le pedimos que genere un texto extenso, estamos incurriendo en un costo monetario. La mayoría de los modelos comerciales cobran por cada 1.000 o 1.000.000 de tokens procesados (texto que le enviamos) y generados (respuesta de la IA).</p>
+    
+    <div class="token-calculator">
+        <h4 style="margin-top: 0; font-family: var(--disp); color: var(--navy); font-size: 18px;">🧮 Calculadora de tokens (Estimador)</h4>
+        <p style="font-size: 13.5px; color: var(--ink-soft); margin-bottom: 15px;">Pega un prompt, texto o documento largo aquí para estimar cuántos tokens representa y su costo aproximado.</p>
+        <textarea id="calc-text" placeholder="Pega o escribe tu texto aquí..." oninput="calculateTokens()" style="width: 100%; min-height: 100px; padding: 12px; border: 1px solid var(--line); border-radius: 8px; font-family: var(--body); font-size: 14px; resize: vertical;"></textarea>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-value" id="val-chars">0</div>
+                <div class="stat-label">Caracteres</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="val-words">0</div>
+                <div class="stat-label">Palabras</div>
+            </div>
+            <div class="stat-box" style="background: rgba(190,164,232,0.15); border: 1px solid var(--lavender-deep);">
+                <div class="stat-value" id="val-tokens" style="color: var(--lavender-deep);">0</div>
+                <div class="stat-label" style="color: var(--lavender-deep);">Tokens (Est.)</div>
+            </div>
+            <div class="stat-box" style="background: rgba(95,156,42,0.15); border: 1px solid var(--lime-deep);">
+                <div class="stat-value" id="val-cost" style="color: var(--lime-deep);">$0.0000</div>
+                <div class="stat-label" style="color: var(--lime-deep);">Costo Est. (USD)</div>
+            </div>
+        </div>
+        <p style="font-size: 11.5px; color: var(--ink-soft); margin-top: 15px; text-align: center; margin-bottom: 0;">*Estimación conservadora: 1 token ≈ 4 caracteres en español. Costo referencial de $2.50 USD por 1 Millón de tokens (Input).</p>
+    </div>
+
+    <h3 id="prompts" style="margin-top: 50px;">6. Ingeniería de Prompts: La Fórmula C-T-F-R</h3>
+    <p>Para evitar las <button type="button" class="term-link" onclick="openModal('modal-alucinaciones')" aria-haspopup="dialog">alucinaciones</button> y guiar el esfuerzo de la IA al analizar nuestros datos, estructuraremos nuestras consultas en 4 partes (C-T-F-R):</p>
+    <ul class="checklist" style="margin-left: 10px;">
+        <li><strong>[C] Contexto:</strong> Quién eres, qué rol juegas y qué datos específicos le estás entregando.</li>
+        <li><strong>[T] Tarea:</strong> Qué necesitas exactamente que haga con esos datos (el análisis).</li>
+        <li><strong>[F] Formato:</strong> Cómo quieres que te entregue la respuesta (viñetas, código, tabla).</li>
+        <li><strong>[R] Restricciones:</strong> Los límites de la IA (qué NO debe hacer).</li>
+    </ul>
+
+ 
+    <h2 id="simulador-cierre">💻Simulador de Prompts C-T-F-R</h2>
+    <div class="ctfr-simulator" style="margin-bottom: 40px;">
+        <h4>✨ Simulador Interactivo</h4>
+        <p style="font-size: 13.5px; color: var(--ink-soft); margin-bottom: 20px;">Utiliza este espacio para iterar tus instrucciones. Al hacer clic en "Construir prompt" verás el prompt completo: cópialo y pégalo en la IA de tu preferencia.</p>
+        
+        <label>[C] Contexto</label>
+        <textarea id="ctfr-c">Eres un analista de datos experto trabajando para la Fundación WWB Colombia. Te voy a proporcionar estadísticas resumidas de la base de datos "BBDD_Curso.csv" correspondientes a las participantes del programa Yarú, que incluye variables como 'ingreso_mensual', 'nivel_educativo' y 'estado_programa'.</textarea>
+        
+        <label>[T] Tarea</label>
+        <textarea id="ctfr-t">Genera un análisis exploratorio preliminar sobre cómo el nivel educativo podría estar correlacionado con el estado de deserción en el programa.</textarea>
+        
+        <label>[F] Formato</label>
+        <textarea id="ctfr-f">Entrégame el resultado en dos partes:
+1. Una lista de viñetas con 3 posibles hipótesis de negocio.
+2. Un bloque de código en Python (usando pandas) que me permita calcular la tasa de deserción agrupada por nivel educativo.</textarea>
+
+        <label>[R] Restricciones</label>
+        <textarea id="ctfr-r">- Utiliza un tono institucional y riguroso.
+- NO inventes datos porcentuales, limítate a generar el código.</textarea>
+        
+        <button type="button" class="btn-run" id="btn-build" onclick="buildCTFR()">Construir prompt</button>
+
+        <p class="ctfr-status warn" id="ctfr-warning" role="alert"></p>
+    </div>
+        
+    <hr>
+
+    <div class="chapter-header" id="bloque-b">
+        <span class="chapter-num">⏱ 45–60 min</span>
+        <h2>Preguntas de negocio. ¿Cómo formular una buena pregunta?</h2>
+    </div>
+    <p>De la pregunta institucional a la pregunta analítica.</p>
+
+    <h3 id="pregunta-institucional">1. La pregunta institucional vs. La pregunta analítica</h3>
+    <p>A menudo, en las organizaciones nos hacemos preguntas muy amplias que reflejan preocupaciones estratégicas válidas, pero que son imposibles de responder directamente con un conjunto de datos. A estas las llamamos <strong>preguntas institucionales</strong>.</p>
+    
+    <div class="callout callout-warning">
+        <div class="callout-title">Ejemplo de pregunta institucional:</div>
+        <p><em>"¿Cómo mejorar el programa Yarú?"</em></p>
+        <p>Esta pregunta es noble, pero <strong>no es analizable</strong>. ¿Qué significa "mejorar"? ¿Para quién? ¿Con qué datos medimos esa mejora?</p>
+    </div>
+
+    <p>Para que la IA o un analista puedan trabajar, necesitamos traducir esa inquietud en una <strong>pregunta analítica</strong>. Una pregunta analítica es concreta, medible y, sobre todo, está vinculada a los datos que realmente tenemos disponibles.</p>
+
+    <div class="result-check">
+        <div class="rc-title">Ejercicio — De la idea al análisis</div>
+        <p>Observen estas tres preguntas y evalúen su viabilidad analítica:</p>
+        <ol style="font-family: var(--body); font-size: 14.5px; color: var(--navy); line-height: 1.6;">
+            <li>"¿Cómo mejorar Yarú?" <em>(Muy amplia, institucional).</em></li>
+            <li>"¿Las mujeres están mejorando?" <em>(Aún vaga. ¿Mejorando en qué?).</em></li>
+            <li><strong>"¿Cómo cambió el ingreso mensual mediano de las participantes activas de Yarú entre línea base y seguimiento, según la zona (rural vs urbana)?"</strong> <em>(Perfecta. Analítica. Tiene población, medida, tiempo y dimensión de comparación).</em></li>
+        </ol>
+    </div>
+    
+    <h3 id="pregunta-analitica" style="margin-top: 30px;">2. Estructura de una pregunta analítica viable</h3>
+    <p>Una buena pregunta analítica suele contener los siguientes elementos:</p>
+    <ul class="checklist">
+        <li><strong>Decisión a tomar:</strong> ¿Para qué queremos saber esto?</li>
+        <li><strong>Población / Unidad de análisis:</strong> ¿A quiénes estamos observando? (ej. mujeres del programa Yarú).</li>
+        <li><strong>Fenómeno de interés:</strong> ¿Qué estamos intentando entender o resolver? (ej. la retención en el programa).</li>
+        <li><strong>Medida:</strong> ¿Con qué métrica lo vamos a evaluar? (ej. tasa de deserción, ingreso promedio).</li>
+        <li><strong>Tiempo:</strong> ¿En qué periodo de tiempo? (ej. entre la línea base y el corte actual).</li>
+        <li><strong>Dimensión de comparación:</strong> ¿Con qué lo comparamos? (ej. por municipio, por nivel educativo).</li>
+    </ul>
+
+    <h4 style="margin-top: 30px;">Ejemplos: De la intuición a la métrica</h4>
+    <div class="q-carousel" id="q-carousel" tabindex="0" aria-roledescription="carrusel" aria-label="Ejemplos de preguntas analíticas">
+      <div class="q-track">
+        <!-- Ejemplo Netflix -->
+        <div class="q-slide" style="--accent: var(--coral);" role="group" aria-roledescription="tarjeta">
+            <h5 style="margin: 0 0 10px 0; color: var(--accent); font-family: var(--disp); font-size: 18px;">🎓 Educación y deserción</h5>
+            <p style="font-size: 13.5px; margin-bottom: 8px;"><strong>Institucional:</strong> <em>¿Cómo podemos lograr que más participantes permanezcan y culminen el programa?</em><br>
+            <p style="font-size: 13.5px; margin-bottom: 12px; border-left: 2px solid var(--lime-deep); padding-left: 10px;"><strong>Analítica:</strong>¿Qué características de las participantes están asociadas con una mayor probabilidad de desertar del programa?</p>
+            <div style="font-size: 12px; line-height: 1.4; background: var(--paper-dim); padding: 10px; border-radius: 6px;">
+                <strong>Desglose:</strong><br>
+                • <strong>Decisión:</strong> Diseñar estrategias de permanencia<br>
+                • <strong>Población:</strong>Beneficiarias matriculadas<br>
+                • <strong>Fenómeno:</strong> Deserción.<br>
+                • <strong>Medida:</strong> Probabilidad/Tasa de deserción<br>
+                • <strong>Tiempo:</strong> Durante el periodo de formación.<br>
+                • <strong>Comparación:</strong>Características sociodemográficas, educativas y económicas..
+            </div>
+            <p style="font-size: 12px; color: var(--ink-soft); margin-top: 10px; font-style: italic;">La organización no necesita saber solamente “por qué las personas abandonan”, sino qué factores están asociados con la deserción y qué condiciones puede modificar para favorecer la permanencia.</p>
+        </div>
+
+        <!-- Ejemplo Rappi -->
+        <div class="q-slide" style="--accent: var(--lavender-text);" role="group" aria-roledescription="tarjeta">
+            <h5 style="margin: 0 0 10px 0; color: var(--accent); font-family: var(--disp); font-size: 18px;">💵Pobreza y generación de ingresos</h5>
+            <p style="font-size: 13.5px; margin-bottom: 8px;"><strong>Institucional:</strong> <em>¿Cómo podemos contribuir a mejorar las condiciones económicas de las personas participantes?</em></p>
+            <p style="font-size: 13.5px; margin-bottom: 12px; border-left: 2px solid var(--lime-deep); padding-left: 10px;"><strong>Analítica:</strong>¿Qué características están asociadas con mayores niveles de ingreso entre las personas participantes?</p>
+            <div style="font-size: 12px; line-height: 1.4; background: var(--paper-dim); padding: 10px; border-radius: 6px;">
+                <strong>Desglose:</strong><br>
+                • <strong>Decisión:</strong>Orientar estrategias de generación de ingresos.<br>
+                • <strong>Población:</strong>Personas beneficiarias con micronegocios<br>
+                • <strong>Fenómeno:</strong>Generación de ingresos.<br>
+                • <strong>Medida:</strong> Ingresos por ventas mensuales.<br>
+                • <strong>Tiempo:</strong> Línea base y comparación.<br>
+                • <strong>Comparación:</strong>Características educativas, empresariales, territoriales y sociodemográficas.
+            </div>
+            <p style="font-size: 12px; color: var(--ink-soft); margin-top: 10px; font-style: italic;">Pregunta para la clase: ¿Esta pregunta nos permite decir que la capacitación CAUSÓ el aumento?</p>
+        </div>
+
+        <!-- Ejemplo Banco -->
+        <div class="q-slide" style="--accent: var(--navy);" role="group" aria-roledescription="tarjeta">
+            <h5 style="margin: 0 0 10px 0; color: var(--accent); font-family: var(--disp); font-size: 18px;">🍼 Trabajo de cuidado no remunerado</h5>
+            <p style="font-size: 13.5px; margin-bottom: 8px;"><strong>Institucional:</strong> <em>¿Cómo podemos diseñar programas que reconozcan las restricciones de tiempo asociadas al cuidado?</em></p>
+            <p style="font-size: 13.5px; margin-bottom: 12px; border-left: 2px solid var(--lime-deep); padding-left: 10px;"><strong>Analítica:</strong>¿Cómo se relaciona el tiempo dedicado al trabajo de cuidado no remunerado con la participación y el desempeño económico?</p>
+            <div style="font-size: 12px; line-height: 1.4; background: var(--paper-dim); padding: 10px; border-radius: 6px;">
+                <strong>Aún mejor (orientada a decisión):</strong><br>
+                ¿Qué perfiles de participantes se configuran según su carga de trabajo de cuidado y sus condiciones de participación económica, y cómo se diferencian en sus resultados económicos?
+            </div>
+            <p style="font-size: 12px; color: var(--ink-soft); margin-top: 10px; font-style: italic;">Introduce naturalmente los conceptos de segmentación y clasificación.</p>
+        </div>
+      </div>
+
+      <div class="q-controls">
+        <button type="button" class="q-btn" onclick="moveQ(-1)" aria-label="Tarjeta anterior">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div class="q-dots" id="q-dots"></div>
+        <span class="q-count" id="q-count" aria-live="polite"></span>
+        <button type="button" class="q-btn" onclick="moveQ(1)" aria-label="Tarjeta siguiente">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+    </div>
+    
+    <p>Aterricemos esto a la realidad de la Fundación. “Pregunta analítica” no significa necesariamente una única cosa. Hay distintos niveles de sofisticación dependiendo de qué tan profundo queramos ir con los datos.</p>
+
+    <div style="background: var(--navy); border-radius: 16px; padding: 32px 28px; margin: 20px 0; color: #fff;">
+        <h4 style="color: #fff; margin-top: 0; font-family: var(--disp); font-size: 20px;">Fundación WWB: “¿Cómo mejorar un programa?”</h4>
+        
+        <div class="q-steps" style="margin-top: 16px;">
+            <div class="q-step">
+                <div style="font-size: 11.5px; color: var(--lime); text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--mono); font-weight: 500; margin-bottom: 6px;">1. Pregunta Institucional</div>
+                <div style="font-size: 16px; margin-bottom: 12px; color: #fff;">¿Cómo mejorar Yarú?</div>
+                <div style="text-align: center; color: var(--lavender); margin-bottom: 12px;">↓</div>
+            </div>
+            <div class="q-step">
+                <div style="font-size: 11.5px; color: var(--lime); text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--mono); font-weight: 500; margin-bottom: 6px;">2. Pregunta analítica descriptiva</div>
+                <div style="font-size: 16px; margin-bottom: 12px; color: #fff; border-left: 2px solid var(--lime); padding-left: 10px;">¿Cuál es la tasa de permanencia de las participantes de Yarú y cómo varía según zona, edad y modalidad?</div>
+                <div style="text-align: center; color: var(--lavender); margin-bottom: 12px;">↓</div>
+            </div>
+            <div class="q-step">
+                <div style="font-size: 11.5px; color: var(--lime); text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--mono); font-weight: 500; margin-bottom: 6px;">3. Pregunta analítica comparativa</div>
+                <div style="font-size: 16px; margin-bottom: 12px; color: #fff; border-left: 2px solid var(--lime); padding-left: 10px;">¿Cómo difiere la tasa de permanencia entre participantes rurales y urbanas de Yarú?</div>
+                <div style="text-align: center; color: var(--lavender); margin-bottom: 12px;">↓</div>
+            </div>
+            <div class="q-step">
+                <div style="font-size: 11.5px; color: var(--lime); text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--mono); font-weight: 500; margin-bottom: 6px;">4. Pregunta analítica explicativa</div>
+                <div style="font-size: 16px; margin-bottom: 12px; color: #fff; border-left: 2px solid var(--lime); padding-left: 10px;">¿Qué características de las participantes están asociadas con una mayor probabilidad de permanecer en Yarú?</div>
+                <div style="text-align: center; color: var(--lavender); margin-bottom: 12px;">↓</div>
+            </div>
+            <div class="q-step">
+                <div style="font-size: 11.5px; color: var(--lime); text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--mono); font-weight: 500; margin-bottom: 6px;">5. Pregunta causal</div>
+                <div style="font-size: 16px; color: #fff; border-left: 2px solid var(--lime); padding-left: 10px;">¿La participación en determinadas actividades de Yarú <em>genera</em> cambios en las capacidades empresariales de las participantes?</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="callout callout-check">
+        <div class="callout-title">💡 Idea Central</div>
+        <p>1. Una buena pregunta analítica no es la que suena más sofisticada. Es la que conecta una decisión real con algo que podemos observar, medir y comparar mediante datos.</p>
+        <p>2. Antes de preguntarnos “¿qué podemos hacer con los datos?”, deberíamos preguntarnos “¿qué decisión necesitamos tomar?”.</p>
+
+    </div>
+    <hr>
+
+    <div class="chapter-header" id="bloque-c">
+        <h2>Anatomía del dato y cómo empezar a emplearlos</h2>
+    </div>
+
+       <p>Una IA puede ayudarte a analizar una base. Pero antes hay que preguntarse: ¿qué contiene esa base?, ¿cómo se construyó?, ¿qué significa cada columna?, ¿puedo confiar en sus valores?”</p>
+
+    <h3 id="Estructura-BD" style="margin-top: 40px;">1. Estructura de una base de datos</h3>
+    <div class="callout callout-warning">
+        <div class="callout-title">⚠️ Nota institucional ficticia</div>
+        <p style="font-size: 18px; font-weight: 600; text-align: center; color: var(--coral-deep); margin: 20px 0;">“El programa logró sacar de la pobreza al 87% de sus participantes”</p>
+        
+        <table style="width: 50%; margin: 0 auto; background: var(--paper-hi); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <tr style="background: var(--paper-dim);">
+                <th style="padding: 8px; text-align: center; font-family: var(--disp); color: var(--navy);">Participantes</th>
+                <th style="padding: 8px; text-align: center; font-family: var(--disp); color: var(--navy);">Ingreso promedio del hogar LC</th>
+            </tr>
+            <tr>
+                <td style="padding: 8px; text-align: center; font-family: var(--mono);">3,500</td>
+                <td style="padding: 8px; text-align: center; font-family: var(--mono); color: var(--lime-deep);">$2.5M</td>
+            </tr>
+        </table>
+
+        <p style="margin-top: 20px;"><strong>Discusión en equipos:</strong> ¿Qué necesitaríamos saber antes de creer esta afirmación? Escriban tres preguntas urgentes.</p>
+    </div>
+
+    <div class="result-check" style="background: var(--lavender-tint); border-color: transparent;">
+        <button type="button" class="reveal-toggle" aria-expanded="false" aria-controls="respuestas-tablero" onclick="toggleReveal(this)">
+            <span>Respuestas clave en el tablero:</span>
+            <span class="reveal-action"><span class="reveal-action-text">Ver respuestas</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </span>
+        </button>
+        <ul id="respuestas-tablero" class="reveal-panel" hidden style="margin: 14px 0 0; font-family: var(--mono); font-size: 13.5px; color: var(--navy);">
+            <li>¿<strong>Quiénes</strong> conforman ese 87%? (¿unidad de observación?)</li>
+            <li>¿<strong>Qué</strong> se midió exactamente? (¿Ingreso bruto, neto, ventas?)</li>
+            <li>¿<strong>Cómo</strong> se midió? (¿Autoreporte, facturación?)</li>
+            <li>¿<strong>Cuándo</strong> se midió? (¿Línea base vs. cierre?)</li>
+            <li>¿Con qué <strong>instrumento</strong>? (¿Encuesta telefónica, visita?)</li>
+        </ul>
+    </div>
+
+    <div class="code-block" style="text-align: center; color: var(--lavender); padding: 12px; margin-top: 30px;">Para responder a esas preguntas críticas, necesitamos ir a la fuente: la <strong>base de datos.</strong> Pero, ¿qué es exactamente una base de datos analítica?</div>
+    
+    <div class="callout callout-check">
+        <div class="callout-title">💡 Idea Central</div>
+        <p>Una base no es simplemente una "tabla bonita" en Excel. Es una estructura rigurosa diseñada para permitir el análisis de cada observación de forma independiente.</p>
+    </div>
+
+       <div class="callout callout-lede">
+        <div class="callout-title">🧠 Concepto</div>
+        <p>Una base de datos es un sistema estructurado para almacenar, administrar, organizar y recuperar grandes cantidades de información de forma digital y segura.</p>
+    </div>
+
+    <p>Veamos la estructura fundamental utilizando un ejemplo institucional del programa Yarú:</p>
+
+    <div style="overflow-x: auto; margin: 20px 0;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+            <thead>
+                <tr>
+                    <th style="background: var(--navy); color: #fff; text-align: center; padding: 12px; border: 1px solid var(--navy-deep);">Identificador Único<br><span style="font-weight: normal; font-size: 11px; opacity: 0.8;">(La llave)</span></th>
+                    <th style="background: var(--navy); color: #fff; text-align: center; padding: 12px; border: 1px solid var(--navy-deep);">Variable 1<br><span style="font-weight: normal; font-size: 11px; opacity: 0.8;">(Atributo cualitativo)</span></th>
+                    <th style="background: var(--navy); color: #fff; text-align: center; padding: 12px; border: 1px solid var(--navy-deep);">Variable 2<br><span style="font-weight: normal; font-size: 11px; opacity: 0.8;">(Atributo cuantitativo)</span></th>
+                    <th style="background: var(--navy); color: #fff; text-align: center; padding: 12px; border: 1px solid var(--navy-deep);">Variable 3<br><span style="font-weight: normal; font-size: 11px; opacity: 0.8;">(Atributo cualitativo)</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background: var(--paper-hi);">
+                    <td style="text-align: center; font-family: var(--mono); padding: 10px; border: 1px solid var(--line);">ID_1045</td>
+                    <td style="text-align: center; padding: 10px; border: 1px solid var(--line);">Cali</td>
+                    <td style="text-align: center; font-family: var(--mono); padding: 10px; border: 1px solid var(--line);">$1,200,000</td>
+                    <td style="text-align: center; padding: 10px; border: 1px solid var(--line);">Activa</td>
+                </tr>
+                <tr style="background: var(--paper-dim);">
+                    <td style="text-align: center; font-family: var(--mono); padding: 10px; border: 1px solid var(--line);">ID_1046</td>
+                    <td style="text-align: center; padding: 10px; border: 1px solid var(--line);">Yumbo</td>
+                    <td style="text-align: center; font-family: var(--mono); padding: 10px; border: 1px solid var(--line);">$850,000</td>
+                    <td style="text-align: center; padding: 10px; border: 1px solid var(--line);">Concluyó</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <ul class="checklist">
+        <li><strong>La Fila (Registro u Observación):</strong> Representa un <em>individuo único</em>. En nuestro caso, una participante específica del programa Yarú. Todo lo que esté en esa fila le pertenece a ella.</span></li>
+        <li><strong>La Columna (Variable):</strong> Representa una <em>característica</em> que estamos midiendo para todas las participantes (ej. sexo, edad, municipio, ventas, número de hijos, nivel educativo).</span></li>
+        <li><strong>La Celda (Valor):</strong> Es el <em>dato específico</em>, la intersección entre una observación y una variable.</span></li>
+        <li><strong>El Identificador Único (ID):</strong> La cédula o código que garantiza que no mezclemos a María de Cali con María de Yumbo. Sin esto, la base es inauditable.</span></li>
+    </ul>
+
+    <div class="result-check">
+        <div class="rc-title">Ejercicio — Base de datos de Yarú Virtual</div>
+        <p>Descarga el archivo y en excel explora la estructura de la base de datos:</p>
+        <div class="download-row">
+            <a href="https://drive.google.com/file/d/1ecdi3d4wky9bc2_HVBfOyV1A3UAQACGo/view" target="_blank" rel="noopener" class="btn-run" style="text-decoration: none; margin-top: 0;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Descargar BBDD_Curso.xlsx
+            </a>
+            <a href="https://drive.google.com/file/d/1sRBEY1zhi6VfX2qDsf18nMuCOOSM4YvU/view" target="_blank" rel="noopener" class="ai-link" style="text-decoration: none;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Descargar BBDD_Curso.csv
+            </a>
+        </div>
+        <p class="download-hint">El .xlsx incluye metadatos y diccionario de variables. El .csv es el que se usa en la práctica de Google Colab.</p>
+                <ol style="font-family: var(--body); font-size: 14.5px; color: var(--navy); line-height: 1.6;">
+            <li>"¿Cuantas variables tiene?"</li>
+            <li>"¿Cuantas observaciones hay?" </li>
+            <li>"¿Cómo se identifica cada observación?"</li>
+        </ol>
+    </div>
+
+    <h3 id="vocabulario-datos" style="margin-top: 40px;">2. Aprendamos algunos conceptos sobre los datos</h3>
+    <p>Conoce los conceptos fundamentales que te permiten entender los datos y cómo manejarlos en tus análisis.</p>
+    
+    <div class="cards-container">
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="flip-card-front"><h3>Fuente primaria</h3><div class="click-hint">👆 Haz clic</div></div>
+                <div class="flip-card-back"><p><strong>Tus propios datos.</strong><br><br>Datos que recolectaste tú o tu organización. Sabes exactamente cómo se preguntaron; el riesgo está en la captura.</p></div>
+            </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="flip-card-front"><h3>Fuente secundaria</h3><div class="click-hint">👆 Haz clic</div></div>
+                <div class="flip-card-back"><p><strong>Datos de otros.</strong><br><br>Recolectados para otro propósito (DANE, Kaggle, API). Más volumen y menos costo, pero no controlas las definiciones.</p></div>
+            </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="flip-card-front"><h3>Dato estructurado</h3><div class="click-hint">👆 Haz clic</div></div>
+                <div class="flip-card-back"><p><strong>Filas y columnas.</strong><br><br>Una tabla con observaciones (filas) y variables (columnas). Es con lo que trabajamos: CSV, Excel, SQL.</p></div>
+            </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="flip-card-front"><h3>Diccionario</h3><div class="click-hint">👆 Haz clic</div></div>
+                <div class="flip-card-back"><p><strong>El mapa de la base.</strong><br><br>Documento que dice qué significa cada columna, en qué unidad está y qué valores admite. Si no existe, debes crearlo.</p></div>
+            </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="flip-card-front"><h3>NA</h3><div class="click-hint">👆 Haz clic</div></div>
+                <div class="flip-card-back"><p><strong>Valor faltante (R/Python).</strong><br><br>No es un cero ni texto vacío: es "aquí no hay dato". Se contagia a cualquier cálculo matemático que lo toque.</p></div>
+            </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="flip-card-front"><h3>Imputar</h3><div class="click-hint">👆 Haz clic</div></div>
+                <div class="flip-card-back"><p><strong>Llenar el vacío.</strong><br><br>Reemplazar un valor faltante por una estimación (media, mediana). Es una decisión analítica importante y siempre se documenta.</p></div>
+            </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="flip-card-front"><h3>Outlier</h3><div class="click-hint">👆 Haz clic</div></div>
+                <div class="flip-card-back"><p><strong>Valor atípico.</strong><br><br>Observación que sale del patrón. Puede ser un error de captura o el caso más interesante de la base. Distinguirlo es tu trabajo.</p></div>
+            </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="flip-card-front"><h3>IQR</h3><div class="click-hint">👆 Haz clic</div></div>
+                <div class="flip-card-back"><p><strong>Rango intercuartílico.</strong><br><br>Distancia entre percentil 25 y 75: donde vive la mitad central de los datos. Base matemática para detectar outliers.</p></div>
+            </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="flip-card-front"><h3>Cardinalidad</h3><div class="click-hint">👆 Haz clic</div></div>
+                <div class="flip-card-back"><p><strong>Valores únicos.</strong><br><br>Cuántos valores distintos tiene una columna. Si "región" tiene cardinalidad 5 y sabes que hay 3 regiones, hallaste un error.</p></div>
+            </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="flip-card-front"><h3>Analysis-ready</h3><div class="click-hint">👆 Haz clic</div></div>
+                <div class="flip-card-back"><p><strong>Listo para usar.</strong><br><br>El dataset ya diagnosticado, limpio y documentado. Es el producto de esta sesión y el punto de partida del análisis.</p></div>
+            </div>
+        </div>
+    </div>
+
+ 
+    <h3 id="tipos-variables" style="margin-top: 40px;">3. Tipos de variables</h3>
+    <p>En estadística y en Business Analytics, las variables se pueden clasificar principalmente por su naturaleza y por su escala de medición. Comprender esto es fundamental porque determina qué tipo de análisis y gráficos podemos aplicar.</p>
+
+    <h4 style="margin-top: 20px;">1. Según su naturaleza</h4>
+    <div style="overflow-x: auto; margin: 15px 0;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+            <thead>
+                <tr>
+                    <th style="background: var(--navy); color: #fff; text-align: left; padding: 12px; border: 1px solid var(--navy-deep);">Tipo</th>
+                    <th style="background: var(--navy); color: #fff; text-align: left; padding: 12px; border: 1px solid var(--navy-deep);">¿Qué representa?</th>
+                    <th style="background: var(--navy); color: #fff; text-align: left; padding: 12px; border: 1px solid var(--navy-deep);">Ejemplos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background: var(--paper-hi);">
+                    <td style="padding: 10px; border: 1px solid var(--line); font-weight: bold;">Cualitativa / categórica</td>
+                    <td style="padding: 10px; border: 1px solid var(--line);">Características o categorías. No se pueden medir matemáticamente de forma significativa.</td>
+                    <td style="padding: 10px; border: 1px solid var(--line);">Sexo, ciudad, estado civil, tipo de empresa</td>
+                </tr>
+                <tr style="background: var(--paper-dim);">
+                    <td style="padding: 10px; border: 1px solid var(--line); font-weight: bold;">Cuantitativa / numérica</td>
+                    <td style="padding: 10px; border: 1px solid var(--line);">Cantidades que pueden medirse. Tienen sentido las operaciones matemáticas.</td>
+                    <td style="padding: 10px; border: 1px solid var(--line);">Edad, ingresos, ventas, número de empleados</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <p>Las variables cuantitativas se dividen a su vez en:</p>
+    <ul class="checklist">
+        <li><strong>Discretas:</strong> Se <em>cuentan</em> y normalmente toman valores enteros. &rarr; <em>Ejemplo: Número de empleados (1, 2, 3...)</em></span></li>
+        <li><strong>Continuas:</strong> Se <em>miden</em> y pueden tomar infinitos valores dentro de un intervalo. &rarr; <em>Ejemplo: Peso (63.5 kg); Ingresos ($2.345.678,50)</em></span></li>
+    </ul>
+
+    <h4 style="margin-top: 30px;">2. Según su escala de medición</h4>
+    <p>Aquí aparecen los cuatro niveles clásicos de medición, que van de menor a mayor complejidad matemática:</p>
+    <div class="code-block" style="text-align: center; color: var(--lavender); padding: 12px;">Nominal &rarr; Ordinal &rarr; Intervalo &rarr; Razón</div>
+    
+    <div style="overflow-x: auto; margin: 15px 0;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+            <thead>
+                <tr>
+                    <th style="background: var(--navy); color: #fff; text-align: left; padding: 12px; border: 1px solid var(--navy-deep);">Escala</th>
+                    <th style="background: var(--navy); color: #fff; text-align: left; padding: 12px; border: 1px solid var(--navy-deep);">Característica</th>
+                    <th style="background: var(--navy); color: #fff; text-align: left; padding: 12px; border: 1px solid var(--navy-deep);">Ejemplo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background: var(--paper-hi);">
+                    <td style="padding: 10px; border: 1px solid var(--line); font-weight: bold;">Nominal</td>
+                    <td style="padding: 10px; border: 1px solid var(--line);">Categorías sin orden inherente. Son solo etiquetas.</td>
+                    <td style="padding: 10px; border: 1px solid var(--line);">Ciudad, género, tipo de negocio</td>
+                </tr>
+                <tr style="background: var(--paper-dim);">
+                    <td style="padding: 10px; border: 1px solid var(--line); font-weight: bold;">Ordinal</td>
+                    <td style="padding: 10px; border: 1px solid var(--line);">Categorías con orden, pero sin distancias comparables (no sabemos "cuánto más").</td>
+                    <td style="padding: 10px; border: 1px solid var(--line);">Nivel de satisfacción (bajo, medio, alto), Nivel educativo</td>
+                </tr>
+                <tr style="background: var(--paper-hi);">
+                    <td style="padding: 10px; border: 1px solid var(--line); font-weight: bold;">Intervalo</td>
+                    <td style="padding: 10px; border: 1px solid var(--line);">Valores numéricos donde las diferencias son interpretables, pero el cero no representa ausencia.</td>
+                    <td style="padding: 10px; border: 1px solid var(--line);">Temperatura °C, Año de nacimiento</td>
+                </tr>
+                <tr style="background: var(--paper-dim);">
+                    <td style="padding: 10px; border: 1px solid var(--line); font-weight: bold;">Razón</td>
+                    <td style="padding: 10px; border: 1px solid var(--line);">Tiene cero absoluto; permiten comparar proporciones (el doble, la mitad).</td>
+                    <td style="padding: 10px; border: 1px solid var(--line);">Ingresos, edad, ventas, número de empleados</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="result-check">
+        <div class="rc-title">Ejercicio — Califica la clasificación</div>
+        <p>Aplica lo que acabas de aprender. Clasifica las siguientes variables seleccionando la opción correcta en cada menú desplegable.</p>
+        
+        <div style="overflow-x: auto; margin-top: 15px;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 13.5px; background: #fff;">
+                <thead>
+                    <tr>
+                        <th style="text-align: left; padding: 10px; border: 1px solid var(--line); background: var(--paper-dim);">Variable</th>
+                        <th style="text-align: left; padding: 10px; border: 1px solid var(--line); background: var(--paper-dim);">Naturaleza</th>
+                        <th style="text-align: left; padding: 10px; border: 1px solid var(--line); background: var(--paper-dim);">Escala de Medición</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid var(--line); font-weight: 500;">Estado en el programa (Activa/Desertó)</td>
+                        <td style="padding: 8px; border: 1px solid var(--line); position: relative;">
+                            <select id="q1-nat" style="width: 100%; padding: 6px; border-radius: 4px; border: 1px solid #ccc; font-family: var(--body);">
+                                <option value="">Selecciona...</option>
+                                <option value="cualitativa">Cualitativa / Categórica</option>
+                                <option value="cuantitativa-discreta">Cuantitativa (Discreta)</option>
+                                <option value="cuantitativa-continua">Cuantitativa (Continua)</option>
+                            </select>
+                            <span id="fb-q1-nat" style="position: absolute; right: 12px; top: 14px; font-size: 14px;"></span>
+                        </td>
+                        <td style="padding: 8px; border: 1px solid var(--line); position: relative;">
+                            <select id="q1-esc" style="width: 100%; padding: 6px; border-radius: 4px; border: 1px solid #ccc; font-family: var(--body);">
+                                <option value="">Selecciona...</option>
+                                <option value="nominal">Nominal</option>
+                                <option value="ordinal">Ordinal</option>
+                                <option value="intervalo">Intervalo</option>
+                                <option value="razon">Razón</option>
+                            </select>
+                            <span id="fb-q1-esc" style="position: absolute; right: 12px; top: 14px; font-size: 14px;"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid var(--line); font-weight: 500;">Ingreso mensual base</td>
+                        <td style="padding: 8px; border: 1px solid var(--line); position: relative;">
+                            <select id="q2-nat" style="width: 100%; padding: 6px; border-radius: 4px; border: 1px solid #ccc; font-family: var(--body);">
+                                <option value="">Selecciona...</option>
+                                <option value="cualitativa">Cualitativa / Categórica</option>
+                                <option value="cuantitativa-discreta">Cuantitativa (Discreta)</option>
+                                <option value="cuantitativa-continua">Cuantitativa (Continua)</option>
+                            </select>
+                            <span id="fb-q2-nat" style="position: absolute; right: 12px; top: 14px; font-size: 14px;"></span>
+                        </td>
+                        <td style="padding: 8px; border: 1px solid var(--line); position: relative;">
+                            <select id="q2-esc" style="width: 100%; padding: 6px; border-radius: 4px; border: 1px solid #ccc; font-family: var(--body);">
+                                <option value="">Selecciona...</option>
+                                <option value="nominal">Nominal</option>
+                                <option value="ordinal">Ordinal</option>
+                                <option value="intervalo">Intervalo</option>
+                                <option value="razon">Razón</option>
+                            </select>
+                            <span id="fb-q2-esc" style="position: absolute; right: 12px; top: 14px; font-size: 14px;"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid var(--line); font-weight: 500;">Nivel de escolaridad</td>
+                        <td style="padding: 8px; border: 1px solid var(--line); position: relative;">
+                            <select id="q3-nat" style="width: 100%; padding: 6px; border-radius: 4px; border: 1px solid #ccc; font-family: var(--body);">
+                                <option value="">Selecciona...</option>
+                                <option value="cualitativa">Cualitativa / Categórica</option>
+                                <option value="cuantitativa-discreta">Cuantitativa (Discreta)</option>
+                                <option value="cuantitativa-continua">Cuantitativa (Continua)</option>
+                            </select>
+                            <span id="fb-q3-nat" style="position: absolute; right: 12px; top: 14px; font-size: 14px;"></span>
+                        </td>
+                        <td style="padding: 8px; border: 1px solid var(--line); position: relative;">
+                            <select id="q3-esc" style="width: 100%; padding: 6px; border-radius: 4px; border: 1px solid #ccc; font-family: var(--body);">
+                                <option value="">Selecciona...</option>
+                                <option value="nominal">Nominal</option>
+                                <option value="ordinal">Ordinal</option>
+                                <option value="intervalo">Intervalo</option>
+                                <option value="razon">Razón</option>
+                            </select>
+                            <span id="fb-q3-esc" style="position: absolute; right: 12px; top: 14px; font-size: 14px;"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid var(--line); font-weight: 500;">Personas a cargo</td>
+                        <td style="padding: 8px; border: 1px solid var(--line); position: relative;">
+                            <select id="q4-nat" style="width: 100%; padding: 6px; border-radius: 4px; border: 1px solid #ccc; font-family: var(--body);">
+                                <option value="">Selecciona...</option>
+                                <option value="cualitativa">Cualitativa / Categórica</option>
+                                <option value="cuantitativa-discreta">Cuantitativa (Discreta)</option>
+                                <option value="cuantitativa-continua">Cuantitativa (Continua)</option>
+                            </select>
+                            <span id="fb-q4-nat" style="position: absolute; right: 12px; top: 14px; font-size: 14px;"></span>
+                        </td>
+                        <td style="padding: 8px; border: 1px solid var(--line); position: relative;">
+                            <select id="q4-esc" style="width: 100%; padding: 6px; border-radius: 4px; border: 1px solid #ccc; font-family: var(--body);">
+                                <option value="">Selecciona...</option>
+                                <option value="nominal">Nominal</option>
+                                <option value="ordinal">Ordinal</option>
+                                <option value="intervalo">Intervalo</option>
+                                <option value="razon">Razón</option>
+                            </select>
+                            <span id="fb-q4-esc" style="position: absolute; right: 12px; top: 14px; font-size: 14px;"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button class="btn-run" style="margin-top: 15px;" onclick="gradeClassification()">Calificar respuestas</button>
+        <button class="reset-btn" style="margin-top: 15px; margin-left: 10px;" onclick="resetClassification()">↻ Reiniciar</button>
+        <div id="classification-results" style="display: none; margin-top: 15px; padding: 15px; border-radius: 8px; font-size: 14px; font-weight: 500;">
+            <!-- Resultados se inyectarán aquí -->
+        </div>
+    </div>
+    
+    <h3 id="auditoria" style="margin-top: 40px;">4. Auditoría y limpieza de datos</h3>
+
+ <p>La auditoría de datos es el proceso de revisar, verificar y evaluar los datos antes de utilizarlos para hacer análisis o tomar decisiones, con el propósito de determinar si son confiables, completos, coherentes y adecuados para responder una pregunta.</p>
+
+    <div class="callout callout-lede">
+        <div class="callout-title">Siguiendo la metáfora del médico:</div>
+        <p>🩺 La auditoría de datos es como revisar los exámenes de laboratorio antes de hacer un diagnóstico.</p>
+    </div>
+
+
+        <h4 style="margin-top: 30px;">La revisión estructural: los primeros 30 segundos</h4>
+    <p>Antes de realizar la auditoria de datos, hay una revisión más básica que se hace de entrada:</p>
+    <ul class="checklist" style="margin-left: 10px;">
+        <li><strong>Dimensiones:</strong> ¿cuántas filas y columnas tiene? ¿Es lo que esperabas?</span></li>
+        <li><strong>Qué es una fila:</strong> ¿una transacción? ¿un cliente? ¿un cliente-mes? Si no puedes responder esto, no puedes analizar nada.</span></li>
+        <li><strong>Nombres y tipos:</strong> ¿las columnas se llaman como deberían? ¿los números son números?</span></li>
+        <li><strong>Diccionario:</strong> ¿existe? Si no, constrúyelo tú — aunque sea de diez líneas.</span></li>
+        <li><strong>Cardinalidad:</strong> ¿cuántos valores distintos tiene cada columna de texto? Aquí saltan las inconsistencias.</span></li>
+    </ul>
+    
+    <p>Un médico prudente no mira un resultado y dice inmediatamente: “Ya sé qué tiene el paciente”. Antes de interpretar los números, hace una pausa y se hace algunas preguntas: ¿estos resultados son confiables?, ¿hay algo extraño?, ¿faltan datos?, ¿los resultados son coherentes entre sí?</p>
+
+    <p>Con los datos ocurre exactamente lo mismo. Antes de analizarlos, tenemos que auditarlos. Un dato puede parecer preciso, estar perfectamente organizado en una tabla y aun así estar equivocado, incompleto o ser inconsistente.</p>
+
+    <p>Por eso, cuando recibimos un conjunto de datos, debemos asumir el papel del médico: no diagnosticamos hasta saber si nuestros “exámenes” son confiables.:</p>
+
+    <ul class="checklist" style="margin-left: 10px;">
+        <li><strong>¿Está completo?</strong> (falta la mitad de la hoja)</li>
+        <li><strong>¿Es consistente?</strong> (la fecha de la muestra es posterior a la del resultado)</li>
+        <li><strong>¿Es válido?</strong> (una hemoglobina de 900 no es una enfermedad rarísima: es un error de digitación)</li>
+        <li><strong>¿Es único?</strong> (te repitieron el mismo examen y quedó cargado dos veces)</li>
+    </ul>
+
+    <p>Solo si los exámenes pasan ese filtro, el médico diagnostica. Si diagnostica sobre un examen equivocado, todo lo que venga después estará equivocado — y con total confianza.</p>
+
+    <div class="callout callout-warning">
+        <div class="callout-title">⚠️ La idea más importante de esta sección</div>
+        <p>Un modelo entrenado o un análisis con datos sucios produce resultados sucios, pero <strong>no produce ningún error de sistema.</strong> Python, R o la IA no te van a avisar. El cálculo va a salir, el gráfico se va a ver bonito y el número va a tener dos decimales exactos.</p>
+        <p>La suciedad de los datos no se manifiesta como una falla: se manifiesta como una respuesta confiada y falsa. Por eso <strong>la auditoría no es opcional</strong>.</p>
+    </div>
+
+    <h4 style="margin-top: 30px;">Las cuatro dimensiones de la calidad</h4>
+    <p>Las cuatro preguntas del médico, con su nombre real. Este es el checklist que le vas a aplicar a toda base de datos que recibas en tu vida profesional.</p>
+    
+    <div class="ra-grid" style="margin-bottom: 30px;">
+        <div class="ra-card" style="border-top-color: var(--lavender-deep);">
+            <div class="ra-badge" style="background: var(--lavender-deep);">1. Completitud</div>
+            <p><strong>¿Están todos los datos que deberían estar?</strong> Es el terreno de los valores faltantes (NA) y de las columnas que llegaron vacías.</p>
+        </div>
+        <div class="ra-card" style="border-top-color: var(--lime-deep);">
+            <div class="ra-badge" style="background: var(--lime-deep);">2. Consistencia</div>
+            <p><strong>¿El mismo hecho se representa siempre igual?</strong> Es el terreno de las categorías inconsistentes ("Norte" vs. "norte") y de los formatos que no cuadran entre tablas.</p>
+        </div>
+        <div class="ra-card" style="border-top-color: var(--coral-deep);">
+            <div class="ra-badge" style="background: var(--coral-deep);">3. Validez</div>
+            <p><strong>¿Los valores son posibles?</strong> Es el terreno de los valores imposibles (una cantidad de -5, una fecha en el futuro) y de los tipos incorrectos (un precio guardado como texto).</p>
+        </div>
+        <div class="ra-card" style="border-top-color: var(--navy-mid);">
+            <div class="ra-badge" style="background: var(--navy-mid);">4. Unicidad</div>
+            <p><strong>¿Cada observación aparece una sola vez?</strong> Es el terreno de los duplicados, que inflan silenciosamente todos los totales.</p>
+        </div>
+    </div>
+
+
+    <div class="callout callout-lede">
+        <div class="callout-title">Resumen del bloque</div>
+        <p>Cuatro dimensiones: completitud (¿falta?), consistencia (¿se escribe siempre igual?), validez (¿es posible?) y unicidad (¿está repetido?). Y una regla de oro que las precede: <strong>saber qué representa una fila.</strong></p>
+    </div>
+
+    
+        <div class="callout callout-lede">
+        <div class="callout-title">💡 Siempre al terminar cada limpieza de datos, debes poder responder estas tres preguntas sin dudar:</div>
+        <p></p>
+<p>¿Cuántas filas eliminé y por qué?</p>
+<p>¿Qué valores imputé o corregí y con qué criterio?</p>
+<p>¿Qué columnas eliminé y por qué no aportaban?</p>
+    </div>
+
+       <h3 id="EDA" style="margin-top: 40px;">5. Análisis Exploratorio de Datos (EDA) </h3>
+      <p>El Análisis Exploratorio de Datos (AED o EDA, por Exploratory Data Analysis) es el proceso de conocer, revisar y entender un conjunto de datos antes de hacer análisis estadístico, construir modelos o tomar decisiones.</p>
+
+    <div class="callout callout-lede">
+        <div class="callout-title">La EDA no es “hacer gráficos bonitos”</div>
+        <p>El objetivo de la EDA no es responder la pregunta de negocio final. Es entender la estructura, las distribuciones y las relaciones antes de comprometerte con un análisis o un modelo. Es el médico leyendo los exámenes ya validados, antes de diagnosticar.</p>
+    </div>
+
+    <p>La EDA busca cuatro cosas:</p>
+
+    <div class="ra-grid" style="margin-bottom: 30px;">
+        <div class="ra-card" style="border-top-color: var(--navy-mid);">
+            <div class="ra-badge" style="background: var(--navy-mid); display: flex; align-items: center; gap: 6px;">
+                <span style="font-size: 14px;">📊</span> Distribuciones
+            </div>
+            <p><strong>¿Cómo se comporta cada variable por su cuenta?</strong><br>¿Simétrica, sesgada, con dos picos?</p>
+        </div>
+        <div class="ra-card" style="border-top-color: var(--lavender-deep);">
+            <div class="ra-badge" style="background: var(--lavender-deep); display: flex; align-items: center; gap: 6px;">
+                <span style="font-size: 14px;">👥</span> Resúmenes por grupo
+            </div>
+            <p><strong>¿Hay diferencias reales?</strong><br>Compara entre regiones, categorías o trimestres.</p>
+        </div>
+        <div class="ra-card" style="border-top-color: var(--lime-deep);">
+            <div class="ra-badge" style="background: var(--lime-deep); display: flex; align-items: center; gap: 6px;">
+                <span style="font-size: 14px;">🔗</span> Relaciones
+            </div>
+            <p><strong>¿Tienen algo que ver entre sí?</strong><br>Por ejemplo: ¿precio y cantidad se mueven juntos?</p>
+        </div>
+        <div class="ra-card" style="border-top-color: var(--coral-deep);">
+            <div class="ra-badge" style="background: var(--coral-deep); display: flex; align-items: center; gap: 6px;">
+                <span style="font-size: 14px;">⚠️</span> Anomalías residuales
+            </div>
+            <p><strong>¿Quedó algo raro?</strong><br>Detecta casos extremos que el diagnóstico inicial no cazó.</p>
+        </div>
+    </div>
+    
+       <h3 id="practica" style="margin-top: 40px;">6. Práctica: Auditoría, limpieza y EDA con IA en Google Colab </h3>
+    <p>Vamos a poner en práctica las cuatro dimensiones. Abriremos Google Colab y le pediremos a nuestra IA (usando la estructura C-T-F-R) que nos genere el código en Python para auditar y limpiar la base de datos <code>BBDD_Curso.csv</code>.</p>
+    <div class="download-row">
+        <a href="https://drive.google.com/file/d/1sRBEY1zhi6VfX2qDsf18nMuCOOSM4YvU/view" target="_blank" rel="noopener" class="btn-run" style="text-decoration: none; margin-top: 0;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Descargar BBDD_Curso.csv
+        </a>
+    </div>
+    
+    <div class="callout callout-practice">
+        <div class="callout-title">Paso 1: El Prompt para la IA</div>
+        <p>Abre un nuevo cuaderno en Google Colab, crea un proyecto, sube el archivo <code>BBDD_Curso.csv</code>, y corre en la IA de Google Colab el siguiente prompt, el cual te permitirá realizar la auditoria de la base de datos </p>
+    </div>
+    
+    <div class="prompt-toolbar">
+        <span class="prompt-toolbar-label">Prompt editable · ajústalo a tu pregunta</span>
+        <div class="prompt-toolbar-actions">
+            <button type="button" class="prompt-reset" onclick="resetPromptBox(this)">↺ Restaurar</button>
+            <button type="button" class="ctfr-copy" onclick="copyPromptBox(this)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span class="copy-label">Copiar prompt</span>
+            </button>
+        </div>
+    </div>
+    <div class="prompt-box prompt-editable" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Prompt editable">[CONTEXTO]
+Eres un analista de datos de la Fundación WWB Colombia. Tienes una base de datos llamada "BBDD_Curso.csv" (separador coma, codificación UTF-8) ubicada en /content/BBDD_Curso.csv en Google Colab.
+
+[TAREA]
+Escribe el código en Python que cargue el archivo en un DataFrame de pandas llamado `df` y realice una AUDITORÍA de calidad de datos evaluando 4 dimensiones. Cada dimensión va en un bloque separado y debe producir una tabla de resultados con UNA FILA POR VARIABLE (todas las columnas de df):
+
+1. UNICIDAD
+   - Imprime el número y porcentaje de filas completamente duplicadas.
+   - Tabla por variable: nombre, tipo de dato, número de valores únicos, % de valores únicos, número de valores repetidos.
+
+2. COMPLETITUD
+   - Tabla por variable: nombre, cantidad de nulos, % de nulos, y una columna de semáforo ("ok" si 0%, "alerta" si 0-5%, "crítico" si >5%).
+   - Ordena la tabla de mayor a menor % de nulos.
+
+3. CONSISTENCIA
+   - Tabla por variable de texto (detectadas dinámicamente con select_dtypes): cantidad de valores con mayúsculas, con espacios al inicio/final, con espacios dobles internos, y número de categorías únicas ANTES vs. DESPUÉS de normalizar (minúsculas + strip). Si el número baja, hay categorías escritas de forma inconsistente.
+   - Lista las columnas de texto cuyos valores parecen numéricos (posible tipo de dato incorrecto).
+   - Lista las columnas con "fecha" en el nombre e indica el % de valores que no se pueden convertir a fecha.
+
+4. VALIDEZ
+   - Imprime df.describe() transpuesto para las variables numéricas.
+   - Tabla por variable numérica: mínimo, máximo, media, mediana, cantidad de valores negativos, cantidad de ceros y cantidad de valores atípicos según la regla IQR (Q1 - 1.5*IQR, Q3 + 1.5*IQR).
+   - Tabla por variable de texto: número de categorías y las 3 categorías más frecuentes con su %.
+
+[FORMATO]
+Solo código Python comentado, con un bloque por dimensión (usa comentarios de encabezado tipo "# ===== 1. UNICIDAD ====="). Las tablas deben imprimirse con pd.set_option('display.max_rows', None) para ver todas las variables.
+
+[RESTRICCIONES]
+- Usa estrictamente la librería pandas (sin numpy, matplotlib ni otras).
+- No inventes nombres de variables: todo debe aplicarse de forma dinámica sobre las columnas de df.
+- No redactes introducciones ni conclusiones.
+- NO corrijas ni modifiques df: solo identifica y reporta los hallazgos.
+    </div>
+
+    <div class="callout callout-check">
+        <div class="callout-title">Paso 2: Limpieza de la base de datos</div>
+        <p>En el cuaderno en Google Colab, sube el archivo, ejecuta el siguiente prompt, el cual te ayudará a corregir los hallazgos de la auditoría</p>
+    </div>
+
+    <div class="prompt-toolbar">
+        <span class="prompt-toolbar-label">Prompt editable · ajústalo a tu pregunta</span>
+        <div class="prompt-toolbar-actions">
+            <button type="button" class="prompt-reset" onclick="resetPromptBox(this)">↺ Restaurar</button>
+            <button type="button" class="ctfr-copy" onclick="copyPromptBox(this)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span class="copy-label">Copiar prompt</span>
+            </button>
+        </div>
+    </div>
+    <div class="prompt-box prompt-editable" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Prompt editable">[CONTEXTO]
+Continuando la auditoría anterior, el DataFrame `df` ya está cargado y se conocen los problemas de calidad detectados.
+
+[TAREA]
+Escribe el código en Python que cree un DataFrame `df_limpio` (sin sobrescribir `df`) corrigiendo los problemas, en 5 bloques:
+
+1. UNICIDAD: elimina filas completamente duplicadas y reporta cuántas se eliminaron.
+
+2. COMPLETITUD: NO imputes ni elimines filas automáticamente; agrega para cada columna con nulos una columna indicadora "<nombre>_nulo" (1/0) y reporta cuántas columnas se marcaron.
+
+3. CONSISTENCIA: en todas las columnas de texto aplica minúsculas, elimina espacios al inicio/final y reemplaza espacios dobles internos por uno solo.
+
+3B. HOMOLOGACIÓN DE CATEGORÍAS: en las columnas de texto con 30 categorías únicas o menos (detectadas dinámicamente), unifica las categorías que son variantes de escritura de un mismo valor, así:
+   - Crea una llave de comparación por categoría SOLO para comparar (no modifica los valores originales): pasa el texto a minúsculas, elimina tildes (str.normalize('NFKD') seguido de str.encode('ascii', 'ignore').str.decode('ascii')), elimina todo carácter que no sea letra, número o espacio, y elimina la vocal final "a" u "o" (para unir variantes de género como "urbana"/"urbano").
+   - Si dos o más categorías de una misma columna comparten la misma llave, reemplázalas por la categoría más frecuente del grupo (con su escritura original).
+   - Imprime una tabla de auditoría con: variable, categorías originales unificadas, categoría final asignada y número de filas afectadas. Si no se unificó nada en ninguna columna, imprime un aviso indicándolo.
+   - No unifiques categorías entre columnas distintas.
+
+4. VALIDEZ: NO elimines valores atípicos; crea una columna indicadora "<nombre>_atipico" (1/0) por cada variable numérica con outliers según IQR (Q1 - 1.5*IQR, Q3 + 1.5*IQR), para que el analista decida después.
+
+Al final imprime una tabla comparativa ANTES vs. DESPUÉS por dimensión (filas, duplicados, total de nulos, categorías únicas en texto, categorías homologadas, total de atípicos marcados) y guarda el resultado en "/content/BBDD_Curso_limpia.csv".
+
+[FORMATO]
+Solo código Python comentado, un bloque por dimensión (con encabezados tipo "# ===== 3B. HOMOLOGACIÓN DE CATEGORÍAS =====").
+
+[RESTRICCIONES]
+- Usa estrictamente pandas (sin numpy, difflib ni otras librerías).
+- No inventes nombres de variables: aplica todo de forma dinámica sobre las columnas.
+- No redactes introducciones ni conclusiones.
+    </div>
+
+
+     <div class="callout callout-check">
+        <div class="callout-title">Paso 3: Análisis exploratorio de datos</div>
+        <p>En el cuaderno en Google Colab ejecuta el siguiente prompt, el cual te ayudará a realizar el análisis exploratorio de datos. Ten en cuenta que este está ajustado para la pregunta de negocio de "¿cuáles son los determinantes de la pobreza monetaria de los propietarios de los negocios? "</p>
+    </div>
+
+    <div class="prompt-toolbar">
+        <span class="prompt-toolbar-label">Prompt editable · ajústalo a tu pregunta</span>
+        <div class="prompt-toolbar-actions">
+            <button type="button" class="prompt-reset" onclick="resetPromptBox(this)">↺ Restaurar</button>
+            <button type="button" class="ctfr-copy" onclick="copyPromptBox(this)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span class="copy-label">Copiar prompt</span>
+            </button>
+        </div>
+    </div>
+    <div class="prompt-box prompt-editable" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Prompt editable">[CONTEXTO]
+Eres un analista de datos de la Fundación WWB Colombia. Tienes la base ya auditada y limpia en "/content/BBDD_Curso_limpia.csv" (texto en minúsculas, sin duplicados, con columnas indicadoras "_nulo" y "_atipico"). La pregunta de investigación es: ¿cuáles son los determinantes de la pobreza monetaria de los propietarios de los negocios? La variable de interés es `pobre_lb` (línea base).
+
+[TAREA]
+Escribe el código en Python que cargue la base en un DataFrame `df` y realice un ANÁLISIS EXPLORATORIO DE DATOS (EDA) en 6 bloques. Cada bloque debe imprimir sus tablas de resultados.
+
+0. PREPARACIÓN
+   - Crea la variable binaria `pobre_bin` (1 si la categoría de `pobre_lb` contiene la palabra "pobreza", 0 en caso contrario; deja NaN si `pobre_lb` es nula).
+   - Define, con los nombres exactos, estas listas (si alguna variable no existe en df, sáltala e imprime un aviso):
+     * categoricas = ['clase', 'genero', 'nivel_educativo', 'gr_etnia', 'estado_civil', 'actividad', 'ubinegocio', 'toma_dec', 'aliado', 'depto']
+     * numericas = ['edad', 'num_per_lb', 'edadnegocio', 'dias_negocio', 'horas_negocio', 'ventas_lb']
+     * binarias = ['computador', 'tableta', 'smartphone', 'internet']
+   - EXCLUYE explícitamente de los determinantes las variables que definen mecánicamente la pobreza: `ing_hog_lb`, `percapita_lb`, `pobre_lb1`; y no uses variables de cierre (terminadas en "_lc"), ni columnas "_nulo"/"_atipico".
+   - Imprime el tamaño de la muestra usada y la distribución de `pobre_bin` (conteo y %).
+
+1. UNIVARIADO
+   - Tabla por variable categórica: categoría, frecuencia, % del total.
+   - Tabla por variable numérica: n, media, mediana, desviación estándar, mínimo, máximo, asimetría (skew) y % de nulos.
+   - Tabla por variable binaria: % de 1 y % de 0.
+
+2. BIVARIADO: CATEGÓRICAS vs POBREZA
+   - Por cada variable categórica: tabla con categoría, n, n de pobres, % de pobres, y diferencia en puntos porcentuales frente a la tasa global de pobreza. Marca con "n-30" las categorías con menos de 30 observaciones.
+   - Calcula el V de Cramér de cada variable contra `pobre_bin` (usa pd.crosstab y calcula chi-cuadrado y V solo con operaciones de pandas).
+   - Repite el análisis para las variables binarias.
+
+3. BIVARIADO: NUMÉRICAS vs POBREZA
+   - Por cada variable numérica: media y mediana para pobres vs. no pobres (groupby sobre `pobre_bin`).
+   - Correlación de cada variable numérica con `pobre_bin` (corrwith).
+   - Tasa de pobreza por cuartiles (pd.qcut con duplicates='drop') de cada variable numérica; para `edad` usa además rangos definidos con pd.cut cada 10 años.
+
+4. MULTIVARIADO
+   - Tablas de doble entrada con la tasa de pobreza (pivot_table, mostrando también n) para los cruces: genero x nivel_educativo, clase x nivel_educativo, gr_etnia x clase, genero x estado_civil.
+   - Matriz de correlación entre las variables numéricas para detectar redundancia.
+
+5. VISUALIZACIÓN
+   - Con el método .plot() de pandas: gráfico de barras de la tasa de pobreza por categoría para cada variable categórica de baja cardinalidad (hasta 6 categorías), y un gráfico de barras de la tasa de pobreza por cuartil para cada variable numérica. Agrega título y etiquetas de ejes.
+
+6. RANKING DE ASOCIACIÓN
+   - Una sola tabla final con una fila por variable analizada: variable, tipo (categórica/numérica/binaria), medida de asociación (V de Cramér o |correlación|), y posición en el ranking de mayor a menor.
+
+[FORMATO]
+Solo código Python comentado, con un bloque por sección (encabezados tipo "# ===== 2. BIVARIADO: CATEGÓRICAS vs POBREZA ====="). Usa pd.set_option('display.max_rows', None) y redondea los porcentajes a 1 decimal.
+
+[RESTRICCIONES]
+- Usa estrictamente la librería pandas (los gráficos con .plot() de pandas están permitidos; no importes matplotlib, seaborn, numpy ni scipy).
+- No inventes nombres de variables distintos a los indicados; aplica los cálculos de forma dinámica recorriendo las listas.
+- No redactes introducciones ni conclusiones: la interpretación la hará el analista.
+- No modifiques la base limpia ni imputes valores; trabaja sobre una copia.
+    </div>
+
+    <hr>
+
+
+    <div class="callout callout-practice">
+        <div class="callout-title">💡 La regla de oro antes de usar la IA</div>
+        <p>Antes de pedirle a una IA que analice datos, debes tener clara la pregunta. El flujo de valor es: <strong>pregunta clara &rarr; estructura de datos adecuada &rarr; auditoría de calidad &rarr; uso de IA como copiloto &rarr; verificación humana &rarr; decisión.</strong></p>
+    </div>
+
+    <hr>
+
+    <div class="chapter-header" id="retos">
+        <h2>📌 Retos Autónomos</h2>
+    </div>
+    <p>Trabajo entre sesiones. Revisa cuidadosamente los entregables requeridos.Estos retos debes realizarlos con la base de datos que te corresponde para el proyecto final</p>
+
+    <div class="challenges-grid">
+        
+        <div class="challenge-card">
+            <h3 class="challenge-title">💡 R1: Formula tu Pregunta</h3>
+            <p>Explora la base de datos de tu proyecto final. Identifica una problemática en tu entorno, plantea una hipótesis y formula una pregunta de negocio analítica. Usa la IA (C-T-F-R) para afinar tu hipótesis.</p>
+            <div class="entregable-box"><b>Entregable</b>Tabla con variables seleccionadas, hipótesis, pregunta formulada y el prompt utilizado.</div>
+        </div>
+
+        <div class="challenge-card">
+            <h3 class="challenge-title">🏷️ R2: Tipos de variables</h3>
+            <p>Selecciona mínimo 10 variables de la base de datos. Pídele a la IA que te ayude a realizar la debida clasificación (nominal, ordinal, discreta, continua).</p>
+            <div class="entregable-box"><b>Entregable</b>Tabla con las variables clasificadas correctamente y el prompt utilizado.</div>
+        </div>
+
+        <div class="challenge-card">
+            <h3 class="challenge-title">🔍 R3: Audita tus datos</h3>
+            <p>Realiza una auditoría en Google Colab. Identifica duplicados, valores faltantes y errores tipográficos. Emplea la IA para limpiar la base.</p>
+            <div class="entregable-box"><b>Entregable</b>Tabla con hallazgos, ajustes realizados al código/base y prompt de limpieza.</div>
+        </div>
+
+        <div class="challenge-card">
+            <h3 class="challenge-title">📈 R4: Análisis Exploratorio</h3>
+            <p>Pide a la IA código para calcular media, varianza, percentiles (para continuas) y tablas de frecuencias (para categóricas) de tus variables seleccionadas. Pídele a la IA que haga ciertos cruces que tú consideres necesarios.</p>
+            <div class="entregable-box"><b>Entregable</b>Tabla con resultados del EDA (estadísticas y frecuencias) y el prompt utilizado.</div>
+        </div>
+
+    </div>
+
+</main>
+
+<div id="modal-red-neuronal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-red-neuronal-title" onclick="if(event.target === this) closeModal('modal-red-neuronal')">
+    <div class="modal-box">
+        <button type="button" class="modal-close" onclick="closeModal('modal-red-neuronal')" aria-label="Cerrar">✕</button>
+        <span class="mono-label">Definición</span>
+        <h3 id="modal-red-neuronal-title">Red neuronal</h3>
+        <p>Una red neuronal es un modelo de inteligencia artificial y aprendizaje automático inspirado en la estructura del cerebro humano, diseñado para reconocer patrones y procesar datos.</p>
+        <p style="margin-bottom: 0;">Se usan en tecnologías avanzadas como Google Cloud para resolver tareas complejas:</p>
+        <ul>
+            <li>Reconocimiento facial y de imágenes.</li>
+            <li>Procesamiento del lenguaje natural y traducción de idiomas.</li>
+            <li>Asistentes de voz y conducción autónoma.</li>
+        </ul>
+    </div>
+</div>
+
+<div id="modal-alucinaciones" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-alucinaciones-title" onclick="if(event.target === this) closeModal('modal-alucinaciones')">
+    <div class="modal-box wide">
+        <button type="button" class="modal-close" onclick="closeModal('modal-alucinaciones')" aria-label="Cerrar">✕</button>
+        <span class="mono-label">Definición</span>
+        <h3 id="modal-alucinaciones-title">Alucinaciones</h3>
+        <p>Las alucinaciones de la inteligencia artificial son respuestas inventadas, falsas o inexactas que los modelos generan con total seguridad y apariencia de veracidad. Ocurren porque la IA no «piensa» ni verifica datos reales, sino que predice estadísticamente cuál es la siguiente palabra o frase más lógica basándose en sus patrones de entrenamiento. Las alucinaciones pueden variar en gravedad, desde un pequeño error de hecho hasta una afirmación totalmente inventada.</p>
+        <p>Aunque las alucinaciones suelen asociarse a los LLM basados en texto, también se producen en los generadores de IA de imagen y vídeo, lo que da lugar a salidas visualmente inverosímiles o contextualmente inexactas.</p>
+        <p class="modal-subtitle">Ejemplos reales sobre alucinaciones</p>
+        <ol>
+            <li>Se descubrió que un informe presentado por Deloitte al gobierno australiano contenía múltiples citas falsificadas y notas a pie de página ficticias. Como consecuencia, Deloitte deberá reembolsar parte de un contrato gubernamental de aproximadamente 300 000 dólares.</li>
+            <li>En su presentación pública, el chatbot de Google afirmó con seguridad que el telescopio James Webb había tomado la primera foto de un planeta fuera del sistema solar, un dato totalmente falso. Esto provocó una fuerte caída en las acciones de la compañía.</li>
+            <li>Una investigación de Associated Press reveló que Whisper inventa contenido falso en las transcripciones, insertando palabras o frases completas que no aparecen en el audio. Entre los errores se incluyen atribuciones raciales, retórica violenta y tratamientos médicos inexistentes.</li>
+            <li>Un tribunal falló en contra de Air Canada después de que su chatbot con inteligencia artificial engañara a un cliente sobre su política de tarifas. La compañía intentó argumentar que no debía ser considerada responsable, alegando que el chatbot era una "entidad jurídica independiente". El tribunal rechazó este argumento y dictaminó que la aerolínea es responsable de todo el contenido de su sitio web, incluidas las respuestas del chatbot.</li>
+        </ol>
+    </div>
+</div>
+
+<div id="modal-ctfr" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-ctfr-title" onclick="if(event.target === this) closeModal('modal-ctfr')">
+    <div class="modal-box wide">
+        <button type="button" class="modal-close" onclick="closeModal('modal-ctfr')" aria-label="Cerrar">✕</button>
+        <span class="mono-label">Simulador C-T-F-R</span>
+        <div class="ctfr-result-head">
+            <h3 id="modal-ctfr-title">Tu prompt completo</h3>
+            <button type="button" class="ctfr-copy" id="btn-copy" onclick="copyCTFR()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span id="btn-copy-text">Copiar prompt</span>
+            </button>
+        </div>
+        <pre class="prompt-box ctfr-output" id="ctfr-result"></pre>
+
+        <p class="block-label" style="margin-top: 20px;">Pégalo en tu IA de preferencia</p>
+        <div class="ai-links">
+            <button type="button" class="ai-link" onclick="openAI('gemini')">Abrir Gemini <span aria-hidden="true">↗</span></button>
+            <button type="button" class="ai-link" onclick="openAI('chatgpt')">Abrir ChatGPT <span aria-hidden="true">↗</span></button>
+            <button type="button" class="ai-link" onclick="openAI('claude')">Abrir Claude <span aria-hidden="true">↗</span></button>
+        </div>
+        <p class="ctfr-status" id="ctfr-status" role="status" aria-live="polite"></p>
+        <p class="ctfr-hint">¿Quieres cambiar algo? Cierra esta ventana, edita los campos y vuelve a hacer clic en "Construir prompt".</p>
+    </div>
+</div>
+
+<footer class="site-footer">
+    <div class="footer-logos">
+        <img src="../assets/logo/WWB_Logotipo_Negativo.png" alt="Fundación WWB Colombia" class="footer-logo-wwb">
+        <span class="footer-sep" aria-hidden="true"></span>
+        <img src="../assets/logo/monocromatico%20negativo.png" alt="EQUIdata" class="footer-logo-equidata">
+    </div>
+    Fundación WWB Colombia · EQUIdata — Aprende. Analiza. Transforma.
+</footer>
+
+<script>
+    // --- CARRUSEL DE EJEMPLOS: UNA TARJETA A LA VEZ ---
+    let qIndex = 0;
+    const qSlides = document.querySelectorAll('#q-carousel .q-slide');
+    const qDots = document.getElementById('q-dots');
+
+    function showQ(i, dir) {
+        qIndex = (i + qSlides.length) % qSlides.length;
+        qSlides.forEach(function (s, k) {
+            s.classList.remove('active', 'from-left');
+            if (k === qIndex) {
+                if (dir < 0) s.classList.add('from-left');
+                s.classList.add('active');
+            }
+        });
+        qDots.querySelectorAll('.q-dot').forEach(function (d, k) {
+            d.classList.toggle('active', k === qIndex);
+            d.setAttribute('aria-current', k === qIndex ? 'true' : 'false');
+        });
+        document.getElementById('q-count').textContent = (qIndex + 1) + ' / ' + qSlides.length;
+    }
+
+    function moveQ(dir) { showQ(qIndex + dir, dir); }
+
+    qSlides.forEach(function (s, k) {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'q-dot';
+        dot.setAttribute('aria-label', 'Ir a la tarjeta ' + (k + 1));
+        dot.addEventListener('click', function () { showQ(k, k < qIndex ? -1 : 1); });
+        qDots.appendChild(dot);
+    });
+
+    // Flechas del teclado y deslizar con el dedo en celular
+    const qCarousel = document.getElementById('q-carousel');
+    qCarousel.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') moveQ(1);
+        if (e.key === 'ArrowLeft') moveQ(-1);
+    });
+    let qTouchX = null;
+    qCarousel.addEventListener('touchstart', function (e) { qTouchX = e.touches[0].clientX; }, { passive: true });
+    qCarousel.addEventListener('touchend', function (e) {
+        if (qTouchX === null) return;
+        const dx = e.changedTouches[0].clientX - qTouchX;
+        if (Math.abs(dx) > 50) moveQ(dx < 0 ? 1 : -1);
+        qTouchX = null;
+    });
+
+    showQ(0, 1);
+
+    // --- NIVELES DE PREGUNTA: APARECEN UNO A UNO A MEDIDA QUE SE HACE SCROLL ---
+    (function () {
+        const wrap = document.querySelector('.q-steps');
+        if (!wrap) return;
+        wrap.classList.add('js-reveal');
+        const steps = wrap.querySelectorAll('.q-step');
+        function check() {
+            const vh = window.innerHeight;
+            steps.forEach(function (step) {
+                const top = step.getBoundingClientRect().top;
+                if (top < vh * 0.82) {
+                    step.classList.add('in');          // el nivel llega a la pantalla: aparece
+                } else if (top > vh) {
+                    step.classList.remove('in');       // vuelve a quedar debajo (scroll hacia arriba): se oculta para repetir el efecto
+                }
+            });
+        }
+        document.addEventListener('scroll', check, { passive: true });
+        window.addEventListener('resize', check);
+        check();
+    })();
+
+    // --- RESPUESTAS OCULTAS: MOSTRAR / OCULTAR ---
+    function toggleReveal(btn) {
+        const panel = document.getElementById(btn.getAttribute('aria-controls'));
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+        panel.hidden = open;
+        btn.querySelector('.reveal-action-text').textContent = open ? 'Ver respuestas' : 'Ocultar respuestas';
+    }
+
+    // --- PROMPTS EDITABLES DE LA PRÁCTICA: COPIAR, RESTAURAR Y PEGAR COMO TEXTO PLANO ---
+    document.querySelectorAll('.prompt-editable').forEach(function (box) {
+        box.dataset.original = box.innerText;
+        box.addEventListener('paste', function (e) {
+            e.preventDefault();
+            const text = (e.clipboardData || window.clipboardData).getData('text');
+            document.execCommand('insertText', false, text);
+        });
+    });
+
+    function promptBoxFor(btn) {
+        return btn.closest('.prompt-toolbar').nextElementSibling;
+    }
+
+    async function copyPromptBox(btn) {
+        const box = promptBoxFor(btn);
+        const label = btn.querySelector('.copy-label');
+        const ok = await copyText(box.innerText.trim());
+        btn.classList.toggle('copied', ok);
+        label.textContent = ok ? '¡Copiado!' : 'Selecciona y copia con Ctrl+C';
+        setTimeout(function () { btn.classList.remove('copied'); label.textContent = 'Copiar prompt'; }, 2000);
+    }
+
+    function resetPromptBox(btn) {
+        const box = promptBoxFor(btn);
+        if (box.innerText === box.dataset.original) return;
+        if (confirm('¿Restaurar el prompt original? Se perderán tus cambios en este recuadro.')) {
+            box.innerText = box.dataset.original;
+        }
+    }
+
+    // --- VENTANAS EMERGENTES DE DEFINICIONES ---
+    function openModal(id) {
+        document.getElementById(id).classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.modal-overlay.active').forEach(function (m) { closeModal(m.id); });
+        }
+    });
+
+    // --- CUADROS DEL SIMULADOR: ALTURA AJUSTADA AL TEXTO ---
+    (function () {
+        const areas = document.querySelectorAll('.ctfr-simulator textarea');
+        function fit(el) {
+            el.style.height = 'auto';
+            el.style.height = (el.scrollHeight + 2) + 'px';
+        }
+        function fitAll() { areas.forEach(fit); }
+        areas.forEach(function (el) {
+            el.addEventListener('input', function () { fit(el); });
+        });
+        fitAll();
+        window.addEventListener('resize', fitAll);
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitAll);
+    })();
+
+    // --- BARRA DE PROGRESO DE LECTURA ---
+    (function(){
+        var fill = document.getElementById('progress-fill');
+        function update(){
+            var h = document.documentElement;
+            var scrollTop = h.scrollTop || document.body.scrollTop;
+            var scrollHeight = (h.scrollHeight || document.body.scrollHeight) - h.clientHeight;
+            var pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+            fill.style.width = pct + '%';
+        }
+        document.addEventListener('scroll', update, {passive:true});
+        window.addEventListener('resize', update);
+        update();
+    })();
+
+    // --- SIMULADOR C-T-F-R: CONSTRUIR, COPIAR Y LLEVAR EL PROMPT A UNA IA ---
+    const AI_LINKS = {
+        gemini:  { name: 'Gemini',  url: function () { return 'https://gemini.google.com/app'; } },
+        chatgpt: { name: 'ChatGPT', url: function (p) { return 'https://chatgpt.com/?q=' + encodeURIComponent(p); } },
+        claude:  { name: 'Claude',  url: function (p) { return 'https://claude.ai/new?q=' + encodeURIComponent(p); } }
+    };
+
+    function getCTFRPrompt() {
+        const c = document.getElementById('ctfr-c').value.trim();
+        const t = document.getElementById('ctfr-t').value.trim();
+        const f = document.getElementById('ctfr-f').value.trim();
+        const r = document.getElementById('ctfr-r').value.trim();
+        if (!c || !t) return null;
+        let prompt = `[CONTEXTO]
+${c}
+
+[TAREA]
+${t}`;
+        if (f) prompt += `
+
+[FORMATO]
+${f}`;
+        if (r) prompt += `
+
+[RESTRICCIONES]
+${r}`;
+        return prompt;
+    }
+
+    let builtPrompt = '';
+
+    function showCTFRStatus(msg, warn) {
+        const status = document.getElementById('ctfr-status');
+        status.textContent = msg;
+        status.classList.toggle('warn', !!warn);
+        status.classList.add('show');
+    }
+
+    // Construye el prompt con lo que haya en los campos en ese momento y lo muestra en la ventana emergente
+    function buildCTFR() {
+        const warning = document.getElementById('ctfr-warning');
+        const prompt = getCTFRPrompt();
+        if (!prompt) {
+            warning.textContent = '⚠️ Por favor, completa al menos los campos de Contexto y Tarea.';
+            warning.classList.add('show');
+            return;
+        }
+        warning.classList.remove('show');
+        builtPrompt = prompt;
+        document.getElementById('ctfr-result').textContent = prompt;
+        document.getElementById('ctfr-status').classList.remove('show');
+        openModal('modal-ctfr');
+    }
+
+    async function copyText(text) {
+        try {
+            await navigator.clipboard.writeText(text);
+            return true;
+        } catch (e) {
+            // Alternativa para navegadores que bloquean el portapapeles (p. ej. al abrir el archivo localmente)
+            const tmp = document.createElement('textarea');
+            tmp.value = text;
+            tmp.setAttribute('readonly', '');
+            tmp.style.position = 'fixed';
+            tmp.style.opacity = '0';
+            document.body.appendChild(tmp);
+            tmp.select();
+            let ok = false;
+            try { ok = document.execCommand('copy'); } catch (err) { ok = false; }
+            document.body.removeChild(tmp);
+            return ok;
+        }
+    }
+
+    async function copyCTFR() {
+        const prompt = builtPrompt;
+        if (!prompt) return;
+        const btn = document.getElementById('btn-copy');
+        const label = document.getElementById('btn-copy-text');
+        if (await copyText(prompt)) {
+            btn.classList.add('copied');
+            label.textContent = '¡Copiado!';
+            setTimeout(function () { btn.classList.remove('copied'); label.textContent = 'Copiar prompt'; }, 2000);
+        } else {
+            showCTFRStatus('No se pudo copiar automáticamente. Selecciona el texto del prompt y cópialo con Ctrl+C (Cmd+C en Mac).', true);
+        }
+    }
+
+    function openAI(key) {
+        const prompt = builtPrompt;
+        if (!prompt) return;
+        const ai = AI_LINKS[key];
+        // La ventana se abre primero (en el mismo clic) para que el navegador no la bloquee
+        window.open(ai.url(prompt), '_blank', 'noopener');
+        copyText(prompt).then(function (ok) {
+            if (ok) {
+                showCTFRStatus(`✅ Prompt copiado. Si no aparece escrito en ${ai.name}, pégalo con Ctrl+V (Cmd+V en Mac) y envíalo.`);
+            } else {
+                showCTFRStatus(`Se abrió ${ai.name}, pero no se pudo copiar automáticamente. Copia el prompt de arriba con Ctrl+C y pégalo allí.`, true);
+            }
+        });
+    }
+
+    // Si se edita un campo, el prompt anterior deja de valer: hay que volver a construirlo
+    document.querySelectorAll('.ctfr-simulator textarea').forEach(function (el) {
+        el.addEventListener('input', function () {
+            builtPrompt = '';
+            document.getElementById('ctfr-warning').classList.remove('show');
+        });
+    });
+
+    // --- LÓGICA DE LA DEMO DE PREDICCIÓN (ÁRBOL DE TOKENS) ---
+    const predictionTree = {
+        "WWB Colombia": {
+            word: "WWB Colombia",
+            prob: "92%",
+            next: {
+                "han": {
+                    word: "han",
+                    prob: "85%",
+                    next: {
+                        "aumentado": {
+                            word: "aumentado",
+                            prob: "78%",
+                            next: {
+                                "un 15%.": { word: "un 15%.", prob: "72%", next: null },
+                                "un 20%.": { word: "un 20%.", prob: "18%", next: null },
+                                "significativamente.": { word: "significativamente.", prob: "10%", next: null }
+                            }
+                        },
+                        "disminuido": {
+                            word: "disminuido",
+                            prob: "12%",
+                            next: {
+                                "este": { word: "este semestre.", prob: "65%", next: null }
+                            }
+                        },
+                        "se han": { word: "se han mantenido estables.", prob: "10%", next: null }
+                    }
+                },
+                "son": {
+                    word: "son",
+                    prob: "10%",
+                    next: {
+                        "un": { word: "un ejemplo.", prob: "55%", next: null }
+                    }
+                }
+            }
+        },
+        "WWB": {
+            word: "WWB",
+            prob: "5%",
+            next: {
+                "crecieron": { word: "crecieron.", prob: "90%", next: null }
+            }
+        }
+    };
+
+    const initialText = "<span>Las</span> <span>ventas</span> <span>de</span> <span>las</span> <span>mujeres</span> <span>del</span> <span>programa</span> <span>Yarú</span> <span>Semipresencial</span> <span>en</span> <span>la</span> <span>Fundación</span>";
+    let currentNode = predictionTree;
+    let sentenceContainer = document.getElementById('sentence-container');
+    let optionsContainer = document.getElementById('options-container');
+
+    function renderOptions(nodeData) {
+        optionsContainer.innerHTML = '<div class="options-title">El LLM predice la siguiente palabra (elige una):</div>';
+        
+        if (!nodeData) {
+            optionsContainer.innerHTML += '<p style="color: var(--lime); font-family: var(--mono); font-size: 14px;">[ Fin de la predicción ]</p>';
+            return;
+        }
+
+        Object.keys(nodeData).forEach(key => {
+            const opt = nodeData[key];
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerHTML = `<span>${opt.word}</span> <span class="prob">${opt.prob}</span>`;
+            btn.onclick = () => selectOption(opt);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    function selectOption(optionObj) {
+        const span = document.createElement('span');
+        span.className = 'added';
+        span.textContent = optionObj.word;
+        sentenceContainer.appendChild(span);
+        
+        currentNode = optionObj.next;
+        renderOptions(currentNode);
+    }
+
+    function resetPrediction() {
+        sentenceContainer.innerHTML = initialText;
+        currentNode = predictionTree;
+        renderOptions(currentNode);
+    }
+
+    renderOptions(currentNode);
+
+    // --- GRÁFICO DE EMBEDDINGS (SVG ANIMADO) ---
+    function playEmbeddings() {
+        const chart = document.getElementById('emb-chart');
+        if (!chart) return;
+        chart.classList.remove('play');
+        void chart.getBoundingClientRect(); // reinicia las animaciones CSS
+        chart.classList.add('play');
+    }
+
+    (function () {
+        const chart = document.getElementById('emb-chart');
+        if (!chart) return;
+        if (!('IntersectionObserver' in window)) { playEmbeddings(); return; }
+        // Se anima cada vez que la gráfica entra en pantalla al hacer scroll
+        const observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    playEmbeddings();
+                } else {
+                    chart.classList.remove('play');
+                }
+            });
+        }, { threshold: 0.4 });
+        observer.observe(chart);
+    })();
+
+    // --- LÓGICA DE CALIFICACIÓN DE VARIABLES ---
+    function gradeClassification() {
+        const answers = {
+            'q1-nat': 'cualitativa',         // Estado: Categórica
+            'q1-esc': 'nominal',             // Estado: Nominal (sin orden)
+            'q2-nat': 'cuantitativa-continua', // Ingreso: Numérica continua
+            'q2-esc': 'razon',               // Ingreso: Razón (cero absoluto)
+            'q3-nat': 'cualitativa',         // Escolaridad: Categórica
+            'q3-esc': 'ordinal',             // Escolaridad: Ordinal (tiene orden)
+            'q4-nat': 'cuantitativa-discreta', // Personas a cargo: Numérica discreta
+            'q4-esc': 'razon'                // Personas a cargo: Razón (cero absoluto)
+        };
+
+        let totalQuestions = Object.keys(answers).length;
+        let correctCount = 0;
+        let unansweredCount = 0;
+
+        Object.keys(answers).forEach(id => {
+            const select = document.getElementById(id);
+            const feedback = document.getElementById(`fb-${id}`);
+            select.style.borderColor = '#ccc';
+            select.style.backgroundColor = 'transparent';
+            feedback.innerHTML = '';
+        });
+
+        Object.keys(answers).forEach(id => {
+            const select = document.getElementById(id);
+            const feedback = document.getElementById(`fb-${id}`);
+            const userValue = select.value;
+
+            if (userValue === "") {
+                unansweredCount++;
+            } else if (userValue === answers[id]) {
+                correctCount++;
+                select.style.borderColor = 'var(--lime-deep)';
+                select.style.backgroundColor = 'rgba(95,156,42,0.05)';
+                feedback.innerHTML = '✅';
+            } else {
+                select.style.borderColor = 'var(--coral-deep)';
+                select.style.backgroundColor = 'rgba(213,89,71,0.05)';
+                feedback.innerHTML = '❌';
+            }
+        });
+
+        const resultsContainer = document.getElementById('classification-results');
+        resultsContainer.style.display = 'block';
+
+        if (unansweredCount > 0) {
+            resultsContainer.style.backgroundColor = '#FBF1DE';
+            resultsContainer.style.color = '#7A5310';
+            resultsContainer.style.border = 'none';
+            resultsContainer.innerHTML = `⚠️ Faltan ${unansweredCount} respuestas por seleccionar. Intenta completarlas todas.`;
+            return;
+        }
+
+        const score = (correctCount / totalQuestions) * 100;
+        let message = `Has obtenido un ${score}% de respuestas correctas (${correctCount}/${totalQuestions}).<br><br>`;
+
+        if (score === 100) {
+            resultsContainer.style.backgroundColor = '#F1FADF';
+            resultsContainer.style.color = '#173404';
+            resultsContainer.style.border = 'none';
+            message += "¡Excelente trabajo! Has clasificado todas las variables correctamente.";
+        } else {
+            resultsContainer.style.backgroundColor = '#FBEAE6';
+            resultsContainer.style.color = '#9A3324';
+            resultsContainer.style.border = 'none';
+            message += "Revisa las casillas marcadas con ❌ e inténtalo de nuevo. Presta especial atención a la diferencia entre variables nominales y ordinales, y continuas vs discretas.";
+        }
+
+        resultsContainer.innerHTML = message;
+    }
+
+    function resetClassification() {
+        const selects = ['q1-nat', 'q1-esc', 'q2-nat', 'q2-esc', 'q3-nat', 'q3-esc', 'q4-nat', 'q4-esc'];
+        
+        selects.forEach(id => {
+            const select = document.getElementById(id);
+            const feedback = document.getElementById(`fb-${id}`);
+            select.value = "";
+            select.style.borderColor = '#ccc';
+            select.style.backgroundColor = 'transparent';
+            feedback.innerHTML = '';
+        });
+
+        const resultsContainer = document.getElementById('classification-results');
+        resultsContainer.style.display = 'none';
+        resultsContainer.innerHTML = '';
+    }
+
+    // --- LÓGICA DE LA CALCULADORA DE TOKENS ---
+    function calculateTokens() {
+        const text = document.getElementById('calc-text').value;
+        const chars = text.length;
+        // Expresión regular para contar palabras correctamente (ignorando múltiples espacios)
+        const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+        
+        // Estimación estándar: 1 token ≈ 4 caracteres en español/inglés
+        const tokens = Math.ceil(chars / 4);
+        
+        // Costo referencial: $2.50 USD por 1M de tokens (Input general)
+        const cost = (tokens / 1000000) * 2.5;
+
+        // Actualizar el HTML con formato de números
+        document.getElementById('val-chars').innerText = chars.toLocaleString('es-CO');
+        document.getElementById('val-words').innerText = words.toLocaleString('es-CO');
+        document.getElementById('val-tokens').innerText = tokens.toLocaleString('es-CO');
+        document.getElementById('val-cost').innerText = '$' + cost.toFixed(4);
+    }
+
+
+</script>
+</body>
+</html>

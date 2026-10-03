@@ -1,0 +1,12 @@
+# Datos personales de participantes: no se publican en GitHub Pages.
+# Compartir por un canal interno (Drive / SharePoint).
+assets/BBDD_Curso.*
+
+# Material docente (evaluaciones, claves de quiz, preguntas de test)
+*.docx
+
+# Archivos temporales de Office y del sistema
+~$*
+Thumbs.db
+desktop.ini
+.DS_Store

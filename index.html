@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EQUIdata · Datos con propósito</title>
+<meta name="description" content="Página central del curso EQUIdata de la Fundación WWB Colombia: presentación, sesiones y bases de datos para los proyectos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #192962;
+    --navy-hover: #0F1C4D;
+    --navy-tint: #EBEEF7;
+    --navy-2: #233473;
+    --lavanda: #BEA4E8;
+    --lavanda-tint: #F1EBFA;
+    --lavanda-ink: #534AB7;
+    --lima: #BBEF7F;
+    --lima-tint: #F1FADF;
+    --lima-ink: #173404;
+    --coral: #D55947;
+    --coral-tint: #FBEAE6;
+    --bg: #FAFAFA;
+    --card: #FFFFFF;
+    --text-2: #5B5E6E;
+    --hint: #9A9DAB;
+    --divider: #EDEEF2;
+    --on-navy-2: #C7CBE0;
+    --shadow: 0 1px 3px rgba(25, 41, 98, 0.08);
+    --mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
+    --head: "Space Grotesk", system-ui, sans-serif;
+    --body: "Inter", system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--navy);
+    font: 400 16px/1.6 var(--body);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px); }
+
+  .mono {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  h1, h2, h3 { font-family: var(--head); font-weight: 500; margin: 0; letter-spacing: -0.01em; }
+  h2 { font-size: 32px; line-height: 1.15; }
+  section { padding: 80px 0 0; }
+  .eyebrow { color: var(--text-2); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+  .eyebrow::before { content: ""; width: 8px; height: 8px; background: currentColor; flex: none; }
+  .section-lead { color: var(--text-2); margin: 16px 0 0; max-width: 720px; font-size: 17px; }
+
+  /* Bandas navy */
+  .band { background: var(--navy); color: #fff; margin-top: 80px; padding: 80px 0; }
+  .band + section { padding-top: 80px; }
+  .band .eyebrow { color: var(--lavanda); }
+  .band .section-lead { color: var(--on-navy-2); }
+
+  /* ---------- Portada ---------- */
+  .hero { background: var(--navy); color: #fff; padding: 32px 0 56px; }
+  /* Los PNG del logo traen ~13% de aire a los lados y ~17% arriba/abajo: se recorta con márgenes negativos */
+  .logo { display: block; width: auto; }
+  .hero-top .logo { height: 56px; margin: -10px 0 -10px -15px; }
+  .hero h1 { font-size: clamp(48px, 11vw, 88px); line-height: 0.95; margin-top: 56px; }
+  .hero h1 span { display: block; color: var(--lima); }
+  .hero p.lead { font-size: 19px; color: #D9DCEA; max-width: 640px; margin: 24px 0 0; }
+  .hero .kicker { color: var(--lima); margin-top: 24px; display: flex; align-items: center; gap: 10px; }
+  .hero .kicker::before { content: ""; width: 8px; height: 8px; background: var(--lima); }
+  .hero-facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; padding-top: 24px; border-top: 0.5px solid rgba(255,255,255,0.2); }
+  .hero-facts b { display: block; font-family: var(--head); font-weight: 500; font-size: 28px; line-height: 1.1; }
+  .hero-facts span { font-size: 13px; color: var(--on-navy-2); }
+  .hero nav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 40px; }
+  .hero nav a {
+    text-decoration: none; padding: 8px 16px; border-radius: 999px;
+    border: 0.5px solid rgba(255,255,255,0.35); font-size: 14px; color: #fff;
+    transition: background .15s;
+  }
+  .hero nav a:hover { background: rgba(255,255,255,0.08); }
+
+  /* ---------- Por qué ---------- */
+  .question { font-size: clamp(28px, 6vw, 40px); line-height: 1.15; }
+  .question .c { color: var(--coral); }
+  .question .l { color: var(--lavanda-ink); }
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px; }
+  .compare div { border-radius: 16px; padding: 24px; }
+  .compare p { margin: 12px 0 0; font-size: 15px; }
+  .compare .without { background: var(--navy); color: #D9DCEA; }
+  .compare .without .mono { color: var(--coral); }
+  .compare .with { background: var(--lima-tint); color: var(--navy); }
+  .compare .with .mono { color: var(--lima-ink); }
+
+  /* ---------- Listas numeradas ---------- */
+  .numbered { list-style: none; padding: 0; margin: 40px 0 0; display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; border-bottom: 0.5px solid var(--divider); }
+  .numbered li { display: grid; grid-template-columns: 64px 1fr; gap: 16px; padding: 20px 0; border-top: 0.5px solid var(--divider); }
+ .numbered .n { font-family: var(--head); font-size: 28px; line-height: 1; color: var(--lavanda-ink); }
+  .numbered strong { font-family: var(--head); font-weight: 500; font-size: 19px; }
+  .numbered p { margin: 6px 0 0; color: var(--text-2); font-size: 15px; }
+  .band .numbered, .band .numbered li { border-color: rgba(255,255,255,0.14); }
+  .band .numbered .n { color: var(--lima); }
+  .band .numbered p { color: var(--on-navy-2); }
+
+  /* ---------- Cómo se aprende ---------- */
+  .method { list-style: none; padding: 0; margin: 32px 0 0; display: grid; gap: 12px; }
+  .method li { display: flex; gap: 12px; align-items: baseline; }
+  .method li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--lavanda-ink); flex: none; transform: translateY(-2px); }
+  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 32px; }
+  .tile { border-radius: 16px; padding: 20px; background: var(--navy-tint); }
+  .tile b { display: block; font-family: var(--head); font-weight: 500; font-size: 30px; line-height: 1; font-variant-numeric: tabular-nums; }
+  .tile span { display: block; margin-top: 8px; font-size: 13px; color: var(--text-2); }
+  .callout { margin-top: 24px; padding: 20px 24px; border-radius: 16px; background: var(--coral-tint); }
+  .callout strong { font-family: var(--head); font-weight: 500; font-size: 19px; display: block; color: var(--navy); }
+  .callout span { color: var(--text-2); font-size: 15px; }
+
+  /* ---------- Ruta de sesiones ---------- */
+  .route { list-style: none; padding: 0; margin: 40px 0 0; position: relative; }
+  .route::before { content: ""; position: absolute; left: 19px; top: 8px; bottom: 8px; width: 2px; background: var(--divider); }
+  .group { position: relative; padding-left: 56px; margin: 40px 0 16px; color: var(--text-2); display: flex; gap: 12px; flex-wrap: wrap; align-items: baseline; }
+  .group:first-child { margin-top: 0; }
+  .group b { color: var(--navy); font-weight: 500; }
+  .step { position: relative; padding-left: 56px; margin-bottom: 16px; }
+  .dot {
+    position: absolute; left: 0; top: 20px; width: 40px; height: 40px; border-radius: 50%;
+    display: grid; place-items: center; font-family: var(--mono); font-size: 13px; font-weight: 500;
+    background: var(--lima); color: var(--lima-ink);
+  }
+  .step.here .dot { background: var(--lavanda); color: var(--navy); }
+  .step.locked .dot { background: var(--bg); border: 2px dashed var(--hint); color: var(--hint); }
+
+  .card { background: var(--card); border-radius: 16px; padding: 24px; box-shadow: var(--shadow); }
+  .step.locked .card { box-shadow: none; background: transparent; border: 0.5px dashed #C9CBD6; }
+  .step.locked h3 { color: var(--text-2); }
+  .unlock { display: flex; gap: 10px; align-items: flex-start; }
+  .unlock svg { width: 16px; height: 16px; flex: none; margin-top: 3px; color: var(--hint); }
+  .unlock b { color: var(--navy); font-weight: 500; }
+  .card .meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; color: var(--text-2); }
+  .tag { padding: 3px 10px; border-radius: 999px; font-size: 11px; }
+  .tag.topic { background: var(--lavanda-tint); color: var(--navy); }
+  .tag.ready { background: var(--lima-tint); color: var(--lima-ink); }
+  .tag.pending { background: var(--divider); color: var(--text-2); }
+  .card h3 { font-size: 24px; line-height: 1.2; margin-top: 12px; }
+  .card p { margin: 8px 0 0; color: var(--text-2); font-size: 15px; max-width: 760px; }
+
+  .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+    padding: 9px 16px; border-radius: 999px; font-size: 14px; font-weight: 500;
+    border: 0.5px solid var(--navy); color: var(--navy); background: transparent;
+    transition: background .15s, transform .1s;
+  }
+  .btn:hover { background: var(--navy-tint); }
+  .btn:active { transform: scale(0.98); }
+  .btn.primary { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .btn.primary:hover { background: var(--navy-hover); }
+  .btn svg { width: 16px; height: 16px; flex: none; }
+  /* Botón sin enlace todavía: se ve inactivo hasta que se llene el href */
+  a.btn[href=""] { opacity: 0.4; pointer-events: none; }
+  .card .pending-note { display: none; margin: 10px 0 0; font-size: 10px; color: var(--hint); }
+  .links:has(a.btn[href=""]) + .pending-note { display: block; }
+
+  details.extra { margin-top: 16px; border-top: 0.5px solid var(--divider); padding-top: 12px; }
+  details.extra summary { cursor: pointer; color: var(--lavanda-ink); list-style: none; }
+  details.extra summary::-webkit-details-marker { display: none; }
+  details.extra summary::before { content: "+ "; }
+  details.extra[open] summary::before { content: "– "; }
+  details.extra ul { list-style: none; padding: 0; margin: 12px 0 0; }
+  details.extra li a { display: flex; gap: 10px; align-items: baseline; padding: 6px 0; text-decoration: none; font-size: 14px; color: var(--navy); }
+  details.extra li a:hover { color: var(--lavanda-ink); }
+  details.extra li .mono { color: var(--hint); font-size: 10px; min-width: 40px; }
+
+  /* ---------- Más allá del aula ---------- */
+  .beyond { display: grid; grid-template-columns: 1fr 1fr; gap: 32px 48px; margin-top: 40px; }
+  .beyond h3 { font-size: 19px; }
+  .beyond p { margin: 6px 0 0; color: var(--text-2); font-size: 15px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .chips span { font-size: 13px; padding: 6px 14px; border-radius: 999px; background: var(--lavanda-tint); color: var(--navy); }
+  .chips.code span { font-family: var(--mono); font-size: 12px; padding: 4px 10px; }
+
+  /* ---------- Certificación ---------- */
+  .checks { list-style: none; padding: 0; margin: 32px 0 0; display: grid; gap: 12px; }
+  .checks li { display: flex; gap: 14px; align-items: center; font-size: 17px; }
+  .checks svg { width: 22px; height: 22px; color: var(--lima); flex: none; }
+  .cert-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 48px; margin-top: 40px; align-items: start; }
+  .eval h3 { font-size: 19px; color: #fff; }
+  .eval-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+  .eval-grid div { background: var(--navy-2); border-radius: 16px; padding: 20px; }
+  .eval-grid b { display: block; font-family: var(--head); font-weight: 500; font-size: 26px; line-height: 1; color: var(--lima); }
+  .eval-grid span { display: block; margin-top: 8px; font-size: 14px; color: var(--on-navy-2); }
+
+  /* ---------- Bases de datos ---------- */
+  .dataset { background: #fff; color: var(--navy); border-radius: 16px; padding: 24px; margin-top: 32px; }
+  .dataset h3 { font-size: 24px; }
+  .dataset > .mono { color: var(--text-2); }
+  .ds-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; }
+  .ds-stats div { background: var(--lima-tint); border-radius: 12px; padding: 16px; }
+  .ds-stats b { display: block; font-family: var(--head); font-weight: 500; font-size: 28px; line-height: 1; font-variant-numeric: tabular-nums; color: var(--lima-ink); }
+  .ds-stats .mono { display: block; margin-top: 6px; font-size: 10px; color: var(--lima-ink); }
+  .vars { margin-top: 24px; }
+  .vars p { margin: 0; color: var(--text-2); font-size: 15px; }
+  .note { margin: 20px 0 0; padding: 12px 16px; border-radius: 12px; background: var(--coral-tint); font-size: 14px; color: var(--navy); }
+  .note strong { color: var(--coral); font-weight: 500; }
+
+  .card .account-note { max-width: none; margin: 20px 0 0; padding: 12px 16px; border-radius: 12px; background: var(--lavanda-tint); font-size: 14px; color: var(--navy); }
+  .account-note strong, .account-note b { font-weight: 500; }
+
+  footer { padding: 48px 0 64px; color: var(--text-2); font-size: 14px; }
+  footer .wrap { display: grid; gap: 16px; }
+  footer .contact a { color: var(--lavanda-ink); text-decoration: none; }
+  footer .contact a:hover { text-decoration: underline; }
+  footer .bottom { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: center; padding-top: 24px; border-top: 0.5px solid var(--divider); }
+  footer .logo { height: 44px; margin: -8px 0 -8px -12px; }
+
+  @media (max-width: 900px) {
+    .numbered, .beyond, .cert-grid { grid-template-columns: 1fr; }
+    .cert-grid { gap: 32px; }
+  }
+
+  @media (max-width: 600px) {
+    section, .band { padding-top: 64px; }
+    .band { padding-bottom: 64px; margin-top: 64px; }
+    .hero h1 { margin-top: 40px; }
+    .hero-top .logo { height: 48px; margin: -8px 0 -8px -13px; }
+    .hero-facts { grid-template-columns: 1fr; gap: 12px; }
+    .compare, .eval-grid, .ds-stats { grid-template-columns: 1fr; }
+    .tiles { grid-template-columns: 1fr 1fr; }
+    .hero p.lead, .section-lead { font-size: 16px; }
+    .card, .dataset { padding: 20px; }
+    .btn { flex: 1 1 auto; justify-content: center; }
+    h2 { font-size: 28px; }
+    .numbered li { grid-template-columns: 44px 1fr; }
+    .numbered .n { font-size: 22px; }
+    .step, .group { padding-left: 48px; }
+    .dot { width: 32px; height: 32px; font-size: 11px; }
+    .route::before { left: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/><path d="M9 7h6"/></symbol>
+  <symbol id="i-slides" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8"/></symbol>
+  <symbol id="i-quiz" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5"/><path d="M5 20h14"/></symbol>
+  <symbol id="i-table" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 4v16"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-clipboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
+</svg>
+
+<!-- ================= PORTADA ================= -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-top">
+      <img class="logo" src="assets/logo/WWB_Logotipo_Negativo.png" alt="Fundación WWB Colombia">
+    </div>
+    <h1>Datos <span>con propósito</span></h1>
+    <p class="lead">Los datos están en todas partes, pero solo cobran sentido cuando nos ayudan a comprender y actuar sobre el propósito misional.</p>
+    <p class="kicker mono">Formación ejecutiva de alto nivel</p>
+    <div class="hero-facts">
+      <div><b>24 h</b><span>de formación total</span></div>
+      <div><b>Híbrida</b><span>presencialidad obligatoria</span></div>
+      <div><b>Semanal</b><span>encuentros presenciales</span></div>
+    </div>
+    <nav aria-label="Secciones">
+      <a href="#presentacion">Presentación</a>
+      <a href="#sesiones">Sesiones</a>
+      <a href="#certificacion">Certificación</a>
+      <a href="#datos">Bases de datos</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- ================= POR QUÉ ================= -->
+  <section id="presentacion">
+    <div class="wrap">
+      <span class="eyebrow mono">Sesión 00 · Por qué nace este programa</span>
+      <h2 class="question">¿Puede haber <span class="c">justicia</span> sin datos?<br>¿Puede haber <span class="l">datos</span> sin justicia?</h2>
+      <p class="section-lead">La Fundación trabaja todos los días con pobreza, desigualdad, género y mercados laborales informales. Leer esos fenómenos con rigor exige mirar el mundo con el lente del propósito misional y sostener esa mirada con técnica estadística. Este programa forma justamente ese oficio.</p>
+
+      <div class="compare">
+        <div class="without">
+          <span class="mono">Sin el programa</span>
+          <p>Se lee el promedio y se cierra el informe. Nadie pregunta si esa cifra esconde una brecha de género o una brecha rural-urbana.</p>
+        </div>
+        <div class="with">
+          <span class="mono">Con el programa</span>
+          <p>Se lee la misma cifra con el lente del propósito misional, con el objetivo del área, con población, territorio y género de por medio. Y se sostiene con la técnica estadística que la hace defendible, con el apoyo de la IA.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= COMPETENCIAS ================= -->
+  <section>
+    <div class="wrap">
+      <span class="eyebrow mono">Propuesta de valor</span>
+      <h2>Cuatro competencias detrás de una sola manera de ver el mundo</h2>
+      <ol class="numbered">
+        <li><span class="n">01</span><div><strong>Enfoque de estudios del desarrollo</strong><p>Ver el propósito misional, la pobreza, la desigualdad y el género con el lente que exige este campo, antes de tocar una sola cifra.</p></div></li>
+        <li><span class="n">02</span><div><strong>Co-construcción con IA</strong><p>Apoyo de la IA para el procesamiento de datos y para aprender a escribir un buen prompt.</p></div></li>
+        <li><span class="n">03</span><div><strong>Técnica estadística con propósito</strong><p>Estadística descriptiva, muestreo e inferencia al servicio de esa mirada, no como ejercicio de cálculo aislado.</p></div></li>
+        <li><span class="n">04</span><div><strong>Lectura crítica del dato</strong><p>Reconocer sesgos, calidad y contexto antes de convertir una cifra en conclusión.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================= CÓMO SE APRENDE ================= -->
+  <section>
+    <div class="wrap">
+      <span class="eyebrow mono">Cómo se aprende</span>
+      <h2>Nada de teoría que se quede en el tablero</h2>
+      <p class="section-lead">Un manual para conversar con los datos. Modalidad híbrida, con lo presencial como columna vertebral del proceso.</p>
+
+      <ul class="method">
+        <li>50% teoría y 50% práctica (Python e IA) en cada sesión de 2 horas.</li>
+        <li>Proyecto final con datos reales de la Fundación y bases de datos nacionales.</li>
+        <li>Tareas entre sesiones, retos y tutoriales: una parte obligatoria y otra opcional.</li>
+      </ul>
+
+      <div class="tiles">
+        <div class="tile"><b>24 h</b><span>Intensidad horaria total</span></div>
+        <div class="tile"><b>16 h</b><span>Sesiones presenciales</span></div>
+        <div class="tile"><b>8 h</b><span>Trabajo autónomo</span></div>
+        <div class="tile"><b>8</b><span>Sesiones · un encuentro por semana</span></div>
+      </div>
+
+      <div class="callout">
+        <strong>La principal herramienta del curso es estar.</strong>
+        <span>Cada sesión construye algo que no se puede recuperar después.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SESIONES ================= -->
+  <section id="sesiones">
+    <div class="wrap">
+      <span class="eyebrow mono">Estructura del curso</span>
+      <h2>El dato, bajo el bisturí</h2>
+      <p class="section-lead">Ocho sesiones. Cada una abre una capa distinta del dato institucional. ¿Qué cuesta más, no medir o medir mal? Cada sesión se desbloquea el día de su encuentro. Abre la guía de estudio antes de la clase; la presentación y el quiz quedan para repasar.</p>
+
+      <ol class="route">
+
+        <li class="group mono"><b>Encuentro 0 · Apertura</b><span>Lunes 5 de octubre</span></li>
+
+        <li class="step here">
+          <span class="dot">00</span>
+          <article class="card">
+            <div class="meta mono"><span>Sesión 00</span><span class="tag topic mono">15 minutos</span><span class="tag ready mono">Estás aquí</span></div>
+            <h3>Presentación del curso</h3>
+            <p>Por qué nace el programa, qué competencias desarrolla, cómo se aprende y qué se necesita para certificarse. Antes de empezar, responde el diagnóstico inicial.</p>
+            <div class="links">
+              <!-- Pega el enlace del diagnóstico inicial dentro de href="" para activar el botón -->
+              <a class="btn primary" id="btn-diagnostico" href="" target="_blank" rel="noopener"><svg><use href="#i-clipboard"/></svg>Diagnóstico inicial</a>            </div>
+            <p class="pending-note mono">El enlace del diagnóstico se publicará pronto</p>
+          </article>
+        </li>
+
+        <li class="group mono"><b>Encuentro 1</b><span>Lunes 5 de octubre</span></li>
+
+        <li class="step">
+          <span class="dot">01</span>
+          <article class="card">
+            <div class="meta mono"><span>Sesión 01</span><span class="tag topic mono">Fundamentos e IA</span><span class="tag ready mono">Disponible</span></div>
+            <h3>Anatomía del dato</h3>
+            <p>Fundamentos técnicos, estructuras del dato y rigor. Formular preguntas de negocio, detectar problemas de calidad y usar la IA como copiloto analítico con prompts efectivos.</p>
+            <div class="links">
+              <a class="btn primary" href="sesion-1/" target="_blank" rel="noopener"><svg><use href="#i-book"/></svg>Guía de estudio</a>
+            </div>
+          </article>
+        </li>
+
+        <li class="group mono"><b>Encuentro 2</b><span>Miércoles 14 de octubre</span></li>
+
+        <li class="step locked" data-unlock="2026-10-14">
+          <span class="dot">02</span>
+          <article class="card">
+            <div class="meta mono"><span>Sesión 02</span><span class="tag pending mono state">Bloqueada</span></div>
+            <h3>La radiografía estadística</h3>
+            <p class="unlock"><svg><use href="#i-lock"/></svg><span>Se desbloquea el <b>miércoles 14 de octubre</b>. El lunes 12 es festivo.</span></p>
+            <div class="unlockable" hidden>
+              <p>Análisis exploratorio descriptivo: lo que el promedio esconde, el efecto de los valores atípicos, el gráfico correcto y las brechas cruzadas entre grupos.</p>
+              <div class="links">
+                <a class="btn" href="sesion-2/" target="_blank" rel="noopener"><svg><use href="#i-book"/></svg>Guía de estudio</a>
+              </div>
+            </div>
+          </article>
+        </li>
+
+        <li class="group mono"><b>Encuentro 3</b><span>Lunes 19 de octubre</span></li>
+
+        <li class="step locked" data-unlock="2026-10-19">
+          <span class="dot">03</span>
+          <article class="card">
+            <div class="meta mono"><span>Sesión 03</span><span class="tag pending mono state">Bloqueada</span></div>
+            <h3>La voz del dato</h3>
+            <p class="unlock"><svg><use href="#i-lock"/></svg><span>Se desbloquea el <b>lunes 19 de octubre</b>.</span></p>
+            <div class="unlockable" hidden>
+              <p>Alquimia del significado, investigación cualitativa y co-construcción. Lo cuantitativo muestra la magnitud de las brechas; lo cualitativo, su significado.</p>
+              <div class="links">
+                <a class="btn" href="sesion-3/" target="_blank" rel="noopener"><svg><use href="#i-book"/></svg>Guía de estudio</a>
+                <a class="btn" href="sesion-3/presentacion.pdf" target="_blank" rel="noopener"><svg><use href="#i-slides"/></svg>Presentación</a>
+                <a class="btn" href="sesion-3/quiz.html" target="_blank" rel="noopener"><svg><use href="#i-quiz"/></svg>Quiz</a>
+              </div>
+              <details class="extra">
+                <summary class="mono">Más materiales</summary>
+                <ul>
+                  <li><a href="sesion-3/matriz-codificacion.xlsx"><span class="mono">XLSX</span>Matriz de codificación · ejercicio cualitativo</a></li>
+                  <li><a href="sesion-3/guia-v1.html" target="_blank" rel="noopener"><span class="mono">HTML</span>Guía de estudio · versión 1</a></li>
+                </ul>
+              </details>
+            </div>
+          </article>
+        </li>
+
+        <li class="group mono"><b>Encuentro 4</b><span>Lunes 26 de octubre</span></li>
+
+        <li class="step locked" data-unlock="2026-10-26">
+          <span class="dot">04</span>
+          <article class="card">
+            <div class="meta mono"><span>Sesión 04</span><span class="tag pending mono state">Bloqueada</span></div>
+            <h3>Las imágenes diagnósticas</h3>
+            <p class="unlock"><svg><use href="#i-lock"/></svg><span>Se desbloquea el <b>lunes 26 de octubre</b>.</span></p>
+            <div class="unlockable" hidden>
+              <p>Principios y técnicas de visualización de datos: qué muestra cada gráfico, qué puede ocultar y cómo evitar distorsiones visuales.</p>
+              <div class="links">
+                <a class="btn" href="sesion-4/" target="_blank" rel="noopener"><svg><use href="#i-book"/></svg>Guía de estudio</a>
+                <a class="btn" href="sesion-4/presentacion.html" target="_blank" rel="noopener"><svg><use href="#i-slides"/></svg>Presentación</a>
+                <a class="btn" href="sesion-4/quiz.html" target="_blank" rel="noopener"><svg><use href="#i-quiz"/></svg>Quiz</a>
+              </div>
+            </div>
+          </article>
+        </li>
+
+        <li class="group mono"><b>Encuentro 5</b><span>Miércoles 4 de noviembre</span></li>
+
+        <li class="step locked" data-unlock="2026-11-04">
+          <span class="dot">05</span>
+          <article class="card">
+            <div class="meta mono"><span>Sesión 05</span><span class="tag pending mono state">Bloqueada</span></div>
+            <h3>Biopsia de datos</h3>
+            <p class="unlock"><svg><use href="#i-lock"/></svg><span>Se desbloquea el <b>miércoles 4 de noviembre</b>. El lunes 2 es festivo.</span></p>
+            <div class="unlockable" hidden>
+              <p>Población, tipos de muestreo y sesgos de selección. Margen de error, confianza, factores de expansión y un laboratorio de muestreo interseccional en Python (Colab).</p>
+              <div class="links">
+                <a class="btn" href="sesion-5/" target="_blank" rel="noopener"><svg><use href="#i-book"/></svg>Guía de estudio</a>
+                <a class="btn" href="sesion-5/presentacion.html" target="_blank" rel="noopener"><svg><use href="#i-slides"/></svg>Presentación</a>
+                <a class="btn" href="sesion-5/quiz.html" target="_blank" rel="noopener"><svg><use href="#i-quiz"/></svg>Quiz</a>
+              </div>
+            </div>
+          </article>
+        </li>
+
+        <li class="group mono"><b>Encuentro 6</b><span>Lunes 9 de noviembre</span></li>
+
+        <li class="step locked" data-unlock="2026-11-09">
+          <span class="dot">06</span>
+          <article class="card">
+            <div class="meta mono"><span>Sesión 06</span><span class="tag pending mono state">Bloqueada</span></div>
+            <h3>Inferencia, relaciones y análisis</h3>
+            <p class="unlock"><svg><use href="#i-lock"/></svg><span>Se desbloquea el <b>lunes 9 de noviembre</b>.</span></p>
+            <div class="unlockable" hidden>
+              <p>Correlación, causalidad e inferencia: pruebas de hipótesis y cómo leer un resultado de regresión lineal para decidir con evidencia.</p>
+              <div class="links">
+                <a class="btn" href="sesion-6/" target="_blank" rel="noopener"><svg><use href="#i-book"/></svg>Guía de estudio</a>
+                <a class="btn" href="sesion-6/presentacion.html" target="_blank" rel="noopener"><svg><use href="#i-slides"/></svg>Presentación</a>
+              </div>
+            </div>
+          </article>
+        </li>
+
+        <li class="group mono"><b>Encuentro 7</b><span>Miércoles 18 de noviembre</span></li>
+
+        <li class="step locked" data-unlock="2026-11-18">
+          <span class="dot">07</span>
+          <article class="card">
+            <div class="meta mono"><span>Sesión 07</span><span class="tag pending mono state">Bloqueada</span></div>
+            <h3>Proyecto final</h3>
+            <p class="unlock"><svg><use href="#i-lock"/></svg><span>Se desbloquea el <b>miércoles 18 de noviembre</b>. El lunes 16 es festivo.</span></p>
+            <div class="unlockable" hidden>
+              <p>Integración y análisis de un caso aplicado con datos reales de la Fundación.</p>
+            </div>
+          </article>
+        </li>
+
+        <li class="group mono"><b>Encuentro 8 · Cierre</b><span>Lunes 23 de noviembre</span></li>
+
+        <li class="step locked" data-unlock="2026-11-23">
+          <span class="dot">08</span>
+          <article class="card">
+            <div class="meta mono"><span>Sesión 08</span><span class="tag pending mono state">Bloqueada</span></div>
+            <h3>Presentación final</h3>
+            <p class="unlock"><svg><use href="#i-lock"/></svg><span>Se desbloquea el <b>lunes 23 de noviembre</b>.</span></p>
+            <div class="unlockable" hidden>
+              <p>Presentación de los proyectos y conclusiones basadas en datos.</p>
+            </div>
+          </article>
+        </li>
+
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================= RESULTADOS DE APRENDIZAJE ================= -->
+  <section class="band">
+    <div class="wrap">
+      <span class="eyebrow mono">Resultados de aprendizaje del curso</span>
+      <h2>Lo que vas a saber, hacer y demostrar al terminar</h2>
+      <ol class="numbered">
+        <li><span class="n">01</span><div><strong>Auditoría, calidad y formulación analítica</strong><p>Formular preguntas de negocio analíticamente viables y auditar la calidad y estructura de bases de datos con uso crítico de la IA (prompts C-T-F-R), identificando inconsistencias, sesgos de medición y niveles de variable.</p></div></li>
+        <li><span class="n">02</span><div><strong>Análisis cuantitativo, cualitativo y descriptivo con enfoque misional</strong><p>Sintetizar datos con estadística descriptiva, tablas cruzadas y matrices de codificación cualitativa para visibilizar brechas socioeconómicas y dinámicas de género, sin reducir la realidad al promedio.</p></div></li>
+        <li><span class="n">03</span><div><strong>Diseño muestral, inferencia y pensamiento crítico</strong><p>Evaluar cifras de impacto y modelos (muestreo estratificado, correlación, regresión lineal) reconociendo los límites de inferencia, los sesgos de selección y la diferencia entre correlación y causalidad.</p></div></li>
+        <li><span class="n">04</span><div><strong>Comunicación ética y toma de decisiones</strong><p>Construir diagnósticos e historias con datos mediante visualizaciones honestas y herramientas ejecutivas (Gran Idea, pitch de decisión), traduciendo hallazgos en recomendaciones alineadas con la misión social, de género e interseccionalidad.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================= MÁS ALLÁ DEL AULA ================= -->
+  <section>
+    <div class="wrap">
+      <span class="eyebrow mono">Más allá del aula</span>
+      <h2>El aprendizaje no se detiene cuando termina la sesión</h2>
+      <div class="beyond">
+        <div><h3>Sesiones flotantes</h3><p>Sesiones de aprendizaje guiado sobre temas prácticos que se usan hoy en el mundo para sacarle más provecho a los datos. Algunas pueden contar para la certificación final.</p></div>
+        <div><h3>Tutoriales útiles</h3><p>Tutoriales rápidos del equipo de analítica sobre técnicas de datos puntuales.</p></div>
+        <div><h3>Retos</h3><p>Visualización de datos y uso ético de la IA. Todavía no tienen fecha fija: se acomodan donde el grupo los necesite.</p></div>
+        <div>
+          <h3>Espacios asincrónicos abiertos a toda la Fundación</h3>
+          <p>No solo para quienes cursan el programa. Cualquier persona de la Fundación puede entrar, con foco práctico.</p>
+          <div class="chips">
+            <span>Ingeniería de prompts y uso de LLM</span><span>Inteligencia artificial aplicada</span><span>Visualización de datos</span><span>Seguridad de la información</span><span>Herramientas digitales</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CERTIFICACIÓN ================= -->
+  <section id="certificacion" class="band">
+    <div class="wrap">
+      <span class="eyebrow mono">Cierre del proceso</span>
+      <h2>Las mejores ideas nacen cuando las personas se involucran. La certificación reconoce ese recorrido.</h2>
+      <div class="cert-grid">
+      <ul class="checks">
+        <li><svg><use href="#i-check"/></svg>80% de asistencia</li>
+        <li><svg><use href="#i-check"/></svg>Conocimiento adquirido durante el curso</li>
+        <li><svg><use href="#i-check"/></svg>Retos y ejercicios desarrollados en sesión</li>
+        <li><svg><use href="#i-check"/></svg>Participación activa en el proyecto final</li>
+      </ul>
+
+      <div class="eval">
+        <h3>Cómo se mide tu avance</h3>
+        <div class="eval-grid">
+          <div><b>≥ 60%</b><span>Nota satisfactoria en los quizzes cortos de cada sesión</span></div>
+          <div><b>Pre y post</b><span>Evaluación de conocimientos al inicio y al cierre del curso</span></div>
+          <div><b>Logrado</b><span>Nivel esperado en la rúbrica de los retos autónomos de cada sesión</span></div>
+          <div><b>4 criterios</b><span>Del proyecto final: calidad del dato, género e interseccionalidad, visualización honesta y límites de inferencia</span></div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BASES DE DATOS ================= -->
+  <section id="datos">
+    <div class="wrap">
+      <span class="eyebrow mono">Proyectos del curso</span>
+      <h2>La base con la que vas a construir</h2>
+      <p class="section-lead">Cada sesión impulsa el proyecto final de tu equipo. Todos trabajan con la misma base: descárgala en Excel para explorar o en CSV para Python.</p>
+
+      <article class="dataset card">
+        <span class="mono">BBDD_Curso</span>
+        <h3>Base de participantes del programa</h3>
+
+        <div class="ds-stats">
+          <div><b>1.438</b><span class="mono">Registros</span></div>
+          <div><b>169</b><span class="mono">Variables</span></div>
+          <div><b>2</b><span class="mono">Momentos · LB y LC</span></div>
+        </div>
+
+        <div class="vars">
+          <p>Perfil sociodemográfico de cada participante y de su negocio, medido en línea base (LB) y línea de cierre (LC): ingresos, ventas, ahorro, pobreza, empleo, registros contables y uso de canales digitales.</p>
+          <div class="chips code">
+            <span>genero</span><span>edad_r</span><span>niv_edu</span><span>etnia</span><span>depto</span><span>actividad</span><span>ventas_lb · lc</span><span>pobre_lb · lc</span><span>ahorro_*</span><span>hab_dig_*</span><span>estado_final</span>
+          </div>
+        </div>
+
+        <div class="links">
+          <a class="btn primary" href="https://drive.google.com/file/d/1ecdi3d4wky9bc2_HVBfOyV1A3UAQACGo/view" target="_blank" rel="noopener"><svg><use href="#i-table"/></svg>Descargar Excel · 0,9 MB</a>
+          <a class="btn" href="https://drive.google.com/file/d/1sRBEY1zhi6VfX2qDsf18nMuCOOSM4YvU/view" target="_blank" rel="noopener"><svg><use href="#i-down"/></svg>Descargar CSV · 1,4 MB</a>
+          <a class="btn" href="sesion-3/matriz-codificacion.xlsx" download><svg><use href="#i-down"/></svg>Matriz cualitativa · S3</a>
+        </div>
+
+        <p class="account-note"><strong>¿No te deja entrar?</strong> La base solo abre con tu cuenta de la Fundación. Si tienes varias cuentas de Google abiertas, en la pantalla de Drive usa <b>Cambiar de cuenta</b> y elige tu correo @fundacionwwbcol.org, o abre el enlace en una ventana de incógnito e inicia sesión solo con esa cuenta.</p>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="contact">
+      <span class="mono">Para mayor información</span><br>
+      <a href="mailto:hsandoval@fundacionwwbcol.org">hsandoval@fundacionwwbcol.org</a> ·
+      <a href="mailto:oramirez@fundacionwwbcol.org">oramirez@fundacionwwbcol.org</a> ·
+      <a href="mailto:vvaloyes@fundacionwwbcol.org">vvaloyes@fundacionwwbcol.org</a>
+    </div>
+    <div class="bottom">
+      <img class="logo" src="assets/logo/WWB_Logotipo_Monocromatico.png" alt="Fundación WWB Colombia">
+      <span class="mono">Aprende · Analiza · Transforma</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Desbloquea cada sesión a partir de su fecha (00:00 hora local)
+  document.querySelectorAll('[data-unlock]').forEach(function (step) {
+    var p = step.dataset.unlock.split('-');
+    if (new Date() < new Date(+p[0], p[1] - 1, +p[2])) return;
+    step.classList.remove('locked');
+    step.querySelector('.unlock').hidden = true;
+    step.querySelector('.unlockable').hidden = false;
+    var tag = step.querySelector('.state');
+    tag.textContent = 'Disponible';
+    tag.className = 'tag ready mono state';
+  });
+</script>
+</body>
+</html>

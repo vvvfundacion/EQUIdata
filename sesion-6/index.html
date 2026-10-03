@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Datos con propósito — Sesión 7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #192962;
+    --navy-tint: #EBEEF7;
+    --lavender: #BEA4E8;
+    --lavender-tint: #F1EBFA;
+    --lavender-text: #534AB7;
+    --bg: #FAFAFA;
+    --card: #FFFFFF;
+    --text-secondary: #5B5E6E;
+    --text-hint: #9A9DAB;
+    --divider: #EDEEF2;
+    --lime: #BBEF7F;
+    --lime-tint: #F1FADF;
+    --lime-text: #173404;
+    --coral: #D55947;
+    --coral-hover: #C24634;
+    --coral-tint: #FBEAE6;
+    --amber: #E8A93B;
+    --amber-tint: #FBF1DE;
+    --teal: #1FA6A6;
+    --teal-tint: #E3F5F5;
+
+    --font-head: 'Space Grotesk', Arial, sans-serif;
+    --font-body: 'Inter', Arial, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    
+    --radius-s: 12px;
+    --radius-card: 16px;
+    --radius-pill: 999px;
+    --max-w: 720px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--navy);
+    font-family: var(--font-body);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  img, svg { max-width: 100%; display: block; }
+
+  h1, h2, h3, h4, h5 { font-family: var(--font-head); font-weight: 500; margin: 0; color: var(--navy); line-height: 1.25; }
+  p { margin: 0; }
+
+  .wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+  .mono-label { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; font-size: 12px; font-weight: 500; }
+
+  /* Progress Bar */
+  #progress-track { position: fixed; top: 0; left: 0; right: 0; height: 4px; background: var(--divider); z-index: 1000; }
+  #progress-fill { height: 100%; width: 0%; background: var(--lime); transition: width 0.08s linear; }
+
+  /* Hero Section */
+  .hero { position: relative; background: var(--navy); color: #fff; overflow: hidden; padding: 64px 24px 56px; }
+  .hero-deco { position: absolute; inset: 0; pointer-events: none; }
+  .hero-inner { position: relative; max-width: var(--max-w); margin: 0 auto; }
+  .hero .mono-label { color: var(--lime); }
+  .hero h1 { color: #fff; font-size: clamp(38px, 9vw, 54px); line-height: 1.05; margin-top: 16px; }
+  .hero h1 span { color: var(--lime); }
+  .hero p.lede { margin-top: 20px; max-width: 52ch; color: #C7CCE6; font-size: 16px; }
+
+  /* Navigation Grid */
+  .quicknav-outer { background: var(--card); border-bottom: 0.5px solid var(--divider); position: sticky; top: 4px; z-index: 900; }
+  .quicknav { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 12px 24px; max-width: var(--max-w); margin: 0 auto; }
+  @media (max-width: 560px) { .quicknav { grid-template-columns: repeat(2, 1fr); } }
+  .quicknav a {
+    font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; font-weight: 500;
+    color: var(--navy); background: var(--navy-tint); padding: 10px 14px; border-radius: var(--radius-s);
+    text-decoration: none; text-align: center; transition: background 0.2s; display: flex; align-items: center; justify-content: center;
+  }
+  .quicknav a:hover { background: var(--lavender-tint); }
+
+  .chapter-header { background: var(--lavender-tint); border-radius: var(--radius-card); border-left: 5px solid var(--lavender); padding: 20px 24px; margin-top: 32px; margin-bottom: 0; scroll-margin-top: 84px; }
+  .chapter-header .chapter-num { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; font-size: 11.5px; color: var(--text-secondary); margin-bottom: 6px; display: block; }
+  .chapter-header h2 { font-size: 26px; color: var(--navy); margin: 0; }
+  .chapter-content { padding-top: 32px; padding-bottom: 40px; }
+
+  main { padding-top: 8px; }
+  .eyebrow { color: var(--lavender-text); }
+  .section-title { font-size: clamp(22px, 5vw, 26px); margin-top: 10px; max-width: 38ch; }
+  .section-intro { margin-top: 16px; color: var(--text-secondary); font-size: 15px; max-width: 62ch; }
+  .sub-section { margin-top: 48px; }
+
+  .conclusion-line { display: flex; align-items: flex-start; gap: 10px; }
+  .conclusion-line .arrow { flex: 0 0 auto; color: var(--teal); font-size: 17px; font-weight: 600; line-height: 1.4; }
+  .conclusion-line .section-intro { margin-top: 0; }
+
+  /* Cards & Layouts */
+  .card { background: var(--card); border-radius: var(--radius-card); padding: 24px; }
+  .card.bordered { border: 0.5px solid var(--divider); }
+  .card.shadow { box-shadow: 0 4px 20px rgba(25, 41, 98, 0.06); }
+  .card.mint { background: #F0FAF5; border: none; }
+  .card.blue-light { background: #F0F4FC; border: none; }
+  .stack { display: flex; flex-direction: column; gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 560px) { .grid-2 { grid-template-columns: 1fr; } }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 700px) { .grid-3 { grid-template-columns: 1fr; } }
+
+  .pill {
+    display: inline-flex; align-items: center; font-family: var(--font-mono); text-transform: uppercase;
+    letter-spacing: 0.08em; font-size: 11px; font-weight: 500; padding: 6px 14px; border-radius: var(--radius-pill); margin-bottom: 12px;
+  }
+  .pill.navy { background: var(--navy); color: #fff; }
+  .pill.lavender { background: var(--lavender); color: var(--navy); }
+  .pill.lime { background: var(--lime); color: var(--lime-text); }
+  .pill.coral { background: var(--coral); color: #fff; }
+
+  .card h4 { font-family: var(--font-body); font-weight: 500; font-size: 17px; color: var(--navy); }
+  .card p, .card li { font-size: 14.5px; color: var(--text-secondary); margin-top: 8px; }
+  .card ul { margin: 8px 0 0; padding-left: 18px; }
+  .card li + li { margin-top: 6px; }
+
+  /* Interactive Buttons & Graphs */
+  .btn-show {
+    margin-top: 16px; background: var(--navy-tint); color: var(--navy); border: none; padding: 8px 16px;
+    border-radius: var(--radius-pill); font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+    cursor: pointer; text-transform: uppercase; letter-spacing: 0.05em; transition: background 0.2s;
+  }
+  .btn-show:hover { background: var(--divider); }
+  .btn-show.teal { background: var(--teal); color: #fff; }
+  .btn-show.teal:hover { background: #178C8C; }
+  .answer-box { display: none; margin-top: 12px; }
+  .answer-box.active { display: block; }
+
+  .reveal-trigger {
+    margin-top: 16px; color: var(--teal); font-weight: 600; font-size: 14.5px;
+    cursor: pointer; display: inline-block; transition: color 0.2s;
+  }
+  .reveal-trigger:hover { color: var(--navy); }
+
+  /* Modal */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(25, 41, 98, 0.55);
+    z-index: 2000; align-items: center; justify-content: center; padding: 24px;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal-box {
+    background: var(--card); border-radius: var(--radius-card); padding: 32px 24px 24px;
+    max-width: 640px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative;
+    box-shadow: 0 20px 60px rgba(25, 41, 98, 0.25);
+  }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px; background: var(--navy-tint); color: var(--navy);
+    border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 16px;
+    line-height: 1; display: flex; align-items: center; justify-content: center; transition: background 0.2s;
+  }
+  .modal-close:hover { background: var(--divider); }
+
+  /* Log transformation tabs */
+  .log-tabs-nav { display: flex; flex-wrap: wrap; gap: 8px; }
+  .log-tab-btn {
+    background: var(--navy-tint); color: var(--navy); border: none; padding: 8px 14px;
+    border-radius: var(--radius-pill); font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.03em; cursor: pointer; transition: background 0.2s, color 0.2s;
+  }
+  .log-tab-btn:hover { background: var(--divider); }
+  .log-tab-btn.active { background: var(--teal); color: #fff; }
+  .log-pane { display: none; }
+  .log-pane.active { display: block; }
+  .formula-inline {
+    font-family: var(--font-mono); background: var(--navy-tint); padding: 2px 6px;
+    border-radius: 4px; font-size: 13px;
+  }
+
+  .btn-tab {
+    background: var(--bg); color: var(--navy); border: 1px solid var(--divider); padding: 10px 18px;
+    border-radius: var(--radius-pill); font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; transition: all 0.3s ease;
+  }
+  .btn-tab:hover { background: var(--divider); }
+  .btn-tab.active { background: var(--teal); color: #fff; border-color: var(--teal); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .example-container { display: none; flex-direction: row; flex-wrap: wrap; gap: 16px; margin-top: 16px; align-items: flex-start; }
+  .example-container.active { display: flex; }
+  .example-card { flex: 1 1 240px; background: var(--bg); padding: 16px; border-radius: var(--radius-s); border: 1px solid var(--divider); }
+  .example-card h5 { margin: 0 0 12px 0; font-size: 13.5px; text-align: center; color: var(--navy); }
+
+  /* Callouts & Formulas */
+  .band-navy { background: var(--navy); color: #fff; border-radius: var(--radius-card); padding: 32px 28px; }
+  .band-navy p.alt { color: #fff; font-family: var(--font-body); font-style: normal; }
+  .band-navy .case-label { color: var(--lime); font-weight: 600; }
+
+  .question-highlight { text-align: center; background: rgba(101, 161, 230, 0.12); border-radius: var(--radius-card); padding: 20px 24px; }
+
+  .callout { border-radius: var(--radius-card); padding: 20px 22px; display: flex; gap: 14px; align-items: flex-start; }
+  .callout.lime { background: var(--lime-tint); }
+  .callout.lavender { background: var(--lavender-tint); }
+  .callout.coral { background: var(--coral-tint); }
+  .callout.amber { background: var(--amber-tint); }
+  .callout.teal { background: var(--teal-tint); }
+  .callout .dot { flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; margin-top: 7px; }
+  .callout.lime .dot { background: #6FAF2A; }
+  .callout.coral .dot { background: var(--coral); }
+  .callout.amber .dot { background: var(--amber); }
+  .callout.teal .dot { background: var(--teal); }
+  .callout p { font-size: 14.5px; color: var(--navy); margin: 0; }
+  .callout strong { font-weight: 600; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-top: 16px; }
+  th, td { padding: 10px 12px; text-align: center; border: 0.5px solid var(--divider); }
+  th { background: var(--navy-tint); font-weight: 500; font-family: var(--font-mono); font-size: 11.5px; text-transform: uppercase; }
+  td.hl { background: var(--navy-tint); font-weight: 600; }
+  
+  .formula { font-family: var(--font-mono); background: var(--navy-tint); border-radius: var(--radius-s); padding: 16px 18px; font-size: 14px; color: var(--navy); overflow-x: auto; }
+
+  /* Carousel Components */
+  .carousel-wrapper { position: relative; background: var(--card); border: 1px solid var(--divider); border-radius: var(--radius-card); padding: 32px; overflow: hidden; margin-top: 16px; }
+  .carousel-title-top { font-family: var(--font-mono); text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em; color: var(--text-secondary); margin-bottom: 24px; text-align: center; }
+  .carousel-slide { display: none; min-height: 140px; animation: fadeIn 0.4s ease; }
+  .carousel-slide.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+  
+  .carousel-header {
+    color: var(--teal); font-size: 18px; font-weight: 600; margin-bottom: 16px;
+    text-decoration: underline; text-decoration-color: var(--teal); 
+    text-underline-offset: 6px; text-decoration-thickness: 2px;
+  }
+  .carousel-controls { display: flex; align-items: center; justify-content: space-between; margin-top: 24px; }
+  .carousel-btn { background: var(--navy-tint); color: var(--navy); border: none; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s; font-size: 16px; }
+  .carousel-btn:hover { background: var(--divider); }
+  .carousel-dots { display: flex; gap: 8px; }
+  .dot-nav { width: 8px; height: 8px; border-radius: 50%; background: var(--divider); cursor: pointer; transition: background 0.2s; }
+  .dot-nav.active { background: var(--navy); }
+
+  /* Causality Animation Framework */
+  .anim-container {
+    background: var(--card); border-radius: var(--radius-card); padding: 32px 24px; border: 1px solid var(--divider);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;
+  }
+  .badge-wrapper { position: relative; height: 32px; display: flex; justify-content: center; width: 100%; margin-bottom: 24px; }
+  .anim-badge {
+    position: absolute; padding: 6px 16px; font-size: 12px; font-family: var(--font-mono); text-transform: uppercase;
+    border-radius: var(--radius-pill); font-weight: 600; opacity: 0;
+  }
+  .anim-arrow-direct, .badge-d { animation: fadeDirect 9s infinite; }
+  .anim-arrow-reverse, .badge-r { animation: fadeReverse 9s infinite; }
+  .anim-arrow-confound, .badge-c { animation: fadeConfound 9s infinite; }
+  .badge-d { background: var(--lime-tint); color: var(--lime-text); }
+  .badge-r { background: var(--coral-tint); color: var(--coral-hover); }
+  .badge-c { background: var(--lavender-tint); color: var(--lavender-text); }
+
+  @keyframes fadeDirect { 0%, 25% { opacity: 1; } 28%, 100% { opacity: 0; } }
+  @keyframes fadeReverse { 0%, 28% { opacity: 0; } 33%, 58% { opacity: 1; } 61%, 100% { opacity: 0; } }
+  @keyframes fadeConfound { 0%, 61% { opacity: 0; } 66%, 95% { opacity: 1; } 100% { opacity: 0; } }
+
+  /* Inferencia / Poblacion y Muestra Component */
+  .inf-wrapper { display: flex; align-items: stretch; justify-content: space-between; gap: 24px; margin-top: 32px; flex-wrap: wrap; }
+  .inf-card { 
+    flex: 1 1 250px; background: var(--card); border: 1px solid var(--divider); border-radius: var(--radius-card); 
+    padding: 32px; display: flex; flex-direction: column; align-items: flex-start; text-align: left; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+  }
+  .inf-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(25, 41, 98, 0.08); }
+  .inf-card h4 { font-size: 18px; color: var(--navy); margin-bottom: 16px; }
+  .inf-card p { font-size: 14.5px; color: var(--text-secondary); margin-bottom: 32px; min-height: 70px; }
+  
+  .inf-circle-wrapper { display: flex; justify-content: center; width: 100%; margin-top: auto; }
+  .inf-circle { 
+    width: 100px; height: 100px; border-radius: 50%; display: flex; justify-content: center; align-items: center; 
+    color: white; font-size: 26px; font-weight: 600; font-family: var(--font-head); box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  .inf-circle.pop { background: var(--coral); }
+  .inf-circle.muest { background: var(--teal); }
+  
+  .inf-middle { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; margin: 0 auto; }
+  .inf-middle span { font-size: 11px; font-family: var(--font-mono); text-transform: uppercase; color: var(--text-hint); letter-spacing: 0.05em; }
+  
+  .dash-anim { stroke-dasharray: 6, 6; animation: dashMove 1s linear infinite reverse; }
+  @keyframes dashMove { to { stroke-dashoffset: 24; } }
+
+  footer { background: var(--navy); color: #9AA2C6; padding: 40px 24px; text-align: center; margin-top: 64px; }
+</style>
+</head>
+<body>
+
+<div id="progress-track"><div id="progress-fill"></div></div>
+
+<header class="hero">
+  <svg class="hero-deco" viewBox="0 0 400 340" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
+    <circle cx="430" cy="90" r="150" fill="#25316f" opacity="0.55"/>
+    <circle cx="370" cy="230" r="110" fill="#2b3a7d" opacity="0.5"/>
+  </svg>
+  <div class="hero-inner">
+    <span class="mono-label">Relaciones, inferencias y análisis</span>
+    <h1>Datos<br><span>con propósito</span></h1>
+    <p class="lede">No toda relación es una causa, ni todo resultado puede generalizarse. Esta guía conecta evidencia y pensamiento crítico para leer datos con más criterio.</p>
+  </div>
+</header>
+
+<div class="quicknav-outer">
+  <nav class="quicknav">
+    <a href="#objetivos">Objetivos</a>
+    <a href="#correlacion">Correlación</a>
+    <a href="#causalidad">Causalidad</a>
+    <a href="#hipotesis">Pruebas de hipótesis</a>
+    <a href="#regresion">Regresión lineal</a>
+    <a href="#caso">Caso práctico</a>
+  </nav>
+</div>
+
+<main class="wrap">
+
+  <section id="objetivos" style="padding: 56px 0; scroll-margin-top: 84px;">
+    <span class="mono-label eyebrow">¿Qué vamos a aprender hoy?</span>
+    <h2 class="section-title">Dos cosas que vas a poder hacer al salir de aquí</h2>
+    <div class="grid-2" style="margin-top:28px;">
+      <div class="card bordered">
+        <span class="pill navy">RA1</span>
+        <h4>Leer una relación entre variables sin caer en la trampa de la causa</h4>
+        <ul>
+          <li>Distinguir si dos variables de Yarú Virtual van juntas de forma positiva, negativa o si no hay relación.</li>
+          <li>Ante un hallazgo llamativo, explicar por qué no prueba una causa y proponer una variable de confusión posible.</li>
+        </ul>
+      </div>
+      <div class="card bordered">
+        <span class="pill lavender">RA2</span>
+        <h4>Leer un resultado de regresión y decidir si alcanza para actuar</h4>
+        <ul>
+          <li>Reconocer el signo de un coeficiente, si es significativo y qué tan bien ajusta el modelo.</li>
+          <li>Decidir si ese hallazgo de muestra ya orienta una decisión para todo el programa o si conviene pedir más evidencia.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div id="correlacion" class="chapter-header">
+    <span class="chapter-num">Momento 1</span>
+    <h2>Relación entre las variables</h2>
+  </div>
+  <div class="chapter-content">
+    <span class="mono-label eyebrow">Relación entre variables continuas</span>
+    <h2 class="section-title">Tres preguntas para leer cualquier nube de puntos</h2>
+
+    <div class="stack" style="margin-top:28px;">
+      <!-- Forma -->
+      <div class="card bordered">
+        <span class="pill lime">Forma</span>
+        <h4>¿Los puntos siguen una línea recta o se ven dispersos?</h4>
+        <p>Si al trazar una línea imaginaria los puntos parecen acomodarse cerca de ella, hay forma. Si no siguen ningún patrón, están completamente dispersos.</p>
+        
+        <button class="btn-show" onclick="toggleExample('ej-forma', this)">Ver ejemplos gráficos</button>
+        <div id="ej-forma" class="example-container">
+          <div class="example-card">
+            <h5>1. Siguen una línea recta</h5>
+            <svg viewBox="0 0 200 120" style="width:100%;">
+              <polyline points="20,10 20,110 190,110" fill="none" stroke="#A9AEC4" stroke-width="1.5"/>
+              <line x1="25" y1="95" x2="185" y2="25" stroke="#333" stroke-width="1.2" stroke-dasharray="4,4"/>
+              <circle cx="30" cy="90" r="3.5" fill="var(--teal)"/><circle cx="45" cy="88" r="3.5" fill="var(--teal)"/>
+              <circle cx="40" cy="78" r="3.5" fill="var(--teal)"/><circle cx="60" cy="80" r="3.5" fill="var(--teal)"/>
+              <circle cx="70" cy="70" r="3.5" fill="var(--teal)"/><circle cx="85" cy="65" r="3.5" fill="var(--teal)"/>
+              <circle cx="95" cy="75" r="3.5" fill="var(--teal)"/><circle cx="110" cy="58" r="3.5" fill="var(--teal)"/>
+              <circle cx="120" cy="50" r="3.5" fill="var(--teal)"/><circle cx="135" cy="60" r="3.5" fill="var(--teal)"/>
+              <circle cx="150" cy="45" r="3.5" fill="var(--teal)"/><circle cx="165" cy="40" r="3.5" fill="var(--teal)"/>
+              <circle cx="180" cy="35" r="3.5" fill="var(--teal)"/><circle cx="170" cy="25" r="3.5" fill="var(--teal)"/>
+            </svg>
+          </div>
+          <div class="example-card">
+            <h5>2. Completamente dispersos</h5>
+            <svg viewBox="0 0 200 120" style="width:100%;">
+              <polyline points="20,10 20,110 190,110" fill="none" stroke="#A9AEC4" stroke-width="1.5"/>
+              <circle cx="30" cy="40" r="3.5" fill="var(--teal)"/><circle cx="45" cy="85" r="3.5" fill="var(--teal)"/>
+              <circle cx="55" cy="25" r="3.5" fill="var(--teal)"/><circle cx="70" cy="65" r="3.5" fill="var(--teal)"/>
+              <circle cx="85" cy="95" r="3.5" fill="var(--teal)"/><circle cx="100" cy="35" r="3.5" fill="var(--teal)"/>
+              <circle cx="115" cy="75" r="3.5" fill="var(--teal)"/><circle cx="130" cy="20" r="3.5" fill="var(--teal)"/>
+              <circle cx="140" cy="60" r="3.5" fill="var(--teal)"/><circle cx="155" cy="85" r="3.5" fill="var(--teal)"/>
+              <circle cx="170" cy="45" r="3.5" fill="var(--teal)"/><circle cx="185" cy="90" r="3.5" fill="var(--teal)"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dirección -->
+      <div class="card bordered">
+        <span class="pill lavender">Dirección</span>
+        <h4>¿La nube sube, baja o no tiene una dirección clara?</h4>
+        <p>Sube: relación positiva. Baja: relación negativa. Sube y baja sin patrón: no hay dirección clara, como una curva que no es lineal.</p>
+        
+        <button class="btn-show" onclick="toggleExample('ej-dir', this)">Ver ejemplos gráficos</button>
+        <div id="ej-dir" class="example-container">
+          <div class="example-card">
+            <h5>1. Dirección Positiva</h5>
+            <svg viewBox="0 0 200 120" style="width:100%;">
+              <polyline points="20,10 20,110 190,110" fill="none" stroke="#A9AEC4" stroke-width="1.5"/>
+              <line x1="25" y1="95" x2="185" y2="25" stroke="#333" stroke-width="1.2" stroke-dasharray="4,4"/>
+              <circle cx="35" cy="90" r="3.5" fill="var(--teal)"/><circle cx="55" cy="82" r="3.5" fill="var(--teal)"/>
+              <circle cx="75" cy="75" r="3.5" fill="var(--teal)"/><circle cx="95" cy="68" r="3.5" fill="var(--teal)"/>
+              <circle cx="115" cy="55" r="3.5" fill="var(--teal)"/><circle cx="135" cy="45" r="3.5" fill="var(--teal)"/>
+              <circle cx="155" cy="40" r="3.5" fill="var(--teal)"/><circle cx="175" cy="30" r="3.5" fill="var(--teal)"/>
+            </svg>
+          </div>
+          <div class="example-card">
+            <h5>2. Dirección Negativa</h5>
+            <svg viewBox="0 0 200 120" style="width:100%;">
+              <polyline points="20,10 20,110 190,110" fill="none" stroke="#A9AEC4" stroke-width="1.5"/>
+              <line x1="25" y1="25" x2="185" y2="95" stroke="#333" stroke-width="1.2" stroke-dasharray="4,4"/>
+              <circle cx="35" cy="30" r="3.5" fill="var(--teal)"/><circle cx="55" cy="38" r="3.5" fill="var(--teal)"/>
+              <circle cx="75" cy="45" r="3.5" fill="var(--teal)"/><circle cx="95" cy="52" r="3.5" fill="var(--teal)"/>
+              <circle cx="115" cy="65" r="3.5" fill="var(--teal)"/><circle cx="135" cy="75" r="3.5" fill="var(--teal)"/>
+              <circle cx="155" cy="80" r="3.5" fill="var(--teal)"/><circle cx="175" cy="90" r="3.5" fill="var(--teal)"/>
+            </svg>
+          </div>
+          <div class="example-card">
+            <h5>3. Sin dirección clara (curva)</h5>
+            <svg viewBox="0 0 200 120" style="width:100%;">
+              <polyline points="20,10 20,110 190,110" fill="none" stroke="#A9AEC4" stroke-width="1.5"/>
+              <path d="M 30,90 Q 70,10 100,50 T 170,90" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="4,4"/>
+              <circle cx="35" cy="85" r="3.5" fill="var(--teal)"/><circle cx="45" cy="70" r="3.5" fill="var(--teal)"/>
+              <circle cx="55" cy="50" r="3.5" fill="var(--teal)"/><circle cx="70" cy="35" r="3.5" fill="var(--teal)"/>
+              <circle cx="85" cy="40" r="3.5" fill="var(--teal)"/><circle cx="100" cy="50" r="3.5" fill="var(--teal)"/>
+              <circle cx="115" cy="65" r="3.5" fill="var(--teal)"/><circle cx="130" cy="80" r="3.5" fill="var(--teal)"/>
+              <circle cx="145" cy="90" r="3.5" fill="var(--teal)"/><circle cx="160" cy="85" r="3.5" fill="var(--teal)"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fuerza -->
+      <div class="card bordered">
+        <span class="pill coral">Fuerza</span>
+        <h4>¿Qué tan cerca están los puntos de esa línea imaginaria?</h4>
+        <p>Mientras más pegados estén los puntos a la línea, más fuerte es la relación. Mientras más lejos, más débil, aunque la dirección sea clara.</p>
+        
+        <button class="btn-show" onclick="toggleExample('ej-fuerza', this)">Ver ejemplos gráficos</button>
+        <div id="ej-fuerza" class="example-container">
+          <div class="example-card">
+            <h5>1. Fuerte (cerca de la línea)</h5>
+            <svg viewBox="0 0 200 120" style="width:100%;">
+              <polyline points="20,10 20,110 190,110" fill="none" stroke="#A9AEC4" stroke-width="1.5"/>
+              <line x1="25" y1="95" x2="185" y2="25" stroke="#333" stroke-width="1.2" stroke-dasharray="4,4"/>
+              <circle cx="30" cy="92" r="3.5" fill="var(--teal)"/><circle cx="40" cy="88" r="3.5" fill="var(--teal)"/>
+              <circle cx="55" cy="80" r="3.5" fill="var(--teal)"/><circle cx="70" cy="74" r="3.5" fill="var(--teal)"/>
+              <circle cx="85" cy="70" r="3.5" fill="var(--teal)"/><circle cx="100" cy="63" r="3.5" fill="var(--teal)"/>
+              <circle cx="115" cy="56" r="3.5" fill="var(--teal)"/><circle cx="130" cy="51" r="3.5" fill="var(--teal)"/>
+              <circle cx="145" cy="45" r="3.5" fill="var(--teal)"/><circle cx="160" cy="34" r="3.5" fill="var(--teal)"/>
+              <circle cx="175" cy="28" r="3.5" fill="var(--teal)"/>
+            </svg>
+          </div>
+          <div class="example-card">
+            <h5>2. Débil (lejos de la línea)</h5>
+            <svg viewBox="0 0 200 120" style="width:100%;">
+              <polyline points="20,10 20,110 190,110" fill="none" stroke="#A9AEC4" stroke-width="1.5"/>
+              <line x1="25" y1="80" x2="185" y2="60" stroke="#333" stroke-width="1.2" stroke-dasharray="4,4"/>
+              <circle cx="35" cy="55" r="3.5" fill="var(--teal)"/><circle cx="55" cy="95" r="3.5" fill="var(--teal)"/>
+              <circle cx="75" cy="40" r="3.5" fill="var(--teal)"/><circle cx="105" cy="80" r="3.5" fill="var(--teal)"/>
+              <circle cx="135" cy="30" r="3.5" fill="var(--teal)"/><circle cx="165" cy="65" r="3.5" fill="var(--teal)"/>
+              <circle cx="180" cy="85" r="3.5" fill="var(--teal)"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<div class="conclusion-line" style="margin-top:16px;">
+  <span class="arrow" aria-hidden="true">→</span>
+  <p class="section-intro">El análisis gráfico a veces engaña, por eso conviene acompañarlo siempre de un coeficiente de correlación.</p>
+</div>
+    <div class="sub-section">
+      <h2 class="section-title">Gráfico de dispersión vs. coeficiente de correlación</h2>
+      <p class="section-intro">Utilizamos la correlación de pearson (r) en variable continuas. El mismo número de r puede significar cosas distintas según la forma de la nube. Por eso el gráfico y el coeficiente se leen juntos, nunca por separado.</p>
+      <div class="grid-2" style="margin-top:24px;">
+        <div class="callout amber"><div class="dot"></div><p><strong>r = −0.047</strong> — no existe relación lineal reconocible entre las variables.</p></div>
+        <div class="callout lime"><div class="dot"></div><p><strong>r = 0.889</strong> — relación directa: cuando una sube, la otra también.</p></div>
+        <div class="callout coral"><div class="dot"></div><p><strong>r = −0.889</strong> — relación inversa: cuando una sube, la otra baja.</p></div>
+        <div class="callout lavender"><div class="dot"></div><p><strong>r = 0.09</strong> — relación no lineal: el coeficiente de Pearson la subestima porque no sigue una recta.</p></div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <span class="mono-label eyebrow">Otra combinación posible</span>
+      <h2 class="section-title">¿Qué pasa cuando ambas variables son dicotómicas?</h2>
+      <p class="section-intro">Aquí ya no buscamos una relación lineal, sino una asociación entre categorías.</p>
+
+      <div class="band-navy" style="margin-top:24px;">
+        <p class="alt" style="margin-top:0;"><strong class="case-label">Estudio de caso:</strong> En Cali, un equipo que trabaja en inclusión financiera quiere entender si existen diferencias en el acceso a productos financieros entre mujeres y hombres que desarrollan emprendimientos en contextos de vulnerabilidad. Al revisar los datos, encuentran que las billeteras digitales, como Nequi, Daviplata y Ahorro a la Mano, tienen una presencia importante entre las personas encuestadas.</p>
+      </div>
+
+      <div class="card shadow" style="margin-top:24px;">
+        <h4 style="margin-top:0;">Tabla de contingencia (2×2)</h4>
+        <p style="margin-top:6px;">¿Existe relación entre tener empleo y tener computador?</p>
+
+        <table>
+          <tr><th></th><th>Billeteras: sí</th><th>Billetera: no</th><th>Total</th></tr>
+          <tr><td class="hl">Mujer</td><td>43</td><td>57</td><td>100</td></tr>
+          <tr><td class="hl">Hombres</td><td>35</td><td>65</td><td>100</td></tr>
+          <tr><td class="hl">Total</td><td>78</td><td>122</td><td>200</td></tr>
+        </table>
+        <p style="margin-top:8px;font-size:12.5px;color:var(--text-hint);">Fuente: Mesa de trabajo de inclusión financiera. <a href="https://www.fundacionwwbcolombia.org/informes-especiales-post/recomendaciones-de-inclusion-financiera-para-los-gobiernos-locales/" target="_blank" rel="noopener" style="color:var(--lavender-text);">Disponible aquí</a></p>
+      </div>
+
+       <div class="callout lime" style="margin-top:16px;">
+        <div class="dot"></div>
+        <p><strong>Conclusión del ejemplo:</strong> A simple vista, las mujeres presentan una mayor proporción de tenencia de billeteras digitales. Pero ¿la diferencia observada es suficientemente grande para afirmar que existe una asociación entre sexo y tenencia de billetera digital, o podría deberse al azar?</p>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <span class="mono-label eyebrow">Relación entre variable continua y cualitativa</span>
+      <h2 class="section-title">¿Qué sucede cuándo la variable Y es continua y la X es cualitativa?</h2>
+
+      <div class="band-navy" style="margin-top:24px;">
+      <p class="alt" style="margin-top:0;"><strong class="case-label">Estudio de caso:</strong> Este mismo equipo quiere analizar si tener billetera digital como producto de ahorro está relacionado con el desempeño económico de los negocios.</p>
+    </div>
+
+    <div class="sub-section" style="margin-top:32px;">
+      <h2 class="question-highlight">¿Existe una asociación entre tener una billetera digital y los ingresos por ventas del negocio?</h2>
+      
+      <div class="grid-2" style="margin-top:24px;">
+        <!-- 2 Category Custom Boxplot -->
+        <div class="card shadow" style="display:flex; flex-direction:column; justify-content:center; padding:16px;">
+          <h4 style="margin:0 0 16px 0; text-align:center; font-size:15px;">Ingresos según uso de billetera digital</h4>
+          <svg viewBox="0 0 240 220" style="width:100%; max-width:240px; margin:0 auto;">
+            <!-- Axes -->
+            <polyline points="40,20 40,180 220,180" fill="none" stroke="#A9AEC4" stroke-width="1.5"/>
+            <text x="-100" y="20" transform="rotate(-90)" fill="#5B5E6E" font-size="11" font-family="Inter, sans-serif" text-anchor="middle">Ingresos por ventas (Millones)</text>
+            <text x="130" y="210" fill="#5B5E6E" font-size="11" font-family="Inter, sans-serif" text-anchor="middle">¿Usa billeteras electrónicas?</text>
+            
+            <text x="30" y="184" fill="#5B5E6E" font-size="10" font-family="Inter, sans-serif" text-anchor="end">0</text>
+            <text x="30" y="144" fill="#5B5E6E" font-size="10" font-family="Inter, sans-serif" text-anchor="end">1</text>
+            <text x="30" y="104" fill="#5B5E6E" font-size="10" font-family="Inter, sans-serif" text-anchor="end">2</text>
+            <text x="30" y="64" fill="#5B5E6E" font-size="10" font-family="Inter, sans-serif" text-anchor="end">3</text>
+            <text x="30" y="24" fill="#5B5E6E" font-size="10" font-family="Inter, sans-serif" text-anchor="end">4</text>
+            
+            <text x="85" y="195" fill="#5B5E6E" font-size="11" font-family="Inter, sans-serif" text-anchor="middle">No</text>
+            <text x="175" y="195" fill="#5B5E6E" font-size="11" font-family="Inter, sans-serif" text-anchor="middle">Sí</text>
+
+            <!-- Boxplot 1 -->
+            <line x1="85" y1="165" x2="85" y2="85" stroke="#3366CC" stroke-width="1.5"/>
+            <line x1="75" y1="165" x2="95" y2="165" stroke="#3366CC" stroke-width="1.5"/>
+            <line x1="75" y1="85" x2="95" y2="85" stroke="#3366CC" stroke-width="1.5"/>
+            <rect x="65" y="105" width="40" height="40" fill="#88B0ED" stroke="#3366CC" stroke-width="1.5"/>
+            <line x1="65" y1="125" x2="105" y2="125" stroke="#3366CC" stroke-width="1.5"/>
+
+            <!-- Boxplot 2 -->
+            <line x1="175" y1="140" x2="175" y2="40" stroke="#6FAF2A" stroke-width="1.5"/>
+            <line x1="165" y1="140" x2="185" y2="140" stroke="#6FAF2A" stroke-width="1.5"/>
+            <line x1="165" y1="40" x2="185" y2="40" stroke="#6FAF2A" stroke-width="1.5"/>
+            <rect x="155" y="70" width="40" height="45" fill="#A7DA78" stroke="#6FAF2A" stroke-width="1.5"/>
+            <line x1="155" y1="95" x2="195" y2="95" stroke="#6FAF2A" stroke-width="1.5"/>
+          </svg>
+        </div>
+        
+        <div class="stack">
+          <div class="card mint">
+            <span class="mono-label" style="color:#0C573A;">Medida de asociación</span>
+            <h4 style="color:#0F1C4D; margin:4px 0 8px;">Correlación punto-biserial</h4>
+            <p style="margin:0; font-size:13.5px; color:#192962;">Equivale a la correlación de Pearson usando una codificación 0/1 de la variable cualitativa.</p>
+          </div>
+          <div class="card blue-light">
+            <span class="mono-label" style="color:#1D4999;">Prueba de hipótesis (opcional)</span>
+            <h4 style="color:#0F1C4D; margin:4px 0 8px;">Prueba t de diferencias de medias</h4>
+            <p style="margin:0; font-size:13.5px; color:#192962;">Evalúa si la media de Y es diferente entre los dos grupos.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="callout lime" style="margin-top:16px;">
+        <div class="dot"></div>
+        <p><strong>Conclusión del ejemplo:</strong> A simple vista, los micronegocios que sí utilizan billetera digital presentan ingresos por ventas mensuales mayores (mediana más alta y mayor dispersión hacia arriba) que los que no la utilizan. Pero ¿esta diferencia observada es estadísticamente significativa o podría deberse al azar?</p>
+      </div>
+    </div>
+
+    <div class="band-navy" style="margin-top:48px;">
+      <p class="alt" style="margin-top:0;"><strong class="case-label">Pero el equipo quiere ir un paso más allá:</strong> Tener una billetera digital es solo una de las formas de relacionarse con el sistema financiero. Una persona emprendedora puede utilizar diferentes productos, como billeteras digitales, cuentas de ahorro, cuentas corrientes o CDT's. Entonces surge una nueva pregunta:</p>
+    </div>
+
+      <div class="sub-section" style="margin-top:32px;">
+      <h2 class="question-highlight">Pero no todos los productos de ahorro son iguales... ¿los ingresos difieren según el tipo de producto financiero?</h2>
+
+    <div class="sub-section" style="margin-top:32px;">
+      <div class="grid-2">
+        <div class="card shadow" style="display:flex; flex-direction:column; justify-content:center; padding:16px;">
+          <h4 style="margin:0 0 16px 0; text-align:center; font-size:15px;">Ingresos según tipo de producto</h4>
+          <svg viewBox="0 0 320 220" style="width:100%; max-width:320px; margin:0 auto;">
+            <!-- Axes -->
+            <polyline points="40,20 40,180 300,180" fill="none" stroke="#A9AEC4" stroke-width="1.5"/>
+            <text x="-100" y="20" transform="rotate(-90)" fill="#5B5E6E" font-size="11" font-family="Inter, sans-serif" text-anchor="middle">Ingresos por ventas (Millones)</text>
+            <text x="170" y="210" fill="#5B5E6E" font-size="11" font-family="Inter, sans-serif" text-anchor="middle">Tipo de producto de ahorro</text>
+            
+            <text x="30" y="184" fill="#5B5E6E" font-size="10" font-family="Inter, sans-serif" text-anchor="end">0</text>
+            <text x="30" y="144" fill="#5B5E6E" font-size="10" font-family="Inter, sans-serif" text-anchor="end">1</text>
+            <text x="30" y="104" fill="#5B5E6E" font-size="10" font-family="Inter, sans-serif" text-anchor="end">2</text>
+            <text x="30" y="64" fill="#5B5E6E" font-size="10" font-family="Inter, sans-serif" text-anchor="end">3</text>
+            <text x="30" y="24" fill="#5B5E6E" font-size="10" font-family="Inter, sans-serif" text-anchor="end">4</text>
+            
+            <text x="80" y="195" fill="#5B5E6E" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">Billetera</text>
+            <text x="140" y="195" fill="#5B5E6E" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">Ahorro</text>
+            <text x="200" y="195" fill="#5B5E6E" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">Corriente</text>
+            <text x="260" y="195" fill="#5B5E6E" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">CDT</text>
+
+            <!-- Boxplot 1 (Billetera) -->
+            <line x1="80" y1="165" x2="80" y2="90" stroke="#3366CC" stroke-width="1.5"/><line x1="73" y1="165" x2="87" y2="165" stroke="#3366CC" stroke-width="1.5"/><line x1="73" y1="90" x2="87" y2="90" stroke="#3366CC" stroke-width="1.5"/><rect x="65" y="115" width="30" height="35" fill="#88B0ED" stroke="#3366CC" stroke-width="1.5"/><line x1="65" y1="135" x2="95" y2="135" stroke="#3366CC" stroke-width="1.5"/>
+            <!-- Boxplot 2 (Ahorro) -->
+            <line x1="140" y1="155" x2="140" y2="85" stroke="#7A5CB4" stroke-width="1.5"/><line x1="133" y1="155" x2="147" y2="155" stroke="#7A5CB4" stroke-width="1.5"/><line x1="133" y1="85" x2="147" y2="85" stroke="#7A5CB4" stroke-width="1.5"/><rect x="125" y="105" width="30" height="25" fill="#C1A7E2" stroke="#7A5CB4" stroke-width="1.5"/><line x1="125" y1="115" x2="155" y2="115" stroke="#7A5CB4" stroke-width="1.5"/><circle cx="140" cy="55" r="2" fill="#2C3545"/>
+            <!-- Boxplot 3 (Corriente) -->
+            <line x1="200" y1="155" x2="200" y2="70" stroke="#C45184" stroke-width="1.5"/><line x1="193" y1="155" x2="207" y2="155" stroke="#C45184" stroke-width="1.5"/><line x1="193" y1="70" x2="207" y2="70" stroke="#C45184" stroke-width="1.5"/><rect x="185" y="90" width="30" height="35" fill="#E896B9" stroke="#C45184" stroke-width="1.5"/><line x1="185" y1="105" x2="215" y2="105" stroke="#C45184" stroke-width="1.5"/><circle cx="200" cy="40" r="2" fill="#2C3545"/>
+            <!-- Boxplot 4 (CDT) -->
+            <line x1="260" y1="140" x2="260" y2="40" stroke="#D1832A" stroke-width="1.5"/><line x1="253" y1="140" x2="267" y2="140" stroke="#D1832A" stroke-width="1.5"/><line x1="253" y1="40" x2="267" y2="40" stroke="#D1832A" stroke-width="1.5"/><rect x="245" y="70" width="30" height="40" fill="#F1C17F" stroke="#D1832A" stroke-width="1.5"/><line x1="245" y1="90" x2="275" y2="90" stroke="#D1832A" stroke-width="1.5"/><circle cx="260" cy="20" r="2" fill="#2C3545"/>
+          </svg>
+        </div>
+        
+        <div class="stack">
+          <div class="card mint">
+            <span class="mono-label" style="color:#0C573A;">Medida de asociación</span>
+            <h4 style="color:#0F1C4D; margin:4px 0 8px;">Coeficiente Eta (η)</h4>
+            <p style="margin:0; font-size:13.5px; color:#192962;">Indica qué proporción de la variabilidad de Y está asociada con las diferencias entre las categorías de X.</p>
+          </div>
+          <div class="card blue-light">
+            <span class="mono-label" style="color:#1D4999;">Prueba de hipótesis</span>
+            <h4 style="color:#0F1C4D; margin:4px 0 8px;">ANOVA o Kruskal-Wallis</h4>
+            <p style="margin:0; font-size:13.5px; color:#192962;">Evalúa si las medias (o medianas) de Y difieren de manera significativa entre las múltiples categorías.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="callout lime" style="margin-top:16px;">
+        <div class="dot"></div>
+        <p><strong>Conclusión del ejemplo:</strong> Según el gráfico, los ingresos por ventas podrían no distribuirse de la misma manera entre los distintos tipos de productos de ahorro. A medida que pasamos de una variable binaria a una variable categórica con múltiples grupos, también cambia la forma en que medimos la asociación. En ambos casos podemos identificar diferencias en los ingresos, pero debemos distinguir siempre entre asociación estadística y causalidad.</p>
+      </div>
+    </div>
+    </div>
+  </div>
+  </div>
+
+  <div id="causalidad" class="chapter-header">
+    <span class="chapter-num">Momento 2</span>
+    <h2>Correlación vs causalidad</h2>
+  </div>
+  <div class="chapter-content">
+    <div class="band-navy" style="margin-top:48px;">
+      <p class="alt" style="margin-top:0;"><strong class="case-label">Estudio de caso:</strong> Supongamos que encontramos que los micronegocios con acceso a crédito presentan mayores ingresos por ventas.</p>
+    </div>
+
+    <!-- Large SVG Causality Animation -->
+    <div style="margin-top:32px;">
+      <div class="anim-container">
+        <!-- Floating Animated Badges -->
+        <div class="badge-wrapper">
+            <div class="anim-badge badge-d">Hipótesis Directa</div>
+            <div class="anim-badge badge-r">Causalidad Inversa</div>
+            <div class="anim-badge badge-c">Efecto Confusor</div>
+        </div>
+        
+        <svg viewBox="0 0 440 220" style="width:100%; max-width: 500px; margin: 0 auto; display: block;">
+          <!-- Node: Variable de Confusión -->
+          <rect x="120" y="10" width="200" height="44" rx="22" fill="var(--lavender)"/>
+          <text x="220" y="37" fill="var(--navy)" font-size="14" font-weight="500" font-family="var(--font-mono)" text-anchor="middle">Variable de confusión</text>
+
+          <!-- Node: Crédito -->
+          <rect x="20" y="140" width="140" height="44" rx="22" fill="var(--navy)"/>
+          <text x="90" y="167" fill="#fff" font-size="14" font-weight="500" font-family="var(--font-mono)" text-anchor="middle">Crédito</text>
+
+          <!-- Node: Ventas -->
+          <rect x="280" y="140" width="140" height="44" rx="22" fill="var(--coral)"/>
+          <text x="350" y="167" fill="#fff" font-size="14" font-weight="500" font-family="var(--font-mono)" text-anchor="middle">Ventas</text>
+
+          <!-- Arrows: Direct Hypothesis -->
+          <g class="anim-arrow-direct">
+            <line x1="170" y1="162" x2="265" y2="162" stroke="var(--navy)" stroke-width="2.5"/>
+            <polygon points="265,162 255,155 255,169" fill="var(--navy)"/>
+          </g>
+
+          <!-- Arrows: Reverse Causality -->
+          <g class="anim-arrow-reverse">
+            <line x1="270" y1="162" x2="175" y2="162" stroke="var(--coral)" stroke-width="2.5"/>
+            <polygon points="175,162 185,155 185,169" fill="var(--coral)"/>
+          </g>
+
+          <!-- Arrows: Confounding Effect -->
+          <g class="anim-arrow-confound">
+            <!-- To Credit -->
+            <line x1="160" y1="60" x2="105" y2="130" stroke="var(--lavender-text)" stroke-width="2.5"/>
+            <polygon points="105,130 115,123 105,117" fill="var(--lavender-text)" transform="rotate(-52, 105, 130)"/>
+            <!-- To Sales -->
+            <line x1="280" y1="60" x2="335" y2="130" stroke="var(--lavender-text)" stroke-width="2.5"/>
+            <polygon points="335,130 335,117 325,123" fill="var(--lavender-text)" transform="rotate(52, 335, 130)"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="card bordered" style="margin-top:24px;">
+        <ul style="font-size:14.5px; color:var(--text-secondary); margin:0; padding-left:18px;">
+          <li style="margin-bottom:8px;"><strong>Causa directa:</strong> Es razonable pensar que el crédito permite comprar inventario o equipos, aumentando las ventas.</li>
+          <li style="margin-bottom:8px;"><strong>Causalidad inversa:</strong> Negocios que ya tienen mayores ventas tienen mayor probabilidad de obtener un crédito (mayor capacidad de pago).</li>
+          <li><strong>Variable de confusión:</strong> Características como educación o capacidad empresarial influyen tanto en obtener crédito como en generar ventas.</li>
+        </ul>
+        <div class="callout amber" style="margin-top:20px; padding:12px 16px;">
+          <div class="dot" style="margin-top:6px;"></div>
+          <p style="font-size:13.5px;">La estadística por sí sola no nos permite concluir la dirección de la causa. Encontrar una relación entre variables puede ser sugestivo, pero no concluyente, a menos que pueda establecerse causalidad.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="hipotesis" class="chapter-header">
+    <span class="chapter-num">Momento 3</span>
+    <h2>Pruebas de hipótesis</h2>
+  </div>
+  <div class="chapter-content">
+    
+    <!-- Módulo interactivo Inferencia -->
+    <div class="inf-wrapper">
+      <div class="inf-card">
+        <h4>Población</h4>
+        <p>Todas las personas a las que quiere aplicar la conclusión: las 4.000 personas que participan en el programa.</p>
+        <div class="inf-circle-wrapper">
+            <div class="inf-circle pop">4.000</div>
+        </div>
+      </div>
+      
+      <div class="inf-middle">
+        <span>Muestreo</span>
+        <svg width="100" height="28" viewBox="0 0 100 28" aria-hidden="true">
+           <!-- Gray arrow right -->
+           <line x1="0" y1="14" x2="90" y2="14" stroke="#A9AEC4" stroke-width="2"/>
+           <polygon points="90,14 80,7 80,21" fill="#A9AEC4"/>
+        </svg>
+        <svg width="100" height="28" viewBox="0 0 100 28" aria-hidden="true">
+           <!-- Amber animated arrow left -->
+           <line x1="100" y1="14" x2="20" y2="14" stroke="var(--amber)" stroke-width="2" class="dash-anim"/>
+           <polygon points="20,14 30,7 30,21" fill="var(--amber)"/>
+        </svg>
+        <span style="color:var(--amber); font-weight:600;">Inferencia</span>
+      </div>
+      
+      <div class="inf-card">
+        <h4>Muestra</h4>
+        <p>El grupo de personas del que sí tenemos datos: por ejemplo, 40 participantes de Yarú Virtual que respondieron la encuesta.</p>
+        <div class="inf-circle-wrapper">
+            <div class="inf-circle muest">40</div>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top: 24px; font-style: italic; font-size: 14px; color: var(--text-secondary); text-align: center;">Inferir es usar lo que vemos en la muestra para decir algo, con cierto margen de duda, sobre toda la población.</p>
+    
+    <div class="sub-section">
+      <h2 class="section-title">¿Cómo sabemos si una diferencia es real o puede ser solo azar?</h2>
+      <p class="section-intro">Las pruebas de hipótesis ayudan a decidir, con base en los datos de la muestra, si lo que observamos es tan inusual que probablemente no se deba al azar.</p>
+
+      <div class="grid-2" style="margin-top:24px;">
+        <div class="card bordered">
+          <span class="pill navy">H₀</span>
+          <h4>Hipótesis nula</h4>
+          <p>No hay diferencia, no hay relación, no hay efecto. Ej.: las horas de capacitación no afectan el monto ahorrado.</p>
+        </div>
+        <div class="card bordered">
+          <span class="pill lavender">H₁</span>
+          <h4>Hipótesis alternativa</h4>
+          <p>Sí hay diferencia, sí hay relación, sí hay efecto. Ej.: las horas de capacitación sí afectan el monto ahorrado.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:24px;">
+        <span class="mono-label eyebrow">Significancia</span>
+        <h2 class="section-title">¿Qué quiere decir "estadísticamente significativo"?</h2>
+        <div class="card bordered" style="margin-top:24px;">
+          <p>Que un resultado sea significativo quiere decir que es poco probable que haya salido solo por azar de muestreo. Eso da una base para pensar en la población, no solo en la muestra.</p>
+        </div>
+      </div>
+
+      <div class="callout lime" style="margin-top:16px;">
+        <div class="dot"></div>
+        <p>Si el resultado observado en la muestra cae en la región de valores poco probables bajo H₀, concluimos que es <strong>poco probable que se deba al azar</strong> y consideramos evidencia a favor de H₁.</p>
+      </div>
+
+      <div class="card shadow" style="margin-top:32px;">
+        <p style="text-align:center; color:var(--text-secondary); margin-bottom: 24px; font-size:14px;">
+          Imagina que queremos saber si tener billetera digital se relaciona con mayores ingresos.
+        </p>
+
+        <div class="stack">
+          <!-- Interactive Bar Chart -->
+          <svg viewBox="0 0 300 180" style="width:100%; max-width:360px; margin:0 auto; display:block;">
+             <!-- Axes -->
+             <polyline points="40,20 40,150 280,150" fill="none" stroke="#A9AEC4" stroke-width="1.5"/>
+             <text x="-85" y="15" transform="rotate(-90)" fill="#5B5E6E" font-size="11" font-family="Inter, sans-serif" text-anchor="middle">Ingresos promedio</text>
+
+             <!-- Bar 1: Sin billetera ($800k -> 40px height) -->
+             <rect x="75" y="110" width="50" height="40" fill="var(--navy)" rx="4"/>
+             <text x="100" y="100" fill="var(--navy)" font-size="12" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle">$800.000</text>
+             <text x="100" y="170" fill="#5B5E6E" font-size="11" font-family="Inter, sans-serif" text-anchor="middle">Sin billetera</text>
+
+             <!-- Bar 2: Con billetera ($1.5M -> 75px height) -->
+             <rect x="175" y="75" width="50" height="75" fill="var(--teal)" rx="4"/>
+             <text x="200" y="65" fill="var(--teal)" font-size="12" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle">$1.500.000</text>
+             <text x="200" y="170" fill="#5B5E6E" font-size="11" font-family="Inter, sans-serif" text-anchor="middle">Con billetera</text>
+          </svg>
+
+          <div>
+            <!-- Tab Buttons -->
+            <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:16px;">
+              <button id="btn-h0" class="btn-tab active" data-tab="h0">Ver explicación H₀</button>
+              <button id="btn-h1" class="btn-tab" data-tab="h1">Ver explicación H₁</button>
+            </div>
+
+            <!-- Tab Content -->
+            <div id="tab-h0" class="tab-content active">
+              <div class="callout lavender">
+                <div class="dot"></div>
+                <p><strong>H₀ (Hipótesis Nula):</strong> No existe relación real. Aunque veamos una diferencia a favor de quienes tienen billetera en este grupo, esto se debe puramente al azar de la muestra. En la población total, los ingresos son iguales.</p>
+              </div>
+            </div>
+            <div id="tab-h1" class="tab-content">
+              <div class="callout lime">
+                <div class="dot"></div>
+                <p><strong>H₁ (Hipótesis Alternativa):</strong> Sí existe una relación real: tener billetera digital está asociado con mayores ingresos, y esa diferencia también se sostendría al mirar a toda la población, no solo a esta muestra.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:32px;font-size:18px;">La lógica de una prueba de hipótesis, paso a paso</h3>
+      <div class="stack" style="margin-top:20px;">
+        <div class="card bordered" style="display:flex;gap:16px;">
+          <span class="pill navy" style="flex:0 0 auto;height:fit-content;">1</span>
+          <div><h4 style="margin-top:0;">Planteamos las hipótesis</h4><p>H₀: no hay diferencia o efecto. H₁: sí hay diferencia o efecto.</p></div>
+        </div>
+        <div class="card bordered" style="display:flex;gap:16px;">
+          <span class="pill navy" style="flex:0 0 auto;height:fit-content;">2</span>
+          <div><h4 style="margin-top:0;">Observamos los datos</h4><p>Calculamos un estadístico: una diferencia de medias, un coeficiente, etc.</p></div>
+        </div>
+        <div class="card bordered" style="display:flex;gap:16px;">
+          <span class="pill navy" style="flex:0 0 auto;height:fit-content;">3</span>
+          <div><h4 style="margin-top:0;">Evaluamos qué tan compatibles son con H₀</h4><p>Calculamos el valor p: la probabilidad de obtener un resultado igual o más extremo si H₀ fuera cierta.</p></div>
+        </div>
+        <div class="card bordered" style="display:flex;gap:16px;">
+          <span class="pill navy" style="flex:0 0 auto;height:fit-content;">4</span>
+          <div><h4 style="margin-top:0;">Tomamos una decisión</h4><p>¿El valor p es menor a 0.05? Si sí, rechazamos H₀: hay evidencia de una diferencia o efecto. Si no, no rechazamos H₀.</p></div>
+        </div>
+        <div class="card bordered" style="display:flex;gap:16px;">
+          <span class="pill navy" style="flex:0 0 auto;height:fit-content;">5</span>
+          <div><h4 style="margin-top:0;">Interpretamos en contexto</h4><p>La decisión siempre debe leerse junto con otra evidencia: tamaño del efecto, relevancia práctica, etc.</p></div>
+        </div>
+      </div>
+
+      <div class="callout lavender" style="margin-top:24px;">
+        <div class="dot"></div>
+        <p>Un resultado estadísticamente significativo indica que es poco probable que lo observado se deba solo al azar, <strong>pero no necesariamente prueba una relación causal.</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="regresion" class="chapter-header">
+    <span class="chapter-num">Momento 4</span>
+    <h2>Regresión lineal</h2>
+  </div>
+  <div class="chapter-content">
+    <span class="mono-label eyebrow">Tenemos un problema</span>
+    <h2 class="section-title">Trazar la línea que mejor representa la relación entre variables</h2>
+    <img src="assets/imagen1.png" alt="Diagrama de dispersión con la recta de mejor ajuste" style="margin-top:20px; border-radius: var(--radius-card);">
+    <p class="section-intro">Como se puede trazar más de una recta, usamos el método de mínimos cuadrados ordinarios (MCO) para encontrar la recta del mejor ajuste.</p>
+
+    <div class="card shadow" style="margin-top:20px;">
+      <h4 style="margin-top:0;">El modelo simple</h4>
+      <div class="formula" style="margin-top:10px;">Y = β₀ + β₁X + ε</div>
+      <ul style="margin-top:12px;">
+        <li><strong>β₀ (intercepto):</strong> valor promedio de Y cuando X = 0.</li>
+        <li><strong>β₁ (pendiente):</strong> magnitud del cambio en Y por cada unidad de cambio en X.</li>
+      </ul>
+      <p class="reveal-trigger" onclick="openSurpriseModal()">🎁 Presiona aquí para desbloquear una SORPRESA</p>
+    </div>
+
+    <div class="grid-2" style="margin-top:16px;">
+      <div class="card bordered">
+        <p style="margin-top:0;"><strong>¿Puedes decir cuánto venderá exactamente una emprendedora el próximo mes?</strong></p>
+        <button class="btn-show teal" onclick="toggleAnswer('resp-1', this)">Ver respuesta</button>
+        <div id="resp-1" class="answer-box">
+          <p>El valor exacto es impredecible: si consigue un cliente grande, se enferma, llueve mucho, cambian los precios… Pero nos podemos aproximar.</p>
+        </div>
+      </div>
+
+      <div class="card bordered">
+        <p style="margin-top:0;"><strong>¿Qué sí podemos estimar?</strong></p>
+        <button class="btn-show teal" onclick="toggleAnswer('resp-2', this)">Ver respuesta</button>
+        <div id="resp-2" class="answer-box">
+          <p>El promedio. Con datos de cientos de emprendedoras parecidas: "las que tienen estas características venden, en promedio, alrededor de $2 millones al mes."</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <span class="mono-label eyebrow">Condiciones del modelo</span>
+      <h2 class="section-title">Supuestos del modelo de regresión lineal</h2>
+
+      <div class="grid-3" style="margin-top:24px;">
+        <div class="card" style="background: var(--lime-tint);">
+          <span class="pill lime">1</span>
+          <h4>Existe un patrón</h4>
+          <p>La relación entre X e Y es real y sistemática, no un efecto del azar.</p>
+        </div>
+        <div class="card" style="background: var(--lavender-tint);">
+          <span class="pill lavender">2</span>
+          <h4>El patrón es estable</h4>
+          <p>La relación se mantiene igual a lo largo de todo el rango de datos, sin cambios abruptos.</p>
+        </div>
+        <div class="card" style="background: var(--coral-tint);">
+          <span class="pill coral">3</span>
+          <h4>No todo es ruido</h4>
+          <p>Una parte de la variación en Y se explica por X; no todo se reduce a error aleatorio.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="tres-numeros" class="sub-section">
+      <span class="mono-label eyebrow">Regresión</span>
+      <h2 class="section-title">Tres números para leer cualquier salida</h2>
+      <p class="section-intro">No hace falta la fórmula completa: con estos tres números ya se puede leer si el hallazgo apunta a algo real y qué tan bien lo explica el modelo.</p>
+
+      <div class="stack" style="margin-top:24px;">
+        <div class="card bordered" style="display:flex;gap:18px;align-items:center;">
+          <span class="pill navy" style="flex:0 0 auto;">Coeficientes del modelo</span>
+          <p style="margin:0;">Dirección y tamaño del efecto: positivo, negativo, grande o pequeño.</p>
+        </div>
+        <div class="card bordered" style="display:flex;gap:18px;align-items:center;">
+          <span class="pill coral" style="flex:0 0 auto;">Significancia</span>
+          <p style="margin:0;">Qué tan poco probable es que el efecto sea puro azar de muestreo.</p>
+        </div>
+        <div class="card bordered" style="display:flex;gap:18px;align-items:center;">
+          <span class="pill lavender" style="flex:0 0 auto;">Coeficiente de determinación R²</span>
+          <p style="margin:0;">Qué proporción de la variación de Y explica el modelo, entre 0 y 1.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <span class="mono-label eyebrow">Predictores múltiples</span>
+      <h2 class="section-title">Multicolinealidad</h2>
+      <p class="section-intro">Aparece cuando existe algún tipo de relación lineal entre las variables independientes.</p>
+      <div class="card bordered" style="margin-top:20px;">
+        <h4 style="margin-top:0;">¿Por qué es un problema?</h4>
+        <ul>
+          <li>Las estimaciones son inestables (cambios pequeños en los datos las cambian notoriamente).</li>
+          <li>Los indicadores de bondad de ajuste resultan falsamente altos.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="caso" class="chapter-header">
+    <span class="chapter-num">Momento 5</span>
+    <h2>Caso práctico</h2>
+  </div>
+  <div class="chapter-content">
+    <span class="mono-label eyebrow">Caso de estudio</span>
+    <h2 class="section-title">Yarú Virtual en la cohorte 2025</h2>
+
+    <div class="callout coral" style="margin-top:20px;">
+      <div class="dot"></div>
+      <p><strong>Objetivo:</strong> construir un modelo que explique el ingreso por ventas de las beneficiarias, a partir de variables como horas de cuidado, experiencia en el negocio y otras características registradas en el programa.</p>
+    </div>
+
+    <div class="band-navy" style="margin-top:24px;">
+      <div class="stack">
+        <div style="display:flex; gap:14px; align-items:center;">
+          <span class="pill lime" style="flex:0 0 auto; margin-bottom:0;">1</span>
+          <p class="alt" style="margin-top:0;">¿Existe una brecha de género estadísticamente significativa en los ingresos por ventas entre las personas que finalizaron Yarú Virtual en 2025?</p>
+        </div>
+        <div style="display:flex; gap:14px; align-items:center;">
+          <span class="pill lime" style="flex:0 0 auto; margin-bottom:0;">2</span>
+          <p class="alt" style="margin-top:0;">¿Cuál es la magnitud de la brecha de género en los ingresos por ventas?</p>
+        </div>
+        <div style="display:flex; gap:14px; align-items:center;">
+          <span class="pill lime" style="flex:0 0 auto; margin-bottom:0;">3</span>
+          <p class="alt" style="margin-top:0;">¿La brecha se mantiene después de controlar por características del negocio y de la persona emprendedora?</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <span class="mono-label eyebrow">Para cerrar</span>
+      <h2 class="section-title">Tres pasos, un mismo hilo</h2>
+      <div class="stack" style="margin-top:24px;">
+        <div class="card bordered" style="display:flex;gap:16px;">
+          <span class="pill lime" style="flex:0 0 auto;height:fit-content;">1</span>
+          <div><h4 style="margin-top:0;">Correlación</h4><p>Describe si dos variables van juntas, sin explicar por qué.</p></div>
+        </div>
+        <div class="card bordered" style="display:flex;gap:16px;">
+          <span class="pill coral" style="flex:0 0 auto;height:fit-content;">2</span>
+          <div><h4 style="margin-top:0;">Causalidad</h4><p>Exige descartar variables de confusión antes de hablar de causa. Si quieres hablar de causa debes hacer experimentos.</p></div>
+        </div>
+        <div class="card bordered" style="display:flex;gap:16px;">
+          <span class="pill lavender" style="flex:0 0 auto;height:fit-content;">3</span>
+          <div><h4 style="margin-top:0;">Inferencia</h4><p>Traduce lo que ves en la muestra en una conclusión sobre la población, con evidencia y límites claros.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div id="surprise-modal" class="modal-overlay" onclick="if(event.target === this) closeSurpriseModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeSurpriseModal()" aria-label="Cerrar">✕</button>
+
+    <div class="sub-section" style="margin-top:0;">
+      <span class="mono-label eyebrow">Transformaciones</span>
+      <h2 class="section-title">Interpretando logaritmos en regresión</h2>
+      <p class="section-intro">A veces necesitamos aplicar logaritmos naturales (ln) a nuestras variables para modelar relaciones no lineales o interpretar cambios porcentuales. Selecciona un modelo para ver cómo se interpreta.</p>
+
+      <div class="log-tabs">
+        <div class="log-tabs-nav" style="margin-top:16px;">
+          <button class="log-tab-btn active" onclick="openLogTab(0, this)">1. Nivel-Nivel</button>
+          <button class="log-tab-btn" onclick="openLogTab(1, this)">2. Nivel-Log</button>
+          <button class="log-tab-btn" onclick="openLogTab(2, this)">3. Log-Nivel</button>
+          <button class="log-tab-btn" onclick="openLogTab(3, this)">4. Log-Log</button>
+        </div>
+
+        <div class="card bordered" style="margin-top:16px;">
+          <!-- Tab 1: Level-Level -->
+          <div id="log-pane-0" class="log-pane active">
+            <h4>1. Y normal, X normal (Nivel-Nivel)</h4>
+            <div class="formula" style="margin:12px 0;">Y = β₀ + β₁X + ε</div>
+            <p><strong>Ejemplo:</strong> <span class="formula-inline">Ingresos = 1.5 + 0.20(Experiencia)</span></p>
+            <p style="margin-top:8px;">Si <em>Y</em> está en millones de pesos, por cada año adicional de experiencia del negocio, los ingresos por ventas aumentan en promedio 0,20 millones de pesos, es decir, $200.000.</p>
+            <div class="callout teal" style="margin-top:16px;">
+              <div class="dot"></div>
+              <p><strong>📌 Regla:</strong> Un aumento de 1 unidad en X se asocia con un cambio de <strong>β unidades</strong> en Y.</p>
+            </div>
+          </div>
+
+          <!-- Tab 2: Level-Log -->
+          <div id="log-pane-1" class="log-pane">
+            <h4>2. Y normal, X en logaritmos (Nivel-Log)</h4>
+            <div class="formula" style="margin:12px 0;">Y = β₀ + β₁ln(X) + ε</div>
+            <p><strong>Ejemplo:</strong> <span class="formula-inline">Ingresos = 0.5 + 0.8ln(Experiencia)</span></p>
+            <p style="margin-top:8px;">Aquí X está en logaritmos, pero Y está en niveles. Una forma sencilla de interpretarlo es dividir el coeficiente entre 100: <span class="formula-inline">β₁ / 100</span>.</p>
+            <p style="margin-top:8px;">Como β₁ = 0.8, entonces 0.8 / 100 = 0.008. Si los ingresos están en millones, un aumento del 1% en la experiencia se asocia con aproximadamente $8.000 adicionales en ingresos.</p>
+            <div class="callout teal" style="margin-top:16px;">
+              <div class="dot"></div>
+              <p><strong>📌 Regla rápida:</strong> Un aumento de 1% en X se asocia con un cambio de aproximadamente <strong>β / 100 unidades</strong> en Y.</p>
+            </div>
+          </div>
+
+          <!-- Tab 3: Log-Level -->
+          <div id="log-pane-2" class="log-pane">
+            <h4>3. Y en logaritmos, X normal (Log-Nivel)</h4>
+            <div class="formula" style="margin:12px 0;">ln(Y) = β₀ + β₁X + ε</div>
+            <p><strong>Ejemplo:</strong> <span class="formula-inline">ln(Ingresos) = 10 + 0.20(Experiencia)</span></p>
+            <p style="margin-top:8px;">Aquí la interpretación es porcentual. Por cada año adicional de experiencia, los ingresos aumentan aproximadamente un 20%. La regla aproximada es: <span class="formula-inline">100 * β</span>.</p>
+            <p style="margin-top:8px; font-size:13.5px; color:var(--text-hint);"><em>Precisión importante:</em> Para coeficientes pequeños, 100β es una buena aproximación. Para una interpretación exacta se usa <span class="formula-inline">100(e<sup>β</sup> - 1)</span>. Con β=0.20, esto es 100(e<sup>0.20</sup> - 1) ≈ 22.1%.</p>
+            <div class="callout teal" style="margin-top:16px;">
+              <div class="dot"></div>
+              <p><strong>📌 Regla aproximada:</strong> Un aumento de 1 unidad en X se asocia con un cambio porcentual de <strong>100 * β %</strong> en Y.</p>
+            </div>
+          </div>
+
+          <!-- Tab 4: Log-Log -->
+          <div id="log-pane-3" class="log-pane">
+            <h4>4. Ambas en logaritmos (Log-Log)</h4>
+            <div class="formula" style="margin:12px 0;">ln(Y) = β₀ + β₁ln(X) + ε</div>
+            <p><strong>Ejemplo:</strong> <span class="formula-inline">ln(Ingresos) = 5 + 0.60ln(Experiencia)</span></p>
+            <p style="margin-top:8px;">Aquí β se interpreta directamente como una elasticidad. Un aumento del 1% en la experiencia del negocio se asocia con un aumento aproximado de 0,6% en los ingresos por ventas.</p>
+            <p style="margin-top:8px; color:var(--text-secondary);">Por eso este modelo es particularmente útil en economía: podemos hablar directamente de elasticidades.</p>
+            <div class="callout teal" style="margin-top:16px;">
+              <div class="dot"></div>
+              <p><strong>📌 Regla:</strong> Un aumento de 1% en X se asocia con un cambio porcentual de <strong>β %</strong> en Y.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Guía de estudio — Sesión 7 · Relaciones, inferencias y análisis</p>
+</footer>
+
+<script>
+  // Progress Bar tracking
+  (function(){
+    var fill = document.getElementById('progress-fill');
+    function update(){
+      var h = document.documentElement;
+      var scrollTop = h.scrollTop || document.body.scrollTop;
+      var scrollHeight = (h.scrollHeight || document.body.scrollHeight) - h.clientHeight;
+      var pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+      fill.style.width = pct + '%';
+    }
+    document.addEventListener('scroll', update, {passive:true});
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // Toggle Graph Sections functionality
+  function toggleExample(id, btn) {
+    var container = document.getElementById(id);
+    if (container.classList.contains('active')) {
+      container.classList.remove('active');
+      btn.innerText = "Ver ejemplos gráficos";
+    } else {
+      container.classList.add('active');
+      btn.innerText = "Ocultar ejemplos";
+    }
+  }
+
+  function openSurpriseModal() {
+    document.getElementById('surprise-modal').classList.add('active');
+  }
+
+  function closeSurpriseModal() {
+    document.getElementById('surprise-modal').classList.remove('active');
+  }
+
+  function openLogTab(index, btn) {
+    document.querySelectorAll('.log-tab-btn').forEach(function (b) { b.classList.remove('active'); });
+    document.querySelectorAll('.log-pane').forEach(function (p) { p.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById('log-pane-' + index).classList.add('active');
+  }
+
+  function toggleAnswer(id, btn) {
+    var box = document.getElementById(id);
+    if (box.classList.contains('active')) {
+      box.classList.remove('active');
+      btn.innerText = "Ver respuesta";
+    } else {
+      box.classList.add('active');
+      btn.innerText = "Ocultar respuesta";
+    }
+  }
+
+  // Interactive Carousel logic (3 Slides)
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.carousel-slide');
+  const dots = document.querySelectorAll('.dot-nav');
+
+  function showSlide(index) {
+    if (index >= slides.length) currentSlide = 0;
+    else if (index < 0) currentSlide = slides.length - 1;
+    else currentSlide = index;
+
+    slides.forEach((slide, i) => {
+      slide.classList.remove('active');
+      if (i === currentSlide) slide.classList.add('active');
+    });
+
+    dots.forEach((dot, i) => {
+      dot.classList.remove('active');
+      if (i === currentSlide) dot.classList.add('active');
+    });
+  }
+
+  function moveCarousel(direction) {
+    showSlide(currentSlide + direction);
+  }
+
+  function setSlide(index) {
+    showSlide(index);
+  }
+
+  // H0 / H1 hypothesis tabs
+  document.querySelectorAll('.btn-tab').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.btn-tab').forEach(function (b) { b.classList.remove('active'); });
+      document.querySelectorAll('.tab-content').forEach(function (c) { c.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

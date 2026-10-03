@@ -81,7 +81,7 @@
         hr { border: none; border-top: 0.5px solid var(--divider); margin: 48px 0; }
 
         .wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--gutter); }
-        .mono-label { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; font-size: 12px; font-weight: 500; }
+        .mono-label { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; font-size: 14px; font-weight: 500; }
 
         /* ===== BARRA DE PROGRESO ===== */
         #progress-track { position: fixed; top: 0; left: 0; right: 0; height: 4px; background: var(--divider); z-index: 1000; }
@@ -99,12 +99,12 @@
         .hero-deco { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
         .hero-inner { position: relative; max-width: var(--max-w); margin: 0 auto; }
         .hero .mono-label { color: var(--lime); }
-        .hero h1 { color: #fff; font-size: clamp(34px, 7vw, 64px); line-height: 1.05; margin: 16px 0 0; max-width: 20ch; }
+        .hero h1 { color: #fff; font-size: clamp(37px, 7vw, 70px); line-height: 1.05; margin: 16px 0 0; max-width: 20ch; }
         .hero h1 span { color: var(--lime); }
-        .hero p.lede { margin: 20px 0 0; max-width: 62ch; color: #C7CCE6; font-size: 17px; }
+        .hero p.lede { margin: 20px 0 0; max-width: 62ch; color: #C7CCE6; font-size: 19.5px; }
         .hero-pill {
             display: inline-flex; margin-top: 24px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em;
-            font-size: 11px; font-weight: 500; padding: 6px 14px; border-radius: var(--radius-pill); background: rgba(187, 239, 127, 0.14); color: var(--lime);
+            font-size: 12.5px; font-weight: 500; padding: 6px 14px; border-radius: var(--radius-pill); background: rgba(187, 239, 127, 0.14); color: var(--lime);
         }
 
         /* ===== NAVEGACIÓN RÁPIDA ===== */
@@ -113,7 +113,7 @@
         @media (max-width: 900px) { .quicknav { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 560px) { .quicknav { grid-template-columns: repeat(2, 1fr); } }
         .quicknav a {
-            font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; font-weight: 500;
+            font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; font-size: 12.5px; font-weight: 500;
             color: var(--navy); background: var(--navy-tint); padding: 10px 14px; border-radius: var(--radius-s);
             text-decoration: none; text-align: center; transition: background 0.2s; display: flex; align-items: center; justify-content: center;
         }
@@ -121,12 +121,12 @@
 
         /* ===== CONTENIDO ===== */
         main.wrap { padding-top: 48px; }
-        main p { font-size: 15.5px; }
-        main > h2, main h2 { font-size: clamp(22px, 5vw, 26px); margin-top: 48px; }
-        main h3 { font-size: 21px; margin: 48px 0 12px; }
-        main h4 { font-size: 17px; margin: 28px 0 10px; }
+        main p { font-size: 18px; }
+        main > h2, main h2 { font-size: clamp(24px, 5vw, 29px); margin-top: 48px; }
+        main h3 { font-size: 24px; margin: 48px 0 12px; }
+        main h4 { font-size: 19.5px; margin: 28px 0 10px; }
         main ul, main ol { padding-left: 20px; margin: 0 0 16px; }
-        main li { margin-bottom: 6px; font-size: 15px; }
+        main li { margin-bottom: 6px; font-size: 17px; }
         /* Con el ancho de 1200px, el texto corrido se limita para que las líneas no queden demasiado largas */
         main p, main li { max-width: 82ch; }
         main .ra-card p, main .challenge-card p, main .flip-card p, main .modal-box p, main .modal-box li { max-width: none; }
@@ -135,18 +135,18 @@
         ul.checklist li { position: relative; padding-left: 22px; }
         ul.checklist li::before { content: ''; position: absolute; left: 2px; top: 0.6em; width: 8px; height: 8px; border-radius: 50%; background: var(--lavender); }
 
-        .block-label { font-family: var(--font-mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin: 0 0 8px; }
+        .block-label { font-family: var(--font-mono); font-size: 12.5px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin: 0 0 8px; }
 
         /* Encabezado de bloque (estilo "Momento" de la Sesión 6) */
         .chapter-header { background: var(--lavender-tint); border-radius: var(--radius-card); border-left: 5px solid var(--lavender); padding: 20px 24px; margin: 56px 0 28px; }
-        .chapter-header .chapter-num { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; font-size: 11.5px; color: var(--text-secondary); margin-bottom: 6px; display: block; }
-        .chapter-header h2 { font-size: 26px; color: var(--navy); margin: 0; }
+        .chapter-header .chapter-num { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; display: block; }
+        .chapter-header h2 { font-size: 30px; color: var(--navy); margin: 0; }
 
         /* ===== CALLOUTS ===== */
         .callout { border-radius: var(--radius-card); padding: 20px 22px; margin: 24px 0; background: var(--navy-tint); }
-        .callout-title { font-family: var(--font-body); font-weight: 500; font-size: 15.5px; color: var(--navy); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .callout-title { font-family: var(--font-body); font-weight: 500; font-size: 18px; color: var(--navy); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
         .callout-title::before { content: ''; flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: var(--navy); }
-        .callout p { font-size: 14.5px; color: var(--navy); }
+        .callout p { font-size: 16.5px; color: var(--navy); }
         .callout p:last-child { margin-bottom: 0; }
         .callout-lede { background: var(--lavender-tint); }
         .callout-lede .callout-title { color: var(--lavender-text); }
@@ -160,21 +160,21 @@
         .callout-check { background: var(--navy-tint); }
 
         /* Ejercicios */
-        .result-check { background: var(--card); border: 0.5px solid var(--divider); border-radius: var(--radius-card); padding: 24px; margin: 20px 0 28px; font-size: 14.5px; }
-        .result-check p, .result-check li { font-size: 14.5px; color: var(--text-secondary); }
-        .result-check .rc-title { font-family: var(--font-body); font-weight: 500; font-size: 16.5px; color: var(--navy); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+        .result-check { background: var(--card); border: 0.5px solid var(--divider); border-radius: var(--radius-card); padding: 24px; margin: 20px 0 28px; font-size: 16.5px; }
+        .result-check p, .result-check li { font-size: 16.5px; color: var(--text-secondary); }
+        .result-check .rc-title { font-family: var(--font-body); font-weight: 500; font-size: 19px; color: var(--navy); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
         .result-check .rc-title::before { content: ''; flex: 0 0 auto; width: 10px; height: 10px; border-radius: 3px; background: var(--lime); }
 
         /* ===== CÓDIGO / PROMPTS ===== */
-        .code-block, .prompt-box { background: var(--navy-hover); border-radius: var(--radius-s); padding: 18px 20px; margin: 14px 0 20px; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; }
+        .code-block, .prompt-box { background: var(--navy-hover); border-radius: var(--radius-s); padding: 18px 20px; margin: 14px 0 20px; font-family: var(--font-mono); font-size: 15.5px; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; }
         .code-block { color: #D7FFB0; border-left: 3px solid var(--lime); }
         .code-block .cm { color: rgba(255, 255, 255, 0.42); }
         .prompt-box { color: #E7DEFC; border-left: 3px solid var(--lavender); }
 
         /* ===== TABLAS ===== */
-        table { border-collapse: collapse; width: 100%; margin: 16px 0 22px; font-size: 14px; }
+        table { border-collapse: collapse; width: 100%; margin: 16px 0 22px; font-size: 16px; }
         th, td { text-align: left; padding: 10px 12px; border: 0.5px solid var(--divider); vertical-align: top; }
-        th { background: var(--navy-tint); color: var(--navy); font-family: var(--font-mono); font-size: 11.5px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
+        th { background: var(--navy-tint); color: var(--navy); font-family: var(--font-mono); font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
         select { font-family: var(--font-body); color: var(--navy); background: var(--card); }
 
         /* ===== RESULTADOS DE APRENDIZAJE / TARJETAS ===== */
@@ -182,9 +182,9 @@
         .ra-card { background: var(--card); border: 0.5px solid var(--divider); border-radius: var(--radius-card); padding: 24px; }
         .ra-badge {
             display: inline-flex; width: fit-content; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em;
-            font-size: 11px; font-weight: 500; color: #fff; background: var(--navy); padding: 6px 14px; border-radius: var(--radius-pill); margin-bottom: 12px;
+            font-size: 12.5px; font-weight: 500; color: #fff; background: var(--navy); padding: 6px 14px; border-radius: var(--radius-pill); margin-bottom: 12px;
         }
-        .ra-card p { margin: 0; font-size: 14.5px; color: var(--text-secondary); line-height: 1.55; }
+        .ra-card p { margin: 0; font-size: 16.5px; color: var(--text-secondary); line-height: 1.55; }
         .ra-card p strong { color: var(--navy); }
 
         /* ===== FLIP CARDS (Diccionario) ===== */
@@ -194,24 +194,24 @@
         .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
         .flip-card-front, .flip-card-back { position: absolute; inset: 0; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: var(--radius-card); padding: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
         .flip-card-front { background: var(--navy); color: #fff; }
-        .flip-card-front h3 { color: #fff; margin: 0; font-size: 19px; }
-        .click-hint { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; font-size: 10.5px; margin-top: 12px; color: var(--lime); }
+        .flip-card-front h3 { color: #fff; margin: 0; font-size: 22px; }
+        .click-hint { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; margin-top: 12px; color: var(--lime); }
         .flip-card-back { background: var(--lime-tint); color: var(--navy); transform: rotateY(180deg); }
-        .flip-card-back p { font-size: 13px; margin: 0; line-height: 1.45; color: var(--navy); }
+        .flip-card-back p { font-size: 15px; margin: 0; line-height: 1.45; color: var(--navy); }
         .flip-card-back strong { color: var(--navy); }
 
         /* ===== RETOS ===== */
         .challenges-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 24px 0; }
         .challenge-card { background: var(--card); border: 0.5px solid var(--divider); border-radius: var(--radius-card); padding: 24px; display: flex; flex-direction: column; gap: 10px; }
-        .challenge-card p { font-size: 14.5px; color: var(--text-secondary); margin: 0; }
-        main .challenge-title { font-family: var(--font-body); font-size: 17px; font-weight: 500; margin: 0; display: flex; align-items: center; gap: 8px; }
-        .entregable-box { background: var(--lavender-tint); padding: 12px 16px; border-radius: var(--radius-s); font-size: 13.5px; margin-top: auto; }
-        .entregable-box b { color: var(--lavender-text); display: block; margin-bottom: 4px; font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+        .challenge-card p { font-size: 16.5px; color: var(--text-secondary); margin: 0; }
+        main .challenge-title { font-family: var(--font-body); font-size: 19.5px; font-weight: 500; margin: 0; display: flex; align-items: center; gap: 8px; }
+        .entregable-box { background: var(--lavender-tint); padding: 12px 16px; border-radius: var(--radius-s); font-size: 15.5px; margin-top: auto; }
+        .entregable-box b { color: var(--lavender-text); display: block; margin-bottom: 4px; font-family: var(--font-mono); font-size: 12.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
 
         /* ===== BOTONES ===== */
         .btn-run {
             background: var(--navy); color: #fff; border: none; padding: 12px 24px; border-radius: var(--radius-pill);
-            font-family: var(--font-body); font-weight: 500; font-size: 14px; cursor: pointer; margin-top: 20px;
+            font-family: var(--font-body); font-weight: 500; font-size: 16px; cursor: pointer; margin-top: 20px;
             transition: background 0.2s, transform 0.1s; display: inline-flex; align-items: center; gap: 8px;
         }
         .btn-run:hover { background: var(--navy-hover); }
@@ -219,26 +219,26 @@
         .btn-run:disabled { opacity: 0.6; cursor: not-allowed; }
         .reset-btn {
             background: transparent; border: 0.5px solid var(--navy); color: var(--navy); padding: 8px 16px; border-radius: var(--radius-pill);
-            font-family: var(--font-mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; cursor: pointer; transition: background 0.2s;
+            font-family: var(--font-mono); font-size: 12.5px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; cursor: pointer; transition: background 0.2s;
         }
         .reset-btn:hover { background: var(--navy-tint); }
-        .spinner { animation: spin 1s linear infinite; font-size: 16px; display: inline-block; }
+        .spinner { animation: spin 1s linear infinite; font-size: 18.5px; display: inline-block; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
         /* ===== SIMULADOR C-T-F-R ===== */
         .ctfr-simulator { background: var(--card); border: 0.5px solid var(--divider); border-radius: var(--radius-card); padding: 24px; margin: 20px 0; box-shadow: 0 4px 20px rgba(25, 41, 98, 0.06); }
-        main .ctfr-simulator h4 { margin-top: 0; font-size: 18px; display: flex; align-items: center; gap: 8px; }
-        .ctfr-simulator label { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; color: var(--text-secondary); text-transform: uppercase; display: block; margin: 16px 0 6px; }
-        .ctfr-simulator textarea { width: 100%; min-height: 60px; padding: 12px; border: 0.5px solid #D9DBE3; border-radius: var(--radius-s); font-family: var(--font-mono); font-size: 13.5px; background: var(--bg); color: var(--navy); resize: vertical; line-height: 1.5; overflow: hidden; }
+        main .ctfr-simulator h4 { margin-top: 0; font-size: 20.5px; display: flex; align-items: center; gap: 8px; }
+        .ctfr-simulator label { font-family: var(--font-mono); font-size: 12.5px; font-weight: 500; letter-spacing: 0.08em; color: var(--text-secondary); text-transform: uppercase; display: block; margin: 16px 0 6px; }
+        .ctfr-simulator textarea { width: 100%; min-height: 60px; padding: 12px; border: 0.5px solid #D9DBE3; border-radius: var(--radius-s); font-family: var(--font-mono); font-size: 15.5px; background: var(--bg); color: var(--navy); resize: vertical; line-height: 1.5; overflow: hidden; }
         .ctfr-simulator textarea:focus, .token-calculator textarea:focus { outline: none; box-shadow: 0 0 0 2px var(--lavender); }
         .ctfr-result-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 8px 40px 0 0; }
         .modal-box .ctfr-result-head h3 { margin: 0; }
-        .modal-box .block-label { font-size: 11px; color: var(--text-secondary); }
-        .modal-box .ctfr-hint { font-size: 12.5px; color: var(--text-hint); margin: 14px 0 0; }
+        .modal-box .block-label { font-size: 12.5px; color: var(--text-secondary); }
+        .modal-box .ctfr-hint { font-size: 14.5px; color: var(--text-hint); margin: 14px 0 0; }
         .ctfr-output { margin: 10px 0 0; }
         .ctfr-copy {
             display: inline-flex; align-items: center; gap: 6px; background: var(--navy-tint); color: var(--navy); border: none;
-            padding: 8px 14px; border-radius: var(--radius-pill); font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+            padding: 8px 14px; border-radius: var(--radius-pill); font-family: var(--font-mono); font-size: 12.5px; font-weight: 500;
             text-transform: uppercase; letter-spacing: 0.06em; cursor: pointer; transition: background 0.2s;
         }
         .ctfr-copy:hover { background: var(--lavender-tint); }
@@ -248,25 +248,25 @@
         .ai-link {
             display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: var(--card); color: var(--navy);
             border: 0.5px solid var(--navy); padding: 11px 16px; border-radius: var(--radius-pill); font-family: var(--font-body);
-            font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.2s, transform 0.1s;
+            font-size: 16px; font-weight: 500; cursor: pointer; transition: background 0.2s, transform 0.1s;
         }
         .ai-link:hover { background: var(--navy-tint); }
         .ai-link:active { transform: scale(0.98); }
-        .modal-box .ctfr-status, .ctfr-status { font-size: 13.5px; color: var(--lime-text); background: var(--lime-tint); border-radius: var(--radius-s); padding: 10px 14px; margin: 14px 0 0; display: none; }
+        .modal-box .ctfr-status, .ctfr-status { font-size: 15.5px; color: var(--lime-text); background: var(--lime-tint); border-radius: var(--radius-s); padding: 10px 14px; margin: 14px 0 0; display: none; }
         .ctfr-status.show { display: block; }
         .ctfr-status.warn { color: var(--coral-hover); background: var(--coral-tint); }
 
         /* ===== DEMO DE PREDICCIÓN ===== */
-        .prediction-demo { background: var(--navy); border-radius: var(--radius-card); padding: 28px; margin: 20px 0; color: #fff; font-size: 18px; line-height: 1.6; }
+        .prediction-demo { background: var(--navy); border-radius: var(--radius-card); padding: 28px; margin: 20px 0; color: #fff; font-size: 20.5px; line-height: 1.6; }
         .prediction-demo .sentence { min-height: 60px; margin-bottom: 20px; border-bottom: 0.5px solid rgba(255,255,255,0.2); padding-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-family: var(--font-head); }
         .prediction-demo .sentence span { display: inline-block; }
         .prediction-demo .sentence span.added { color: var(--lime); animation: fadeIn 0.3s ease-in; }
         .prediction-demo .options { display: flex; flex-direction: column; gap: 10px; }
-        .prediction-demo .options-title { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--lavender); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
-        .prediction-demo .option-btn { background: rgba(255,255,255,0.08); border: 0.5px solid rgba(255,255,255,0.22); color: #fff; padding: 12px 16px; border-radius: var(--radius-s); cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-body); font-size: 15px; transition: background 0.2s, border-color 0.2s; }
+        .prediction-demo .options-title { font-family: var(--font-mono); font-size: 12.5px; font-weight: 500; color: var(--lavender); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+        .prediction-demo .option-btn { background: rgba(255,255,255,0.08); border: 0.5px solid rgba(255,255,255,0.22); color: #fff; padding: 12px 16px; border-radius: var(--radius-s); cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-body); font-size: 17px; transition: background 0.2s, border-color 0.2s; }
         .prediction-demo .option-btn:hover { background: rgba(255,255,255,0.16); border-color: var(--lime); }
-        .prediction-demo .option-btn .prob { font-family: var(--font-mono); color: var(--lime); font-size: 12.5px; background: rgba(0,0,0,0.25); padding: 2px 8px; border-radius: var(--radius-pill); }
-        .prediction-demo .prediction-note { background: rgba(255,255,255,0.06); border-left: 3px solid var(--lime); padding: 14px 18px; border-radius: 0 var(--radius-s) var(--radius-s) 0; margin-top: 20px; font-size: 14.5px; line-height: 1.55; color: #E4E7F4; }
+        .prediction-demo .option-btn .prob { font-family: var(--font-mono); color: var(--lime); font-size: 14.5px; background: rgba(0,0,0,0.25); padding: 2px 8px; border-radius: var(--radius-pill); }
+        .prediction-demo .prediction-note { background: rgba(255,255,255,0.06); border-left: 3px solid var(--lime); padding: 14px 18px; border-radius: 0 var(--radius-s) var(--radius-s) 0; margin-top: 20px; font-size: 16.5px; line-height: 1.55; color: #E4E7F4; }
         .prediction-demo .reset-btn { margin-top: 20px; border-color: rgba(255,255,255,0.4); color: #fff; }
         .prediction-demo .reset-btn:hover { background: rgba(255,255,255,0.1); }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
@@ -276,8 +276,8 @@
         .token-calculator textarea { border-radius: var(--radius-s) !important; border: 0.5px solid #D9DBE3 !important; background: var(--bg); color: var(--navy); }
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-top: 20px; }
         .stat-box { background: var(--navy-tint); padding: 16px; border-radius: var(--radius-s); text-align: center; }
-        .stat-value { font-family: var(--font-head); font-size: 26px; font-weight: 500; color: var(--navy); font-variant-numeric: tabular-nums; }
-        .stat-label { font-size: 10.5px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; font-family: var(--font-mono); margin-top: 4px; }
+        .stat-value { font-family: var(--font-head); font-size: 30px; font-weight: 500; color: var(--navy); font-variant-numeric: tabular-nums; }
+        .stat-label { font-size: 12px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; font-family: var(--font-mono); margin-top: 4px; }
 
         /* ===== GRÁFICO DE EMBEDDINGS (SVG ANIMADO) ===== */
         .emb-card { background: var(--card); border: 0.5px solid var(--divider); border-radius: var(--radius-card); padding: 24px; margin: 20px 0; text-align: center; }
@@ -331,7 +331,7 @@
         .q-dots { display: flex; gap: 8px; margin-left: auto; }
         .q-dot { width: 10px; height: 10px; border-radius: var(--radius-pill); border: none; padding: 0; background: var(--divider); cursor: pointer; transition: width 0.25s, background 0.25s; }
         .q-dot.active { width: 28px; background: var(--lime); }
-        .q-count { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; color: var(--text-secondary); margin-right: auto; min-width: 44px; text-align: left; }
+        .q-count { font-family: var(--font-mono); font-size: 12.5px; font-weight: 500; letter-spacing: 0.08em; color: var(--text-secondary); margin-right: auto; min-width: 44px; text-align: left; }
 
         /* ===== NIVELES DE PREGUNTA: APARECEN UNO A UNO CON EL SCROLL ===== */
         .q-steps.js-reveal .q-step { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
@@ -339,11 +339,11 @@
 
         /* ===== PROMPTS EDITABLES DE LA PRÁCTICA ===== */
         .prompt-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin: 18px 0 8px; }
-        .prompt-toolbar-label { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); }
+        .prompt-toolbar-label { font-family: var(--font-mono); font-size: 12.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); }
         .prompt-toolbar-actions { display: flex; gap: 8px; }
         .prompt-reset {
             background: transparent; border: 0.5px solid var(--navy); color: var(--navy); padding: 8px 14px; border-radius: var(--radius-pill);
-            font-family: var(--font-mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; cursor: pointer; transition: background 0.2s;
+            font-family: var(--font-mono); font-size: 12.5px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; cursor: pointer; transition: background 0.2s;
         }
         .prompt-reset:hover { background: var(--navy-tint); }
         .prompt-box.prompt-editable { margin-top: 0; cursor: text; transition: box-shadow 0.2s; }
@@ -352,17 +352,17 @@
 
         /* ===== DESCARGA DE LA BASE DE DATOS ===== */
         .download-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
-        .result-check .download-hint { font-size: 12.5px; color: var(--text-hint); margin: 10px 0 4px; }
+        .result-check .download-hint { font-size: 14.5px; color: var(--text-hint); margin: 10px 0 4px; }
 
         /* ===== RESPUESTAS OCULTAS TRAS UN BOTÓN ===== */
         .reveal-toggle {
             width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
             background: none; border: none; padding: 0; cursor: pointer; text-align: left;
-            font-family: var(--font-body); font-weight: 500; font-size: 16.5px; color: var(--lavender-text);
+            font-family: var(--font-body); font-weight: 500; font-size: 19px; color: var(--lavender-text);
         }
         .reveal-action {
             display: inline-flex; align-items: center; gap: 6px; background: var(--card); color: var(--navy);
-            padding: 8px 14px; border-radius: var(--radius-pill); font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+            padding: 8px 14px; border-radius: var(--radius-pill); font-family: var(--font-mono); font-size: 12.5px; font-weight: 500;
             text-transform: uppercase; letter-spacing: 0.06em; transition: background 0.2s;
         }
         .reveal-toggle:hover .reveal-action { background: var(--navy-tint); }
@@ -387,23 +387,23 @@
             box-shadow: 0 20px 60px rgba(25, 41, 98, 0.25);
         }
         .modal-box .mono-label { color: var(--lavender-text); }
-        .modal-box h3 { font-size: 22px; margin: 8px 0 14px; }
-        .modal-box p, .modal-box li { font-size: 15px; color: var(--text-secondary); }
+        .modal-box h3 { font-size: 25.5px; margin: 8px 0 14px; }
+        .modal-box p, .modal-box li { font-size: 17px; color: var(--text-secondary); }
         .modal-box ul, .modal-box ol { padding-left: 20px; margin: 8px 0 0; }
         .modal-box li { margin-bottom: 6px; }
         .modal-box ol li { margin-bottom: 12px; }
         .modal-box li strong { color: var(--navy); }
         .modal-box.wide { max-width: 680px; }
-        .modal-box .modal-subtitle { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; font-size: 11.5px; font-weight: 500; color: var(--lavender-text); margin: 22px 0 4px; }
+        .modal-box .modal-subtitle { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; font-size: 13px; font-weight: 500; color: var(--lavender-text); margin: 22px 0 4px; }
         .modal-close {
             position: absolute; top: 16px; right: 16px; background: var(--navy-tint); color: var(--navy);
-            border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 16px;
+            border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 18.5px;
             line-height: 1; display: flex; align-items: center; justify-content: center; transition: background 0.2s;
         }
         .modal-close:hover { background: var(--divider); }
 
         /* ===== PIE ===== */
-        footer.site-footer { background: var(--navy); color: #9AA2C6; padding: 40px var(--gutter); text-align: center; margin-top: 64px; font-size: 13.5px; line-height: 1.7; }
+        footer.site-footer { background: var(--navy); color: #9AA2C6; padding: 40px var(--gutter); text-align: center; margin-top: 64px; font-size: 15.5px; line-height: 1.7; }
         footer.site-footer code { background: rgba(255,255,255,0.1); color: #fff; }
         .footer-logos { display: flex; align-items: center; justify-content: center; gap: 24px; margin-bottom: 20px; flex-wrap: wrap; }
         .footer-logos img { width: auto; }
@@ -415,7 +415,7 @@
             .hero-logo-wwb { height: 60px; }
             .hero-logo-equidata { height: 38px; }
             .hero { padding: 48px var(--gutter) 44px; }
-            .chapter-header h2 { font-size: 22px; }
+            .chapter-header h2 { font-size: 25.5px; }
             .flip-card { width: calc(50% - 8px); }
         }
     </style>
@@ -609,7 +609,7 @@
     <h3 id="como-funciona" style="margin-top: 50px;">4. ¿Cómo funciona la IA?</h3>
     <p>Quiero empezar con una pregunta muy sencilla: ¿Qué creen que ve ChatGPT cuando yo escribo una frase?</p>
     <p class="block-label">Por ejemplo:</p>
-    <div class="code-block" style="text-align: center; font-size: 16px;">“El banco está lleno.”</div>
+    <div class="code-block" style="text-align: center; font-size: 18.5px;">“El banco está lleno.”</div>
     <p>Probablemente pensamos que la IA ve exactamente lo mismo que nosotros: una frase compuesta por palabras. Pero no. Y aquí empieza una de las ideas más importantes para entender cómo funciona la inteligencia artificial generativa. La IA no ve directamente palabras. No ve ideas. No ve significados. <strong>Primero ve números.</strong></p>
 
     <h4 style="margin-top: 30px;">Paso 1: La IA no lee palabras, lee Tokens</h4>
@@ -622,7 +622,7 @@
     <div class="result-check">
         <div class="rc-title">Ejercicio — ¿Dónde cortarías una palabra?</div>
         <p style="margin-bottom: 10px;">En parejas, intenten dividir estas palabras en piezas de manera que puedan reutilizar esas piezas en otras palabras:</p>
-        <ul style="margin: 0; font-family: var(--mono); font-size: 13.5px; color: var(--navy);">
+        <ul style="margin: 0; font-family: var(--mono); font-size: 15.5px; color: var(--navy);">
             <li>internacionalización</li>
             <li>emprendimiento</li>
             <li>analítica</li>
@@ -718,7 +718,7 @@
     <div class="result-check">
         <div class="rc-title">Ejercicio — El experimento del "banco"</div>
         <p>Compara estas dos frases:</p>
-        <ul style="font-family: var(--mono); font-size: 13.5px; color: var(--navy);">
+        <ul style="font-family: var(--mono); font-size: 15.5px; color: var(--navy);">
             <li>Frase A: "Fui al banco a consignar el cheque."</li>
             <li>Frase B: "Me senté en el banco del parque."</li>
         </ul>
@@ -733,9 +733,9 @@
     <p>Procesar tokens requiere enormes cantidades de poder computacional (servidores, tarjetas gráficas, electricidad). Por lo tanto, cada vez que le enviamos un documento largo a una IA o le pedimos que genere un texto extenso, estamos incurriendo en un costo monetario. La mayoría de los modelos comerciales cobran por cada 1.000 o 1.000.000 de tokens procesados (texto que le enviamos) y generados (respuesta de la IA).</p>
     
     <div class="token-calculator">
-        <h4 style="margin-top: 0; font-family: var(--disp); color: var(--navy); font-size: 18px;">🧮 Calculadora de tokens (Estimador)</h4>
-        <p style="font-size: 13.5px; color: var(--ink-soft); margin-bottom: 15px;">Pega un prompt, texto o documento largo aquí para estimar cuántos tokens representa y su costo aproximado.</p>
-        <textarea id="calc-text" placeholder="Pega o escribe tu texto aquí..." oninput="calculateTokens()" style="width: 100%; min-height: 100px; padding: 12px; border: 1px solid var(--line); border-radius: 8px; font-family: var(--body); font-size: 14px; resize: vertical;"></textarea>
+        <h4 style="margin-top: 0; font-family: var(--disp); color: var(--navy); font-size: 20.5px;">🧮 Calculadora de tokens (Estimador)</h4>
+        <p style="font-size: 15.5px; color: var(--ink-soft); margin-bottom: 15px;">Pega un prompt, texto o documento largo aquí para estimar cuántos tokens representa y su costo aproximado.</p>
+        <textarea id="calc-text" placeholder="Pega o escribe tu texto aquí..." oninput="calculateTokens()" style="width: 100%; min-height: 100px; padding: 12px; border: 1px solid var(--line); border-radius: 8px; font-family: var(--body); font-size: 16px; resize: vertical;"></textarea>
         <div class="stats-grid">
             <div class="stat-box">
                 <div class="stat-value" id="val-chars">0</div>
@@ -754,7 +754,7 @@
                 <div class="stat-label" style="color: var(--lime-deep);">Costo Est. (USD)</div>
             </div>
         </div>
-        <p style="font-size: 11.5px; color: var(--ink-soft); margin-top: 15px; text-align: center; margin-bottom: 0;">*Estimación conservadora: 1 token ≈ 4 caracteres en español. Costo referencial de $2.50 USD por 1 Millón de tokens (Input).</p>
+        <p style="font-size: 13px; color: var(--ink-soft); margin-top: 15px; text-align: center; margin-bottom: 0;">*Estimación conservadora: 1 token ≈ 4 caracteres en español. Costo referencial de $2.50 USD por 1 Millón de tokens (Input).</p>
     </div>
 
     <h3 id="prompts" style="margin-top: 50px;">6. Ingeniería de Prompts: La Fórmula C-T-F-R</h3>
@@ -770,7 +770,7 @@
     <h2 id="simulador-cierre">💻Simulador de Prompts C-T-F-R</h2>
     <div class="ctfr-simulator" style="margin-bottom: 40px;">
         <h4>✨ Simulador Interactivo</h4>
-        <p style="font-size: 13.5px; color: var(--ink-soft); margin-bottom: 20px;">Utiliza este espacio para iterar tus instrucciones. Al hacer clic en "Construir prompt" verás el prompt completo: cópialo y pégalo en la IA de tu preferencia.</p>
+        <p style="font-size: 15.5px; color: var(--ink-soft); margin-bottom: 20px;">Utiliza este espacio para iterar tus instrucciones. Al hacer clic en "Construir prompt" verás el prompt completo: cópialo y pégalo en la IA de tu preferencia.</p>
         
         <label>[C] Contexto</label>
         <textarea id="ctfr-c">Eres un analista de datos experto trabajando para la Fundación WWB Colombia. Te voy a proporcionar estadísticas resumidas de la base de datos "BBDD_Curso.csv" correspondientes a las participantes del programa Yarú, que incluye variables como 'ingreso_mensual', 'nivel_educativo' y 'estado_programa'.</textarea>
@@ -814,7 +814,7 @@
     <div class="result-check">
         <div class="rc-title">Ejercicio — De la idea al análisis</div>
         <p>Observen estas tres preguntas y evalúen su viabilidad analítica:</p>
-        <ol style="font-family: var(--body); font-size: 14.5px; color: var(--navy); line-height: 1.6;">
+        <ol style="font-family: var(--body); font-size: 16.5px; color: var(--navy); line-height: 1.6;">
             <li>"¿Cómo mejorar Yarú?" <em>(Muy amplia, institucional).</em></li>
             <li>"¿Las mujeres están mejorando?" <em>(Aún vaga. ¿Mejorando en qué?).</em></li>
             <li><strong>"¿Cómo cambió el ingreso mensual mediano de las participantes activas de Yarú entre línea base y seguimiento, según la zona (rural vs urbana)?"</strong> <em>(Perfecta. Analítica. Tiene población, medida, tiempo y dimensión de comparación).</em></li>
@@ -837,10 +837,10 @@
       <div class="q-track">
         <!-- Ejemplo Netflix -->
         <div class="q-slide" style="--accent: var(--coral);" role="group" aria-roledescription="tarjeta">
-            <h5 style="margin: 0 0 10px 0; color: var(--accent); font-family: var(--disp); font-size: 18px;">🎓 Educación y deserción</h5>
-            <p style="font-size: 13.5px; margin-bottom: 8px;"><strong>Institucional:</strong> <em>¿Cómo podemos lograr que más participantes permanezcan y culminen el programa?</em><br>
-            <p style="font-size: 13.5px; margin-bottom: 12px; border-left: 2px solid var(--lime-deep); padding-left: 10px;"><strong>Analítica:</strong>¿Qué características de las participantes están asociadas con una mayor probabilidad de desertar del programa?</p>
-            <div style="font-size: 12px; line-height: 1.4; background: var(--paper-dim); padding: 10px; border-radius: 6px;">
+            <h5 style="margin: 0 0 10px 0; color: var(--accent); font-family: var(--disp); font-size: 20.5px;">🎓 Educación y deserción</h5>
+            <p style="font-size: 15.5px; margin-bottom: 8px;"><strong>Institucional:</strong> <em>¿Cómo podemos lograr que más participantes permanezcan y culminen el programa?</em><br>
+            <p style="font-size: 15.5px; margin-bottom: 12px; border-left: 2px solid var(--lime-deep); padding-left: 10px;"><strong>Analítica:</strong>¿Qué características de las participantes están asociadas con una mayor probabilidad de desertar del programa?</p>
+            <div style="font-size: 14px; line-height: 1.4; background: var(--paper-dim); padding: 10px; border-radius: 6px;">
                 <strong>Desglose:</strong><br>
                 • <strong>Decisión:</strong> Diseñar estrategias de permanencia<br>
                 • <strong>Población:</strong>Beneficiarias matriculadas<br>
@@ -849,15 +849,15 @@
                 • <strong>Tiempo:</strong> Durante el periodo de formación.<br>
                 • <strong>Comparación:</strong>Características sociodemográficas, educativas y económicas..
             </div>
-            <p style="font-size: 12px; color: var(--ink-soft); margin-top: 10px; font-style: italic;">La organización no necesita saber solamente “por qué las personas abandonan”, sino qué factores están asociados con la deserción y qué condiciones puede modificar para favorecer la permanencia.</p>
+            <p style="font-size: 14px; color: var(--ink-soft); margin-top: 10px; font-style: italic;">La organización no necesita saber solamente “por qué las personas abandonan”, sino qué factores están asociados con la deserción y qué condiciones puede modificar para favorecer la permanencia.</p>
         </div>
 
         <!-- Ejemplo Rappi -->
         <div class="q-slide" style="--accent: var(--lavender-text);" role="group" aria-roledescription="tarjeta">
-            <h5 style="margin: 0 0 10px 0; color: var(--accent); font-family: var(--disp); font-size: 18px;">💵Pobreza y generación de ingresos</h5>
-            <p style="font-size: 13.5px; margin-bottom: 8px;"><strong>Institucional:</strong> <em>¿Cómo podemos contribuir a mejorar las condiciones económicas de las personas participantes?</em></p>
-            <p style="font-size: 13.5px; margin-bottom: 12px; border-left: 2px solid var(--lime-deep); padding-left: 10px;"><strong>Analítica:</strong>¿Qué características están asociadas con mayores niveles de ingreso entre las personas participantes?</p>
-            <div style="font-size: 12px; line-height: 1.4; background: var(--paper-dim); padding: 10px; border-radius: 6px;">
+            <h5 style="margin: 0 0 10px 0; color: var(--accent); font-family: var(--disp); font-size: 20.5px;">💵Pobreza y generación de ingresos</h5>
+            <p style="font-size: 15.5px; margin-bottom: 8px;"><strong>Institucional:</strong> <em>¿Cómo podemos contribuir a mejorar las condiciones económicas de las personas participantes?</em></p>
+            <p style="font-size: 15.5px; margin-bottom: 12px; border-left: 2px solid var(--lime-deep); padding-left: 10px;"><strong>Analítica:</strong>¿Qué características están asociadas con mayores niveles de ingreso entre las personas participantes?</p>
+            <div style="font-size: 14px; line-height: 1.4; background: var(--paper-dim); padding: 10px; border-radius: 6px;">
                 <strong>Desglose:</strong><br>
                 • <strong>Decisión:</strong>Orientar estrategias de generación de ingresos.<br>
                 • <strong>Población:</strong>Personas beneficiarias con micronegocios<br>
@@ -866,19 +866,19 @@
                 • <strong>Tiempo:</strong> Línea base y comparación.<br>
                 • <strong>Comparación:</strong>Características educativas, empresariales, territoriales y sociodemográficas.
             </div>
-            <p style="font-size: 12px; color: var(--ink-soft); margin-top: 10px; font-style: italic;">Pregunta para la clase: ¿Esta pregunta nos permite decir que la capacitación CAUSÓ el aumento?</p>
+            <p style="font-size: 14px; color: var(--ink-soft); margin-top: 10px; font-style: italic;">Pregunta para la clase: ¿Esta pregunta nos permite decir que la capacitación CAUSÓ el aumento?</p>
         </div>
 
         <!-- Ejemplo Banco -->
         <div class="q-slide" style="--accent: var(--navy);" role="group" aria-roledescription="tarjeta">
-            <h5 style="margin: 0 0 10px 0; color: var(--accent); font-family: var(--disp); font-size: 18px;">🍼 Trabajo de cuidado no remunerado</h5>
-            <p style="font-size: 13.5px; margin-bottom: 8px;"><strong>Institucional:</strong> <em>¿Cómo podemos diseñar programas que reconozcan las restricciones de tiempo asociadas al cuidado?</em></p>
-            <p style="font-size: 13.5px; margin-bottom: 12px; border-left: 2px solid var(--lime-deep); padding-left: 10px;"><strong>Analítica:</strong>¿Cómo se relaciona el tiempo dedicado al trabajo de cuidado no remunerado con la participación y el desempeño económico?</p>
-            <div style="font-size: 12px; line-height: 1.4; background: var(--paper-dim); padding: 10px; border-radius: 6px;">
+            <h5 style="margin: 0 0 10px 0; color: var(--accent); font-family: var(--disp); font-size: 20.5px;">🍼 Trabajo de cuidado no remunerado</h5>
+            <p style="font-size: 15.5px; margin-bottom: 8px;"><strong>Institucional:</strong> <em>¿Cómo podemos diseñar programas que reconozcan las restricciones de tiempo asociadas al cuidado?</em></p>
+            <p style="font-size: 15.5px; margin-bottom: 12px; border-left: 2px solid var(--lime-deep); padding-left: 10px;"><strong>Analítica:</strong>¿Cómo se relaciona el tiempo dedicado al trabajo de cuidado no remunerado con la participación y el desempeño económico?</p>
+            <div style="font-size: 14px; line-height: 1.4; background: var(--paper-dim); padding: 10px; border-radius: 6px;">
                 <strong>Aún mejor (orientada a decisión):</strong><br>
                 ¿Qué perfiles de participantes se configuran según su carga de trabajo de cuidado y sus condiciones de participación económica, y cómo se diferencian en sus resultados económicos?
             </div>
-            <p style="font-size: 12px; color: var(--ink-soft); margin-top: 10px; font-style: italic;">Introduce naturalmente los conceptos de segmentación y clasificación.</p>
+            <p style="font-size: 14px; color: var(--ink-soft); margin-top: 10px; font-style: italic;">Introduce naturalmente los conceptos de segmentación y clasificación.</p>
         </div>
       </div>
 
@@ -897,32 +897,32 @@
     <p>Aterricemos esto a la realidad de la Fundación. “Pregunta analítica” no significa necesariamente una única cosa. Hay distintos niveles de sofisticación dependiendo de qué tan profundo queramos ir con los datos.</p>
 
     <div style="background: var(--navy); border-radius: 16px; padding: 32px 28px; margin: 20px 0; color: #fff;">
-        <h4 style="color: #fff; margin-top: 0; font-family: var(--disp); font-size: 20px;">Fundación WWB: “¿Cómo mejorar un programa?”</h4>
+        <h4 style="color: #fff; margin-top: 0; font-family: var(--disp); font-size: 23px;">Fundación WWB: “¿Cómo mejorar un programa?”</h4>
         
         <div class="q-steps" style="margin-top: 16px;">
             <div class="q-step">
-                <div style="font-size: 11.5px; color: var(--lime); text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--mono); font-weight: 500; margin-bottom: 6px;">1. Pregunta Institucional</div>
-                <div style="font-size: 16px; margin-bottom: 12px; color: #fff;">¿Cómo mejorar Yarú?</div>
+                <div style="font-size: 13px; color: var(--lime); text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--mono); font-weight: 500; margin-bottom: 6px;">1. Pregunta Institucional</div>
+                <div style="font-size: 18.5px; margin-bottom: 12px; color: #fff;">¿Cómo mejorar Yarú?</div>
                 <div style="text-align: center; color: var(--lavender); margin-bottom: 12px;">↓</div>
             </div>
             <div class="q-step">
-                <div style="font-size: 11.5px; color: var(--lime); text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--mono); font-weight: 500; margin-bottom: 6px;">2. Pregunta analítica descriptiva</div>
-                <div style="font-size: 16px; margin-bottom: 12px; color: #fff; border-left: 2px solid var(--lime); padding-left: 10px;">¿Cuál es la tasa de permanencia de las participantes de Yarú y cómo varía según zona, edad y modalidad?</div>
+                <div style="font-size: 13px; color: var(--lime); text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--mono); font-weight: 500; margin-bottom: 6px;">2. Pregunta analítica descriptiva</div>
+                <div style="font-size: 18.5px; margin-bottom: 12px; color: #fff; border-left: 2px solid var(--lime); padding-left: 10px;">¿Cuál es la tasa de permanencia de las participantes de Yarú y cómo varía según zona, edad y modalidad?</div>
                 <div style="text-align: center; color: var(--lavender); margin-bottom: 12px;">↓</div>
             </div>
             <div class="q-step">
-                <div style="font-size: 11.5px; color: var(--lime); text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--mono); font-weight: 500; margin-bottom: 6px;">3. Pregunta analítica comparativa</div>
-                <div style="font-size: 16px; margin-bottom: 12px; color: #fff; border-left: 2px solid var(--lime); padding-left: 10px;">¿Cómo difiere la tasa de permanencia entre participantes rurales y urbanas de Yarú?</div>
+                <div style="font-size: 13px; color: var(--lime); text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--mono); font-weight: 500; margin-bottom: 6px;">3. Pregunta analítica comparativa</div>
+                <div style="font-size: 18.5px; margin-bottom: 12px; color: #fff; border-left: 2px solid var(--lime); padding-left: 10px;">¿Cómo difiere la tasa de permanencia entre participantes rurales y urbanas de Yarú?</div>
                 <div style="text-align: center; color: var(--lavender); margin-bottom: 12px;">↓</div>
             </div>
             <div class="q-step">
-                <div style="font-size: 11.5px; color: var(--lime); text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--mono); font-weight: 500; margin-bottom: 6px;">4. Pregunta analítica explicativa</div>
-                <div style="font-size: 16px; margin-bottom: 12px; color: #fff; border-left: 2px solid var(--lime); padding-left: 10px;">¿Qué características de las participantes están asociadas con una mayor probabilidad de permanecer en Yarú?</div>
+                <div style="font-size: 13px; color: var(--lime); text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--mono); font-weight: 500; margin-bottom: 6px;">4. Pregunta analítica explicativa</div>
+                <div style="font-size: 18.5px; margin-bottom: 12px; color: #fff; border-left: 2px solid var(--lime); padding-left: 10px;">¿Qué características de las participantes están asociadas con una mayor probabilidad de permanecer en Yarú?</div>
                 <div style="text-align: center; color: var(--lavender); margin-bottom: 12px;">↓</div>
             </div>
             <div class="q-step">
-                <div style="font-size: 11.5px; color: var(--lime); text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--mono); font-weight: 500; margin-bottom: 6px;">5. Pregunta causal</div>
-                <div style="font-size: 16px; color: #fff; border-left: 2px solid var(--lime); padding-left: 10px;">¿La participación en determinadas actividades de Yarú <em>genera</em> cambios en las capacidades empresariales de las participantes?</div>
+                <div style="font-size: 13px; color: var(--lime); text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--mono); font-weight: 500; margin-bottom: 6px;">5. Pregunta causal</div>
+                <div style="font-size: 18.5px; color: #fff; border-left: 2px solid var(--lime); padding-left: 10px;">¿La participación en determinadas actividades de Yarú <em>genera</em> cambios en las capacidades empresariales de las participantes?</div>
             </div>
         </div>
     </div>
@@ -944,7 +944,7 @@
     <h3 id="Estructura-BD" style="margin-top: 40px;">1. Estructura de una base de datos</h3>
     <div class="callout callout-warning">
         <div class="callout-title">⚠️ Nota institucional ficticia</div>
-        <p style="font-size: 18px; font-weight: 600; text-align: center; color: var(--coral-deep); margin: 20px 0;">“El programa logró sacar de la pobreza al 87% de sus participantes”</p>
+        <p style="font-size: 20.5px; font-weight: 600; text-align: center; color: var(--coral-deep); margin: 20px 0;">“El programa logró sacar de la pobreza al 87% de sus participantes”</p>
         
         <table style="width: 50%; margin: 0 auto; background: var(--paper-hi); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
             <tr style="background: var(--paper-dim);">
@@ -967,7 +967,7 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </span>
         </button>
-        <ul id="respuestas-tablero" class="reveal-panel" hidden style="margin: 14px 0 0; font-family: var(--mono); font-size: 13.5px; color: var(--navy);">
+        <ul id="respuestas-tablero" class="reveal-panel" hidden style="margin: 14px 0 0; font-family: var(--mono); font-size: 15.5px; color: var(--navy);">
             <li>¿<strong>Quiénes</strong> conforman ese 87%? (¿unidad de observación?)</li>
             <li>¿<strong>Qué</strong> se midió exactamente? (¿Ingreso bruto, neto, ventas?)</li>
             <li>¿<strong>Cómo</strong> se midió? (¿Autoreporte, facturación?)</li>
@@ -991,13 +991,13 @@
     <p>Veamos la estructura fundamental utilizando un ejemplo institucional del programa Yarú:</p>
 
     <div style="overflow-x: auto; margin: 20px 0;">
-        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 16px;">
             <thead>
                 <tr>
-                    <th style="background: var(--navy); color: #fff; text-align: center; padding: 12px; border: 1px solid var(--navy-deep);">Identificador Único<br><span style="font-weight: normal; font-size: 11px; opacity: 0.8;">(La llave)</span></th>
-                    <th style="background: var(--navy); color: #fff; text-align: center; padding: 12px; border: 1px solid var(--navy-deep);">Variable 1<br><span style="font-weight: normal; font-size: 11px; opacity: 0.8;">(Atributo cualitativo)</span></th>
-                    <th style="background: var(--navy); color: #fff; text-align: center; padding: 12px; border: 1px solid var(--navy-deep);">Variable 2<br><span style="font-weight: normal; font-size: 11px; opacity: 0.8;">(Atributo cuantitativo)</span></th>
-                    <th style="background: var(--navy); color: #fff; text-align: center; padding: 12px; border: 1px solid var(--navy-deep);">Variable 3<br><span style="font-weight: normal; font-size: 11px; opacity: 0.8;">(Atributo cualitativo)</span></th>
+                    <th style="background: var(--navy); color: #fff; text-align: center; padding: 12px; border: 1px solid var(--navy-deep);">Identificador Único<br><span style="font-weight: normal; font-size: 12.5px; opacity: 0.8;">(La llave)</span></th>
+                    <th style="background: var(--navy); color: #fff; text-align: center; padding: 12px; border: 1px solid var(--navy-deep);">Variable 1<br><span style="font-weight: normal; font-size: 12.5px; opacity: 0.8;">(Atributo cualitativo)</span></th>
+                    <th style="background: var(--navy); color: #fff; text-align: center; padding: 12px; border: 1px solid var(--navy-deep);">Variable 2<br><span style="font-weight: normal; font-size: 12.5px; opacity: 0.8;">(Atributo cuantitativo)</span></th>
+                    <th style="background: var(--navy); color: #fff; text-align: center; padding: 12px; border: 1px solid var(--navy-deep);">Variable 3<br><span style="font-weight: normal; font-size: 12.5px; opacity: 0.8;">(Atributo cualitativo)</span></th>
                 </tr>
             </thead>
             <tbody>
@@ -1046,7 +1046,7 @@
             </a>
         </div>
         <p class="download-hint">El .xlsx incluye metadatos y diccionario de variables. El .csv es el que se usa en la práctica de Google Colab.</p>
-                <ol style="font-family: var(--body); font-size: 14.5px; color: var(--navy); line-height: 1.6;">
+                <ol style="font-family: var(--body); font-size: 16.5px; color: var(--navy); line-height: 1.6;">
             <li>"¿Cuantas variables tiene?"</li>
             <li>"¿Cuantas observaciones hay?" </li>
             <li>"¿Cómo se identifica cada observación?"</li>
@@ -1134,7 +1134,7 @@
 
     <h4 style="margin-top: 20px;">1. Según su naturaleza</h4>
     <div style="overflow-x: auto; margin: 15px 0;">
-        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 16px;">
             <thead>
                 <tr>
                     <th style="background: var(--navy); color: #fff; text-align: left; padding: 12px; border: 1px solid var(--navy-deep);">Tipo</th>
@@ -1168,7 +1168,7 @@
     <div class="code-block" style="text-align: center; color: var(--lavender); padding: 12px;">Nominal &rarr; Ordinal &rarr; Intervalo &rarr; Razón</div>
     
     <div style="overflow-x: auto; margin: 15px 0;">
-        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 16px;">
             <thead>
                 <tr>
                     <th style="background: var(--navy); color: #fff; text-align: left; padding: 12px; border: 1px solid var(--navy-deep);">Escala</th>
@@ -1206,7 +1206,7 @@
         <p>Aplica lo que acabas de aprender. Clasifica las siguientes variables seleccionando la opción correcta en cada menú desplegable.</p>
         
         <div style="overflow-x: auto; margin-top: 15px;">
-            <table style="width: 100%; border-collapse: collapse; font-size: 13.5px; background: #fff;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 15.5px; background: #fff;">
                 <thead>
                     <tr>
                         <th style="text-align: left; padding: 10px; border: 1px solid var(--line); background: var(--paper-dim);">Variable</th>
@@ -1224,7 +1224,7 @@
                                 <option value="cuantitativa-discreta">Cuantitativa (Discreta)</option>
                                 <option value="cuantitativa-continua">Cuantitativa (Continua)</option>
                             </select>
-                            <span id="fb-q1-nat" style="position: absolute; right: 12px; top: 14px; font-size: 14px;"></span>
+                            <span id="fb-q1-nat" style="position: absolute; right: 12px; top: 14px; font-size: 16px;"></span>
                         </td>
                         <td style="padding: 8px; border: 1px solid var(--line); position: relative;">
                             <select id="q1-esc" style="width: 100%; padding: 6px; border-radius: 4px; border: 1px solid #ccc; font-family: var(--body);">
@@ -1234,7 +1234,7 @@
                                 <option value="intervalo">Intervalo</option>
                                 <option value="razon">Razón</option>
                             </select>
-                            <span id="fb-q1-esc" style="position: absolute; right: 12px; top: 14px; font-size: 14px;"></span>
+                            <span id="fb-q1-esc" style="position: absolute; right: 12px; top: 14px; font-size: 16px;"></span>
                         </td>
                     </tr>
                     <tr>
@@ -1246,7 +1246,7 @@
                                 <option value="cuantitativa-discreta">Cuantitativa (Discreta)</option>
                                 <option value="cuantitativa-continua">Cuantitativa (Continua)</option>
                             </select>
-                            <span id="fb-q2-nat" style="position: absolute; right: 12px; top: 14px; font-size: 14px;"></span>
+                            <span id="fb-q2-nat" style="position: absolute; right: 12px; top: 14px; font-size: 16px;"></span>
                         </td>
                         <td style="padding: 8px; border: 1px solid var(--line); position: relative;">
                             <select id="q2-esc" style="width: 100%; padding: 6px; border-radius: 4px; border: 1px solid #ccc; font-family: var(--body);">
@@ -1256,7 +1256,7 @@
                                 <option value="intervalo">Intervalo</option>
                                 <option value="razon">Razón</option>
                             </select>
-                            <span id="fb-q2-esc" style="position: absolute; right: 12px; top: 14px; font-size: 14px;"></span>
+                            <span id="fb-q2-esc" style="position: absolute; right: 12px; top: 14px; font-size: 16px;"></span>
                         </td>
                     </tr>
                     <tr>
@@ -1268,7 +1268,7 @@
                                 <option value="cuantitativa-discreta">Cuantitativa (Discreta)</option>
                                 <option value="cuantitativa-continua">Cuantitativa (Continua)</option>
                             </select>
-                            <span id="fb-q3-nat" style="position: absolute; right: 12px; top: 14px; font-size: 14px;"></span>
+                            <span id="fb-q3-nat" style="position: absolute; right: 12px; top: 14px; font-size: 16px;"></span>
                         </td>
                         <td style="padding: 8px; border: 1px solid var(--line); position: relative;">
                             <select id="q3-esc" style="width: 100%; padding: 6px; border-radius: 4px; border: 1px solid #ccc; font-family: var(--body);">
@@ -1278,7 +1278,7 @@
                                 <option value="intervalo">Intervalo</option>
                                 <option value="razon">Razón</option>
                             </select>
-                            <span id="fb-q3-esc" style="position: absolute; right: 12px; top: 14px; font-size: 14px;"></span>
+                            <span id="fb-q3-esc" style="position: absolute; right: 12px; top: 14px; font-size: 16px;"></span>
                         </td>
                     </tr>
                     <tr>
@@ -1290,7 +1290,7 @@
                                 <option value="cuantitativa-discreta">Cuantitativa (Discreta)</option>
                                 <option value="cuantitativa-continua">Cuantitativa (Continua)</option>
                             </select>
-                            <span id="fb-q4-nat" style="position: absolute; right: 12px; top: 14px; font-size: 14px;"></span>
+                            <span id="fb-q4-nat" style="position: absolute; right: 12px; top: 14px; font-size: 16px;"></span>
                         </td>
                         <td style="padding: 8px; border: 1px solid var(--line); position: relative;">
                             <select id="q4-esc" style="width: 100%; padding: 6px; border-radius: 4px; border: 1px solid #ccc; font-family: var(--body);">
@@ -1300,7 +1300,7 @@
                                 <option value="intervalo">Intervalo</option>
                                 <option value="razon">Razón</option>
                             </select>
-                            <span id="fb-q4-esc" style="position: absolute; right: 12px; top: 14px; font-size: 14px;"></span>
+                            <span id="fb-q4-esc" style="position: absolute; right: 12px; top: 14px; font-size: 16px;"></span>
                         </td>
                     </tr>
                 </tbody>
@@ -1308,7 +1308,7 @@
         </div>
         <button class="btn-run" style="margin-top: 15px;" onclick="gradeClassification()">Calificar respuestas</button>
         <button class="reset-btn" style="margin-top: 15px; margin-left: 10px;" onclick="resetClassification()">↻ Reiniciar</button>
-        <div id="classification-results" style="display: none; margin-top: 15px; padding: 15px; border-radius: 8px; font-size: 14px; font-weight: 500;">
+        <div id="classification-results" style="display: none; margin-top: 15px; padding: 15px; border-radius: 8px; font-size: 16px; font-weight: 500;">
             <!-- Resultados se inyectarán aquí -->
         </div>
     </div>
@@ -1404,25 +1404,25 @@
     <div class="ra-grid" style="margin-bottom: 30px;">
         <div class="ra-card" style="border-top-color: var(--navy-mid);">
             <div class="ra-badge" style="background: var(--navy-mid); display: flex; align-items: center; gap: 6px;">
-                <span style="font-size: 14px;">📊</span> Distribuciones
+                <span style="font-size: 16px;">📊</span> Distribuciones
             </div>
             <p><strong>¿Cómo se comporta cada variable por su cuenta?</strong><br>¿Simétrica, sesgada, con dos picos?</p>
         </div>
         <div class="ra-card" style="border-top-color: var(--lavender-deep);">
             <div class="ra-badge" style="background: var(--lavender-deep); display: flex; align-items: center; gap: 6px;">
-                <span style="font-size: 14px;">👥</span> Resúmenes por grupo
+                <span style="font-size: 16px;">👥</span> Resúmenes por grupo
             </div>
             <p><strong>¿Hay diferencias reales?</strong><br>Compara entre regiones, categorías o trimestres.</p>
         </div>
         <div class="ra-card" style="border-top-color: var(--lime-deep);">
             <div class="ra-badge" style="background: var(--lime-deep); display: flex; align-items: center; gap: 6px;">
-                <span style="font-size: 14px;">🔗</span> Relaciones
+                <span style="font-size: 16px;">🔗</span> Relaciones
             </div>
             <p><strong>¿Tienen algo que ver entre sí?</strong><br>Por ejemplo: ¿precio y cantidad se mueven juntos?</p>
         </div>
         <div class="ra-card" style="border-top-color: var(--coral-deep);">
             <div class="ra-badge" style="background: var(--coral-deep); display: flex; align-items: center; gap: 6px;">
-                <span style="font-size: 14px;">⚠️</span> Anomalías residuales
+                <span style="font-size: 16px;">⚠️</span> Anomalías residuales
             </div>
             <p><strong>¿Quedó algo raro?</strong><br>Detecta casos extremos que el diagnóstico inicial no cazó.</p>
         </div>
@@ -2039,7 +2039,7 @@ ${r}`;
         optionsContainer.innerHTML = '<div class="options-title">El LLM predice la siguiente palabra (elige una):</div>';
         
         if (!nodeData) {
-            optionsContainer.innerHTML += '<p style="color: var(--lime); font-family: var(--mono); font-size: 14px;">[ Fin de la predicción ]</p>';
+            optionsContainer.innerHTML += '<p style="color: var(--lime); font-family: var(--mono); font-size: 16px;">[ Fin de la predicción ]</p>';
             return;
         }
 

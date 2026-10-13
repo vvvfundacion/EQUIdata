@@ -418,6 +418,58 @@
             .chapter-header h2 { font-size: 25.5px; }
             .flip-card { width: calc(50% - 8px); }
         }
+
+        /* ===== CHECKLIST INTERACTIVO DE LIMPIEZA ===== */
+        .lp { background: var(--card); border: 0.5px solid var(--divider); border-radius: var(--radius-card); padding: 22px; margin: 20px 0 30px; }
+        .lp-progress { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+        .lp-bar { flex: 1; height: 10px; background: var(--paper-dim); border-radius: var(--radius-pill); overflow: hidden; }
+        .lp-bar span { display: block; height: 100%; width: 0; background: var(--lime-deep); border-radius: inherit; transition: width .35s ease; }
+        .lp-count { font-family: var(--font-mono); font-size: 14px; color: var(--text-secondary); white-space: nowrap; }
+        .lp-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+        .lp-tab { --c: var(--navy); border: 2px solid var(--c); background: #fff; color: var(--c); font-family: var(--font-mono); font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; padding: 8px 14px; border-radius: var(--radius-pill); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: background .2s, color .2s; }
+        .lp-tab:hover { background: var(--paper-dim); }
+        .lp-tab.active { background: var(--c); color: #fff; }
+        .lp-tab .lp-n { font-size: 12px; opacity: .85; }
+        .lp-tab.complete .lp-n::after { content: " ✓"; }
+        .lp-panel { --c: var(--navy); }
+        .lp-item { border: 1px solid var(--line); border-left: 5px solid var(--c); border-radius: 12px; margin-bottom: 10px; background: #fff; transition: background .2s; }
+        .lp-item.done { background: var(--paper-dim); }
+        .lp-row { display: flex; align-items: center; gap: 12px; padding: 12px 14px; }
+        .lp-check { width: 20px; height: 20px; accent-color: var(--c); cursor: pointer; flex: 0 0 auto; }
+        .lp-toggle { flex: 1; display: flex; justify-content: space-between; align-items: center; gap: 10px; background: none; border: 0; padding: 0; text-align: left; font: inherit; font-size: 17px; font-weight: 600; color: var(--navy); cursor: pointer; }
+        .lp-item.done .lp-toggle .lp-t { text-decoration: line-through; opacity: .6; }
+        .lp-chev { font-size: 13px; color: var(--c); font-family: var(--font-mono); white-space: nowrap; }
+        .lp-toggle[aria-expanded="true"] .lp-chev { opacity: .6; }
+        .lp-body { padding: 0 16px 14px 46px; }
+        .lp-body p { margin: 0; font-size: 16px; color: var(--text-secondary); line-height: 1.55; }
+        .lp-done { margin-top: 16px; padding: 14px 18px; border-radius: 12px; background: var(--lime-deep); color: #fff; font-weight: 600; }
+        @media (max-width: 560px) {
+            .lp { padding: 16px; }
+            .lp-body { padding-left: 16px; }
+        }
+
+        /* ===== CELEBRACIÓN AL LLEGAR AL EDA ===== */
+        #fiesta-canvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9998; }
+        .fiesta-msg {
+            position: fixed; left: 50%; top: 50%; z-index: 9999; width: min(520px, calc(100% - 32px));
+            transform: translate(-50%, -50%) scale(.6); opacity: 0; pointer-events: none;
+            background: var(--card); border-radius: 22px; padding: 30px 28px 24px; text-align: center;
+            box-shadow: 0 24px 60px rgba(25, 41, 98, .35); border-top: 8px solid var(--lime-deep);
+            transition: transform .45s cubic-bezier(.2, 1.4, .4, 1), opacity .3s ease;
+        }
+        .fiesta-msg.show { transform: translate(-50%, -50%) scale(1); opacity: 1; pointer-events: auto; }
+        .fiesta-emoji { font-size: 54px; line-height: 1; margin-bottom: 10px; animation: fiesta-bounce 1s ease infinite alternate; }
+        .fiesta-msg h3 { margin: 0 0 10px; color: var(--navy); font-size: 26px; }
+        .fiesta-msg p { margin: 0 0 14px; color: var(--text-secondary); font-size: 17px; line-height: 1.5; }
+        .fiesta-pasos { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 0 0 18px; padding: 0; list-style: none; }
+        .fiesta-pasos li { font-family: var(--font-mono); font-size: 12.5px; text-transform: uppercase; letter-spacing: .06em; color: #fff; padding: 6px 12px; border-radius: var(--radius-pill); }
+        .fiesta-cerrar { background: var(--navy); color: #fff; border: 0; border-radius: var(--radius-pill); padding: 10px 22px; font: inherit; font-weight: 600; cursor: pointer; }
+        .fiesta-cerrar:hover { background: var(--navy-mid); }
+        @keyframes fiesta-bounce { from { transform: translateY(0) rotate(-6deg); } to { transform: translateY(-8px) rotate(6deg); } }
+        @media (prefers-reduced-motion: reduce) {
+            .fiesta-emoji { animation: none; }
+            .fiesta-msg { transition: opacity .2s ease; transform: translate(-50%, -50%); }
+        }
     </style>
 </head>
 <body>
@@ -448,9 +500,7 @@
         <a href="#bloque-a">IA como copiloto</a>
         <a href="#bloque-b">Preguntas de negocio</a>
         <a href="#bloque-c">Anatomía del dato</a>
-        <a href="#practica">Práctica</a>
-        <a href="#retos">Retos autónomos</a>
-    </nav>
+        <a href="#practica">Práctica</a>    </nav>
 </div>
 
 <main class="wrap">
@@ -795,7 +845,6 @@
     <hr>
 
     <div class="chapter-header" id="bloque-b">
-        <span class="chapter-num">⏱ 45–60 min</span>
         <h2>Preguntas de negocio. ¿Cómo formular una buena pregunta?</h2>
     </div>
     <p>De la pregunta institucional a la pregunta analítica.</p>
@@ -1358,77 +1407,33 @@
     <p>Las cuatro preguntas del médico, con su nombre real. Este es el checklist que le vas a aplicar a toda base de datos que recibas en tu vida profesional.</p>
     
     <div class="ra-grid" style="margin-bottom: 30px;">
-        <div class="ra-card" style="border-top-color: var(--lavender-deep);">
-            <div class="ra-badge" style="background: var(--lavender-deep);">1. Completitud</div>
-            <p><strong>¿Están todos los datos que deberían estar?</strong> Es el terreno de los valores faltantes (NA) y de las columnas que llegaron vacías.</p>
+        <div class="ra-card" style="border-top-color: var(--navy-mid);">
+            <div class="ra-badge" style="background: var(--navy-mid);">1. Unicidad</div>
+            <p><strong>¿Cada observación aparece una sola vez?</strong> Es el terreno de los duplicados, que inflan silenciosamente todos los totales.</p>
         </div>
-        <div class="ra-card" style="border-top-color: var(--lime-deep);">
-            <div class="ra-badge" style="background: var(--lime-deep);">2. Consistencia</div>
-            <p><strong>¿El mismo hecho se representa siempre igual?</strong> Es el terreno de las categorías inconsistentes ("Norte" vs. "norte") y de los formatos que no cuadran entre tablas.</p>
+        <div class="ra-card" style="border-top-color: var(--lavender-deep);">
+            <div class="ra-badge" style="background: var(--lavender-deep);">2. Completitud</div>
+            <p><strong>¿Están todos los datos que deberían estar?</strong> Es el terreno de los valores faltantes (NA) y de las columnas que llegaron vacías.</p>
         </div>
         <div class="ra-card" style="border-top-color: var(--coral-deep);">
             <div class="ra-badge" style="background: var(--coral-deep);">3. Validez</div>
             <p><strong>¿Los valores son posibles?</strong> Es el terreno de los valores imposibles (una cantidad de -5, una fecha en el futuro) y de los tipos incorrectos (un precio guardado como texto).</p>
         </div>
-        <div class="ra-card" style="border-top-color: var(--navy-mid);">
-            <div class="ra-badge" style="background: var(--navy-mid);">4. Unicidad</div>
-            <p><strong>¿Cada observación aparece una sola vez?</strong> Es el terreno de los duplicados, que inflan silenciosamente todos los totales.</p>
+        <div class="ra-card" style="border-top-color: var(--lime-deep);">
+            <div class="ra-badge" style="background: var(--lime-deep);">4. Consistencia</div>
+            <p><strong>¿El mismo hecho se representa siempre igual?</strong> Es el terreno de las categorías inconsistentes ("Norte" vs. "norte") y de los formatos que no cuadran entre tablas.</p>
         </div>
     </div>
 
 
     <div class="callout callout-lede">
         <div class="callout-title">Resumen del bloque</div>
-        <p>Cuatro dimensiones: completitud (¿falta?), consistencia (¿se escribe siempre igual?), validez (¿es posible?) y unicidad (¿está repetido?). Y una regla de oro que las precede: <strong>saber qué representa una fila.</strong></p>
+        <p>Cuatro dimensiones: unicidad (¿está repetido?), completitud (¿falta?), validez (¿es posible?) y consistencia (¿se escribe siempre igual?). Y una regla de oro que las precede: <strong>saber qué representa una fila.</strong></p>
     </div>
 
     
-        <div class="callout callout-lede">
-        <div class="callout-title">💡 Siempre al terminar cada limpieza de datos, debes poder responder estas tres preguntas sin dudar:</div>
-        <p></p>
-<p>¿Cuántas filas eliminé y por qué?</p>
-<p>¿Qué valores imputé o corregí y con qué criterio?</p>
-<p>¿Qué columnas eliminé y por qué no aportaban?</p>
-    </div>
 
-       <h3 id="EDA" style="margin-top: 40px;">5. Análisis Exploratorio de Datos (EDA) </h3>
-      <p>El Análisis Exploratorio de Datos (AED o EDA, por Exploratory Data Analysis) es el proceso de conocer, revisar y entender un conjunto de datos antes de hacer análisis estadístico, construir modelos o tomar decisiones.</p>
-
-    <div class="callout callout-lede">
-        <div class="callout-title">La EDA no es “hacer gráficos bonitos”</div>
-        <p>El objetivo de la EDA no es responder la pregunta de negocio final. Es entender la estructura, las distribuciones y las relaciones antes de comprometerte con un análisis o un modelo. Es el médico leyendo los exámenes ya validados, antes de diagnosticar.</p>
-    </div>
-
-    <p>La EDA busca cuatro cosas:</p>
-
-    <div class="ra-grid" style="margin-bottom: 30px;">
-        <div class="ra-card" style="border-top-color: var(--navy-mid);">
-            <div class="ra-badge" style="background: var(--navy-mid); display: flex; align-items: center; gap: 6px;">
-                <span style="font-size: 16px;">📊</span> Distribuciones
-            </div>
-            <p><strong>¿Cómo se comporta cada variable por su cuenta?</strong><br>¿Simétrica, sesgada, con dos picos?</p>
-        </div>
-        <div class="ra-card" style="border-top-color: var(--lavender-deep);">
-            <div class="ra-badge" style="background: var(--lavender-deep); display: flex; align-items: center; gap: 6px;">
-                <span style="font-size: 16px;">👥</span> Resúmenes por grupo
-            </div>
-            <p><strong>¿Hay diferencias reales?</strong><br>Compara entre regiones, categorías o trimestres.</p>
-        </div>
-        <div class="ra-card" style="border-top-color: var(--lime-deep);">
-            <div class="ra-badge" style="background: var(--lime-deep); display: flex; align-items: center; gap: 6px;">
-                <span style="font-size: 16px;">🔗</span> Relaciones
-            </div>
-            <p><strong>¿Tienen algo que ver entre sí?</strong><br>Por ejemplo: ¿precio y cantidad se mueven juntos?</p>
-        </div>
-        <div class="ra-card" style="border-top-color: var(--coral-deep);">
-            <div class="ra-badge" style="background: var(--coral-deep); display: flex; align-items: center; gap: 6px;">
-                <span style="font-size: 16px;">⚠️</span> Anomalías residuales
-            </div>
-            <p><strong>¿Quedó algo raro?</strong><br>Detecta casos extremos que el diagnóstico inicial no cazó.</p>
-        </div>
-    </div>
-    
-       <h3 id="practica" style="margin-top: 40px;">6. Práctica: Auditoría, limpieza y EDA con IA en Google Colab </h3>
+       <h3 id="practica" style="margin-top: 40px;">5. Práctica: Auditoría, limpieza y EDA con IA en Google Colab </h3>
     <p>Vamos a poner en práctica las cuatro dimensiones. Abriremos Google Colab y le pediremos a nuestra IA (usando la estructura C-T-F-R) que nos genere el código en Python para auditar y limpiar la base de datos <code>BBDD_Curso.csv</code>.</p>
     <div class="download-row">
         <a href="https://drive.google.com/file/d/1sRBEY1zhi6VfX2qDsf18nMuCOOSM4YvU/view" target="_blank" rel="noopener" class="btn-run" style="text-decoration: none; margin-top: 0;">
@@ -1442,8 +1447,8 @@
     </div>
     
     <div class="callout callout-practice">
-        <div class="callout-title">Paso 1: El Prompt para la IA</div>
-        <p>Abre un nuevo cuaderno en Google Colab, crea un proyecto, sube el archivo <code>BBDD_Curso.csv</code>, y corre en la IA de Google Colab el siguiente prompt, el cual te permitirá realizar la auditoria de la base de datos </p>
+        <div class="callout-title">Paso 1: Setup de la base de datos</div>
+        <p>Abre un nuevo cuaderno en Google Colab, crea un proyecto, sube el archivo <code>BBDD_Curso.csv</code>, y corre en la IA de Google Colab el siguiente prompt, el cual te permitirá cargar la base y separar las variables categóricas y numéricas.</p>
     </div>
     
     <div class="prompt-toolbar">
@@ -1457,195 +1462,439 @@
         </div>
     </div>
     <div class="prompt-box prompt-editable" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Prompt editable">[CONTEXTO]
-Eres un analista de datos de la Fundación WWB Colombia. Tienes una base de datos llamada "BBDD_Curso.csv" (separador coma, codificación UTF-8) ubicada en /content/BBDD_Curso.csv en Google Colab.
+Eres analista de datos de la Fundación WWB Colombia. Estás trabajando en Google Colab con una base de datos llamada BBDD_Curso.csv, ubicada en /content/BBDD_Curso.csv. El archivo utiliza separador coma y codificación UTF-8.
 
 [TAREA]
-Escribe el código en Python que cargue el archivo en un DataFrame de pandas llamado `df` y realice una AUDITORÍA de calidad de datos evaluando 4 dimensiones. Cada dimensión va en un bloque separado y debe producir una tabla de resultados con UNA FILA POR VARIABLE (todas las columnas de df):
+Escribe código Python para realizar las siguientes acciones:
+1. Cargar el archivo BBDD_Curso.csv en un DataFrame de pandas llamado df.
+2. Separar las variables de la base en dos grupos, utilizando las listas explícitas de variables que se proporcionan a continuación:
+   - Variables categóricas: asignarlas a un DataFrame llamado vc.
+   - Variables numéricas: asignarlas a un DataFrame llamado vn.
+3. Verificar que todas las variables solicitadas existan en df antes de crear los DataFrames.
+4. Mostrar los nombres de las columnas de vc y vn, así como sus dimensiones (número de filas y columnas).
+5. Mostrar las primeras cinco filas de cada DataFrame para verificar que la separación se realizó correctamente.
 
-1. UNICIDAD
-   - Imprime el número y porcentaje de filas completamente duplicadas.
-   - Tabla por variable: nombre, tipo de dato, número de valores únicos, % de valores únicos, número de valores repetidos.
+Variables categóricas
+tipo_id, aliado, clase, genero, bsex, fecha_nac, edad_r, niv_edu, etnia, est_civil_r, edadnegocio, actividad, ubi_negocio, tiene_dx, pobre_lb, rm_lb, rut_lb, tiene_lc, pobre_lc, rut_lc, rm_lc, estado_final, concluye.
 
-2. COMPLETITUD
-   - Tabla por variable: nombre, cantidad de nulos, % de nulos, y una columna de semáforo ("ok" si 0%, "alerta" si 0-5%, "crítico" si >5%).
-   - Ordena la tabla de mayor a menor % de nulos.
-
-3. CONSISTENCIA
-   - Tabla por variable de texto (detectadas dinámicamente con select_dtypes): cantidad de valores con mayúsculas, con espacios al inicio/final, con espacios dobles internos, y número de categorías únicas ANTES vs. DESPUÉS de normalizar (minúsculas + strip). Si el número baja, hay categorías escritas de forma inconsistente.
-   - Lista las columnas de texto cuyos valores parecen numéricos (posible tipo de dato incorrecto).
-   - Lista las columnas con "fecha" en el nombre e indica el % de valores que no se pueden convertir a fecha.
-
-4. VALIDEZ
-   - Imprime df.describe() transpuesto para las variables numéricas.
-   - Tabla por variable numérica: mínimo, máximo, media, mediana, cantidad de valores negativos, cantidad de ceros y cantidad de valores atípicos según la regla IQR (Q1 - 1.5*IQR, Q3 + 1.5*IQR).
-   - Tabla por variable de texto: número de categorías y las 3 categorías más frecuentes con su %.
+Variables numéricas
+edad, num_per_lb, ing_hog_lb, percapita_lb, dias_negocio, horas_negocio, ventas_lb, num_per_lc, ing_hog_lc, percapita_lc, dias_neg_lc, horas_neg_lc, ventas_lc, ln_ventas_lb, ln_ventas_lc, cuidado_lc.
 
 [FORMATO]
-Solo código Python comentado, con un bloque por dimensión (usa comentarios de encabezado tipo "# ===== 1. UNICIDAD ====="). Las tablas deben imprimirse con pd.set_option('display.max_rows', None) para ver todas las variables.
+Entrega únicamente el código Python, comentado y organizado en bloques sencillos:
+• # ===== 1. CARGA DE DATOS =====
+• # ===== 2. DEFINICIÓN DE VARIABLES =====
+• # ===== 3. VERIFICACIÓN DE COLUMNAS =====
+• # ===== 4. CREACIÓN DE DATAFRAMES =====
+• # ===== 5. VERIFICACIÓN DE RESULTADOS =====
+El código debe ser fácil de entender y ejecutar en una celda de Google Colab.
 
 [RESTRICCIONES]
-- Usa estrictamente la librería pandas (sin numpy, matplotlib ni otras).
-- No inventes nombres de variables: todo debe aplicarse de forma dinámica sobre las columnas de df.
-- No redactes introducciones ni conclusiones.
-- NO corrijas ni modifiques df: solo identifica y reporta los hallazgos.
+• Utiliza únicamente pandas para la manipulación de datos.
+• No utilices numpy, matplotlib ni otras librerías.
+• No modifiques los valores originales de df.
+• No elimines registros ni filtres observaciones.
+• No conviertas automáticamente las variables de texto a números ni cambies los tipos de datos.
+• No inventes ni renombres columnas.
+• Si alguna variable de las listas no existe en el archivo, informa cuáles faltan y cuáles están disponibles, sin detener innecesariamente la creación de los DataFrames con las columnas que sí existen.
+• Conserva el orden de las variables indicado en cada lista.
+• No redactes introducciones ni conclusiones.
     </div>
-
-    <div class="callout callout-check">
-        <div class="callout-title">Paso 2: Limpieza de la base de datos</div>
-        <p>En el cuaderno en Google Colab, sube el archivo, ejecuta el siguiente prompt, el cual te ayudará a corregir los hallazgos de la auditoría</p>
-    </div>
-
-    <div class="prompt-toolbar">
-        <span class="prompt-toolbar-label">Prompt editable · ajústalo a tu pregunta</span>
-        <div class="prompt-toolbar-actions">
-            <button type="button" class="prompt-reset" onclick="resetPromptBox(this)">↺ Restaurar</button>
-            <button type="button" class="ctfr-copy" onclick="copyPromptBox(this)">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                <span class="copy-label">Copiar prompt</span>
-            </button>
-        </div>
-    </div>
-    <div class="prompt-box prompt-editable" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Prompt editable">[CONTEXTO]
-Continuando la auditoría anterior, el DataFrame `df` ya está cargado y se conocen los problemas de calidad detectados.
-
-[TAREA]
-Escribe el código en Python que cree un DataFrame `df_limpio` (sin sobrescribir `df`) corrigiendo los problemas, en 5 bloques:
-
-1. UNICIDAD: elimina filas completamente duplicadas y reporta cuántas se eliminaron.
-
-2. COMPLETITUD: NO imputes ni elimines filas automáticamente; agrega para cada columna con nulos una columna indicadora "<nombre>_nulo" (1/0) y reporta cuántas columnas se marcaron.
-
-3. CONSISTENCIA: en todas las columnas de texto aplica minúsculas, elimina espacios al inicio/final y reemplaza espacios dobles internos por uno solo.
-
-3B. HOMOLOGACIÓN DE CATEGORÍAS: en las columnas de texto con 30 categorías únicas o menos (detectadas dinámicamente), unifica las categorías que son variantes de escritura de un mismo valor, así:
-   - Crea una llave de comparación por categoría SOLO para comparar (no modifica los valores originales): pasa el texto a minúsculas, elimina tildes (str.normalize('NFKD') seguido de str.encode('ascii', 'ignore').str.decode('ascii')), elimina todo carácter que no sea letra, número o espacio, y elimina la vocal final "a" u "o" (para unir variantes de género como "urbana"/"urbano").
-   - Si dos o más categorías de una misma columna comparten la misma llave, reemplázalas por la categoría más frecuente del grupo (con su escritura original).
-   - Imprime una tabla de auditoría con: variable, categorías originales unificadas, categoría final asignada y número de filas afectadas. Si no se unificó nada en ninguna columna, imprime un aviso indicándolo.
-   - No unifiques categorías entre columnas distintas.
-
-4. VALIDEZ: NO elimines valores atípicos; crea una columna indicadora "<nombre>_atipico" (1/0) por cada variable numérica con outliers según IQR (Q1 - 1.5*IQR, Q3 + 1.5*IQR), para que el analista decida después.
-
-Al final imprime una tabla comparativa ANTES vs. DESPUÉS por dimensión (filas, duplicados, total de nulos, categorías únicas en texto, categorías homologadas, total de atípicos marcados) y guarda el resultado en "/content/BBDD_Curso_limpia.csv".
-
-[FORMATO]
-Solo código Python comentado, un bloque por dimensión (con encabezados tipo "# ===== 3B. HOMOLOGACIÓN DE CATEGORÍAS =====").
-
-[RESTRICCIONES]
-- Usa estrictamente pandas (sin numpy, difflib ni otras librerías).
-- No inventes nombres de variables: aplica todo de forma dinámica sobre las columnas.
-- No redactes introducciones ni conclusiones.
-    </div>
-
-
-     <div class="callout callout-check">
-        <div class="callout-title">Paso 3: Análisis exploratorio de datos</div>
-        <p>En el cuaderno en Google Colab ejecuta el siguiente prompt, el cual te ayudará a realizar el análisis exploratorio de datos. Ten en cuenta que este está ajustado para la pregunta de negocio de "¿cuáles son los determinantes de la pobreza monetaria de los propietarios de los negocios? "</p>
-    </div>
-
-    <div class="prompt-toolbar">
-        <span class="prompt-toolbar-label">Prompt editable · ajústalo a tu pregunta</span>
-        <div class="prompt-toolbar-actions">
-            <button type="button" class="prompt-reset" onclick="resetPromptBox(this)">↺ Restaurar</button>
-            <button type="button" class="ctfr-copy" onclick="copyPromptBox(this)">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                <span class="copy-label">Copiar prompt</span>
-            </button>
-        </div>
-    </div>
-    <div class="prompt-box prompt-editable" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Prompt editable">[CONTEXTO]
-Eres un analista de datos de la Fundación WWB Colombia. Tienes la base ya auditada y limpia en "/content/BBDD_Curso_limpia.csv" (texto en minúsculas, sin duplicados, con columnas indicadoras "_nulo" y "_atipico"). La pregunta de investigación es: ¿cuáles son los determinantes de la pobreza monetaria de los propietarios de los negocios? La variable de interés es `pobre_lb` (línea base).
-
-[TAREA]
-Escribe el código en Python que cargue la base en un DataFrame `df` y realice un ANÁLISIS EXPLORATORIO DE DATOS (EDA) en 6 bloques. Cada bloque debe imprimir sus tablas de resultados.
-
-0. PREPARACIÓN
-   - Crea la variable binaria `pobre_bin` (1 si la categoría de `pobre_lb` contiene la palabra "pobreza", 0 en caso contrario; deja NaN si `pobre_lb` es nula).
-   - Define, con los nombres exactos, estas listas (si alguna variable no existe en df, sáltala e imprime un aviso):
-     * categoricas = ['clase', 'genero', 'nivel_educativo', 'gr_etnia', 'estado_civil', 'actividad', 'ubinegocio', 'toma_dec', 'aliado', 'depto']
-     * numericas = ['edad', 'num_per_lb', 'edadnegocio', 'dias_negocio', 'horas_negocio', 'ventas_lb']
-     * binarias = ['computador', 'tableta', 'smartphone', 'internet']
-   - EXCLUYE explícitamente de los determinantes las variables que definen mecánicamente la pobreza: `ing_hog_lb`, `percapita_lb`, `pobre_lb1`; y no uses variables de cierre (terminadas en "_lc"), ni columnas "_nulo"/"_atipico".
-   - Imprime el tamaño de la muestra usada y la distribución de `pobre_bin` (conteo y %).
-
-1. UNIVARIADO
-   - Tabla por variable categórica: categoría, frecuencia, % del total.
-   - Tabla por variable numérica: n, media, mediana, desviación estándar, mínimo, máximo, asimetría (skew) y % de nulos.
-   - Tabla por variable binaria: % de 1 y % de 0.
-
-2. BIVARIADO: CATEGÓRICAS vs POBREZA
-   - Por cada variable categórica: tabla con categoría, n, n de pobres, % de pobres, y diferencia en puntos porcentuales frente a la tasa global de pobreza. Marca con "n-30" las categorías con menos de 30 observaciones.
-   - Calcula el V de Cramér de cada variable contra `pobre_bin` (usa pd.crosstab y calcula chi-cuadrado y V solo con operaciones de pandas).
-   - Repite el análisis para las variables binarias.
-
-3. BIVARIADO: NUMÉRICAS vs POBREZA
-   - Por cada variable numérica: media y mediana para pobres vs. no pobres (groupby sobre `pobre_bin`).
-   - Correlación de cada variable numérica con `pobre_bin` (corrwith).
-   - Tasa de pobreza por cuartiles (pd.qcut con duplicates='drop') de cada variable numérica; para `edad` usa además rangos definidos con pd.cut cada 10 años.
-
-4. MULTIVARIADO
-   - Tablas de doble entrada con la tasa de pobreza (pivot_table, mostrando también n) para los cruces: genero x nivel_educativo, clase x nivel_educativo, gr_etnia x clase, genero x estado_civil.
-   - Matriz de correlación entre las variables numéricas para detectar redundancia.
-
-5. VISUALIZACIÓN
-   - Con el método .plot() de pandas: gráfico de barras de la tasa de pobreza por categoría para cada variable categórica de baja cardinalidad (hasta 6 categorías), y un gráfico de barras de la tasa de pobreza por cuartil para cada variable numérica. Agrega título y etiquetas de ejes.
-
-6. RANKING DE ASOCIACIÓN
-   - Una sola tabla final con una fila por variable analizada: variable, tipo (categórica/numérica/binaria), medida de asociación (V de Cramér o |correlación|), y posición en el ranking de mayor a menor.
-
-[FORMATO]
-Solo código Python comentado, con un bloque por sección (encabezados tipo "# ===== 2. BIVARIADO: CATEGÓRICAS vs POBREZA ====="). Usa pd.set_option('display.max_rows', None) y redondea los porcentajes a 1 decimal.
-
-[RESTRICCIONES]
-- Usa estrictamente la librería pandas (los gráficos con .plot() de pandas están permitidos; no importes matplotlib, seaborn, numpy ni scipy).
-- No inventes nombres de variables distintos a los indicados; aplica los cálculos de forma dinámica recorriendo las listas.
-- No redactes introducciones ni conclusiones: la interpretación la hará el analista.
-- No modifiques la base limpia ni imputes valores; trabaja sobre una copia.
-    </div>
-
-    <hr>
-
 
     <div class="callout callout-practice">
-        <div class="callout-title">💡 La regla de oro antes de usar la IA</div>
-        <p>Antes de pedirle a una IA que analice datos, debes tener clara la pregunta. El flujo de valor es: <strong>pregunta clara &rarr; estructura de datos adecuada &rarr; auditoría de calidad &rarr; uso de IA como copiloto &rarr; verificación humana &rarr; decisión.</strong></p>
+        <div class="callout-title">Paso 2: Revisión completa de las cuatro dimensiones de la calidad</div>
+        <p>Vamos a revisar la calidad general de la base de datos, revisando los criterios de unicidad, completitud, validez y consistencia.</p>
     </div>
 
-    <hr>
+    <h4 style="margin: 36px 0 20px; background: var(--navy-mid); color: #fff; padding: 14px 22px; border-radius: 14px; font-size: 1.5em; letter-spacing: 0.04em; text-transform: uppercase;">🔁 Unicidad</h4>
 
-    <div class="chapter-header" id="retos">
-        <h2>📌 Retos Autónomos</h2>
+    <div class="prompt-toolbar">
+        <span class="prompt-toolbar-label">Prompt editable · ajústalo a tu pregunta</span>
+        <div class="prompt-toolbar-actions">
+            <button type="button" class="prompt-reset" onclick="resetPromptBox(this)">↺ Restaurar</button>
+            <button type="button" class="ctfr-copy" onclick="copyPromptBox(this)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span class="copy-label">Copiar prompt</span>
+            </button>
+        </div>
     </div>
-    <p>Trabajo entre sesiones. Revisa cuidadosamente los entregables requeridos.Estos retos debes realizarlos con la base de datos que te corresponde para el proyecto final</p>
+    <div class="prompt-box prompt-editable" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Prompt editable">[CONTEXTO]
+Eres analista de datos de la Fundación WWB Colombia y estás realizando una auditoría de calidad de datos sobre la base BBDD_Curso.csv en Google Colab.
+En el paso anterior, cargaste la base original en el DataFrame df y separaste las variables en dos DataFrames: vc, que contiene las variables categóricas, y vn, que contiene las variables numéricas.
 
-    <div class="challenges-grid">
-        
-        <div class="challenge-card">
-            <h3 class="challenge-title">💡 R1: Formula tu Pregunta</h3>
-            <p>Explora la base de datos de tu proyecto final. Identifica una problemática en tu entorno, plantea una hipótesis y formula una pregunta de negocio analítica. Usa la IA (C-T-F-R) para afinar tu hipótesis.</p>
-            <div class="entregable-box"><b>Entregable</b>Tabla con variables seleccionadas, hipótesis, pregunta formulada y el prompt utilizado.</div>
-        </div>
+[TAREA]
+Realiza una auditoría de unicidad para identificar registros completamente duplicados y evaluar la repetición de valores en cada variable.
+Desarrolla las siguientes actividades:
+1. Duplicados en los registros
+   - Calcula el número de filas completamente duplicadas en df.
+   - Calcula el porcentaje que representan respecto al total de filas.
+   - Imprime ambos resultados.
+2. Unicidad por tipo de variable
+   - Genera una tabla para las variables categóricas de vc y otra para las variables numéricas de vn.
+   - Incluye las siguientes columnas:
+      · Nombre de la variable.
+      · Tipo de dato.
+      · Número de valores únicos.
+      · Porcentaje de valores únicos respecto al total de filas.
+      · Número de valores repetidos.
 
-        <div class="challenge-card">
-            <h3 class="challenge-title">🏷️ R2: Tipos de variables</h3>
-            <p>Selecciona mínimo 10 variables de la base de datos. Pídele a la IA que te ayude a realizar la debida clasificación (nominal, ordinal, discreta, continua).</p>
-            <div class="entregable-box"><b>Entregable</b>Tabla con las variables clasificadas correctamente y el prompt utilizado.</div>
-        </div>
+[FORMATO]
+Entrega únicamente el código Python comentado, organizado en bloques:
+• # ===== 1. DUPLICADOS EN LOS REGISTROS =====
+• # ===== 2. UNICIDAD EN VARIABLES CATEGÓRICAS =====
+• # ===== 3. UNICIDAD EN VARIABLES NUMÉRICAS =====
+Imprime las tablas completas utilizando pd.set_option('display.max_rows', None) para visualizar todas las variables.
+Utiliza nombres claros en español para las columnas de resultados.
 
-        <div class="challenge-card">
-            <h3 class="challenge-title">🔍 R3: Audita tus datos</h3>
-            <p>Realiza una auditoría en Google Colab. Identifica duplicados, valores faltantes y errores tipográficos. Emplea la IA para limpiar la base.</p>
-            <div class="entregable-box"><b>Entregable</b>Tabla con hallazgos, ajustes realizados al código/base y prompt de limpieza.</div>
-        </div>
-
-        <div class="challenge-card">
-            <h3 class="challenge-title">📈 R4: Análisis Exploratorio</h3>
-            <p>Pide a la IA código para calcular media, varianza, percentiles (para continuas) y tablas de frecuencias (para categóricas) de tus variables seleccionadas. Pídele a la IA que haga ciertos cruces que tú consideres necesarios.</p>
-            <div class="entregable-box"><b>Entregable</b>Tabla con resultados del EDA (estadísticas y frecuencias) y el prompt utilizado.</div>
-        </div>
-
+[RESTRICCIONES]
+• Utiliza únicamente pandas, sin numpy ni otras librerías.
+• Trabaja con los DataFrames df, vc y vn creados en el paso anterior. No vuelvas a cargar el archivo.
+• No modifiques los DataFrames originales ni elimines registros.
+• Considera los valores nulos como una categoría adicional al calcular el número de valores únicos, para que la métrica refleje también su presencia. Aclara esta decisión en un comentario del código.
+• Calcula el porcentaje de valores únicos respecto al total de filas del DataFrame correspondiente.
+• Calcula el número de valores repetidos como el total de filas menos el número de valores únicos, contando los nulos como un valor adicional.
+• Si la base no tiene filas, evita divisiones por cero e informa que no es posible calcular los porcentajes.
+• Mantén el código sencillo, legible y fácil de entender para una persona que está aprendiendo análisis de datos.
+• No redactes introducciones ni conclusiones.
     </div>
 
+    <h4 style="margin: 36px 0 20px; background: var(--lavender-deep); color: #fff; padding: 14px 22px; border-radius: 14px; font-size: 1.5em; letter-spacing: 0.04em; text-transform: uppercase;">🧩 Completitud</h4>
+
+    <div class="prompt-toolbar">
+        <span class="prompt-toolbar-label">Prompt editable · ajústalo a tu pregunta</span>
+        <div class="prompt-toolbar-actions">
+            <button type="button" class="prompt-reset" onclick="resetPromptBox(this)">↺ Restaurar</button>
+            <button type="button" class="ctfr-copy" onclick="copyPromptBox(this)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span class="copy-label">Copiar prompt</span>
+            </button>
+        </div>
+    </div>
+    <div class="prompt-box prompt-editable" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Prompt editable">[CONTEXTO]
+Eres analista de datos de la Fundación WWB Colombia y estás realizando una auditoría de calidad de datos sobre la base BBDD_Curso.csv en Google Colab.
+En los pasos anteriores, cargaste la base original en el DataFrame df y separaste las variables en dos DataFrames: vc, que contiene las variables categóricas, y vn, que contiene las variables numéricas. También realizaste una auditoría de unicidad.
+Ahora necesitas evaluar la completitud de la información, identificando los valores faltantes y diferenciando los faltantes reales de aquellos que se producen por el diseño del instrumento de recolección.
+
+[TAREA]
+Realiza una auditoría de completitud sobre las variables de df, vc y vn.
+
+1. Completitud de la base completa
+Calcula e imprime:
+• Número total de filas.
+• Número total de columnas.
+• Número total de celdas de la base.
+• Cantidad total de valores nulos.
+• Porcentaje total de valores nulos sobre el total de celdas.
+
+2. Completitud por variable
+Ordena la tabla de mayor a menor porcentaje de valores nulos.
+
+4. Completitud de variables categóricas y numéricas
+Genera dos tablas adicionales una para las variables de vc y otra para las variables de vn, que contenga:
+• Nombre de la variable.
+• Tipo de dato.
+• Cantidad de valores nulos.
+• Porcentaje de valores nulos respecto al total de filas.
+• Cantidad de valores no nulos.
+• Porcentaje de valores no nulos.
+• Estado de completitud mediante un semáforo:
+   - OK: 0 % de valores nulos.
+   - Alerta: más de 0 % y hasta 5 % de valores nulos.
+   - Crítico: más de 5 % de valores nulos.
+
+4. Revisión de faltantes estructurales
+En esta base existe una variable llamada tiene_lc, cuyo valor puede ser 0 o 1. Cuando tiene_lc = 0, la información correspondiente a la línea de comparación no fue recolectada, por lo que algunas variables posteriores pueden presentar valores nulos que no representan necesariamente errores de calidad.
+Realiza las siguientes actividades:
+• Verifica que la variable tiene_lc exista en df.
+• Identifica las variables correspondientes a la línea de comparación que presentan valores nulos.
+• Calcula, para cada una de esas variables, la cantidad y el porcentaje de nulos entre los registros con tiene_lc = 0.
+• Calcula, para cada una de esas variables, la cantidad y el porcentaje de nulos entre los registros con tiene_lc = 1.
+• Presenta los resultados en una tabla comparativa para identificar cuáles faltantes podrían explicarse por el diseño del instrumento.
+• Reporta por separado los faltantes observados cuando tiene_lc = 1, pues estos sí requieren revisión para determinar si corresponden a problemas de captura, no respuesta u otra causa.
+No clasifiques automáticamente todos los nulos de las variables de línea de comparación como estructurales. Utiliza la relación con tiene_lc como criterio de revisión.
+
+[FORMATO]
+Entrega únicamente el código Python comentado, organizado en los siguientes bloques:
+• # ===== 1. COMPLETITUD GENERAL DE LA BASE =====
+• # ===== 2. COMPLETITUD DE VARIABLES CATEGÓRICAS =====
+• # ===== 3. COMPLETITUD DE VARIABLES NUMÉRICAS =====
+• # ===== 4. REVISIÓN DE FALTANTES ESTRUCTURALES =====
+Utiliza pd.set_option('display.max_rows', None) para mostrar todas las variables en las tablas.
+Presenta los porcentajes con dos decimales y utiliza nombres claros en español para las columnas.
+
+[RESTRICCIONES]
+• Utiliza únicamente pandas, sin numpy ni otras librerías.
+• Trabaja con los DataFrames df, vc y vn creados en los pasos anteriores. No vuelvas a cargar el archivo.
+• No modifiques los valores ni la estructura de los DataFrames originales.
+• No elimines registros ni reemplaces valores nulos.
+• No confundas los faltantes estructurales con los faltantes reales.
+• No asumas que todas las variables posteriores a tiene_lc corresponden a la línea de comparación. Identifica las variables de esta línea a partir de los nombres disponibles y de la estructura conocida de la base.
+• Si no puedes identificar con certeza alguna variable, informa la limitación en un comentario del código en lugar de asumir su significado.
+• Si tiene_lc no existe, informa esta situación y continúa con las demás dimensiones de completitud.
+• Si existen columnas sin valores o una base vacía, evita divisiones por cero.
+• Mantén el código sencillo, legible y fácil de entender para una persona que está aprendiendo análisis de datos.
+• No redactes introducciones ni conclusiones.
+    </div>
+
+    <h4 style="margin: 36px 0 20px; background: var(--coral-deep); color: #fff; padding: 14px 22px; border-radius: 14px; font-size: 1.5em; letter-spacing: 0.04em; text-transform: uppercase;">✅ Validez</h4>
+
+    <h5 style="margin: 24px 0 10px; color: var(--coral-deep); font-size: 1.15em;">Revisión de tipo de datos</h5>
+    <div class="prompt-toolbar">
+        <span class="prompt-toolbar-label">Prompt editable · ajústalo a tu pregunta</span>
+        <div class="prompt-toolbar-actions">
+            <button type="button" class="prompt-reset" onclick="resetPromptBox(this)">↺ Restaurar</button>
+            <button type="button" class="ctfr-copy" onclick="copyPromptBox(this)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span class="copy-label">Copiar prompt</span>
+            </button>
+        </div>
+    </div>
+    <div class="prompt-box prompt-editable" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Prompt editable">[CONTEXTO]
+Soy analista de datos de la Fundación WWB Colombia y estoy trabajando en Google Colab con la base BBDD_Curso.csv, cargada previamente en el DataFrame df. También tengo los DataFrames vc y vn, que contienen las variables categóricas y numéricas, respectivamente.
+
+[TAREA]
+Realiza una revisión inicial de la consistencia de los tipos de datos utilizando el método info() de pandas.
+1. Muestra la información general de df, incluyendo las columnas, los valores no nulos y los tipos de datos.
+2. Identifica si alguna variable definida como numérica en vn está almacenada como texto.
+3. Identifica si alguna variable definida como categórica en vc está almacenada como numérica.
+
+[FORMATO]
+Entrega únicamente el código Python, sencillo y comentado, para ejecutar en una celda de Google Colab. Organízalo en dos bloques:
+• # ===== 1. INFORMACIÓN GENERAL DE LA BASE =====
+• # ===== 2. REVISIÓN DE TIPOS DE DATOS =====
+
+[RESTRICCIONES]
+• Utiliza únicamente pandas.
+• Trabaja con los DataFrames existentes; no vuelvas a cargar el archivo.
+• No modifiques los datos ni cambies los tipos de las variables.
+• No asumas que una variable categórica almacenada como número es incorrecta.
+• Mantén el código sencillo y fácil de entender.
+• No redactes introducciones ni conclusiones.
+    </div>
+
+    <h4 style="margin: 36px 0 20px; background: var(--lime-deep); color: #fff; padding: 14px 22px; border-radius: 14px; font-size: 1.5em; letter-spacing: 0.04em; text-transform: uppercase;">🔤 Consistencia</h4>
+
+    <h5 style="margin: 24px 0 10px; color: var(--lime-deep); font-size: 1.15em;">Consistencia de la base de datos</h5>
+    <div class="prompt-toolbar">
+        <span class="prompt-toolbar-label">Prompt editable · ajústalo a tu pregunta</span>
+        <div class="prompt-toolbar-actions">
+            <button type="button" class="prompt-reset" onclick="resetPromptBox(this)">↺ Restaurar</button>
+            <button type="button" class="ctfr-copy" onclick="copyPromptBox(this)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span class="copy-label">Copiar prompt</span>
+            </button>
+        </div>
+    </div>
+    <div class="prompt-box prompt-editable" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Prompt editable">[CONTEXTO]
+Soy analista de datos de la Fundación WWB Colombia y estoy realizando una auditoría de calidad de datos sobre la base BBDD_Curso.csv en Google Colab.
+En los pasos anteriores, cargué la base en el DataFrame df y separé las variables en dos DataFrames: vc, que contiene las variables categóricas, y vn, que contiene las variables numéricas.
+
+[TAREA]
+Realiza una auditoría de validez para revisar la distribución de los valores numéricos, identificar posibles valores atípicos y conocer las categorías más frecuentes de las variables categóricas.
+
+1. Estadísticas descriptivas de las variables numéricas
+• Imprime vn.describe().T para mostrar las estadísticas descriptivas transpuestas de las variables numéricas.
+• Incluye las estadísticas que proporciona pandas por defecto.
+
+2. Revisión de valores y posibles atípicos
+Genera una tabla con una fila por cada variable numérica de vn e incluye las siguientes columnas:
+• Nombre de la variable.
+• Cantidad de valores válidos.
+• Valor mínimo.
+• Valor máximo.
+• Media.
+• Mediana.
+• Cantidad de valores negativos.
+• Cantidad de valores iguales a cero.
+• Primer cuartil (Q1).
+• Tercer cuartil (Q3).
+• Rango intercuartílico (IQR).
+• Cantidad de valores atípicos según la regla IQR.
+Identifica los valores atípicos utilizando los siguientes límites:
+• Límite inferior: Q1 - 1.5 × IQR.
+• Límite superior: Q3 + 1.5 × IQR.
+• Considera atípicos los valores estrictamente inferiores al límite inferior o superiores al límite superior.
+Excluye los valores nulos de los cálculos estadísticos y de los conteos correspondientes.
+
+3. Revisión de categorías
+Genera una tabla para las variables categóricas de vc que incluya:
+• Nombre de la variable.
+• Número de categorías distintas.
+
+[FORMATO]
+Entrega únicamente el código Python comentado, organizado en tres bloques:
+• # ===== 1. ESTADÍSTICAS DESCRIPTIVAS =====
+• # ===== 2. VALORES Y POSIBLES ATÍPICOS =====
+• # ===== 3. UNIQUES DE VARIABLES CATEGÓRICAS =====
+Utiliza pd.set_option('display.max_rows', None) para mostrar todas las variables de las tablas.
+Presenta los resultados con dos decimales cuando corresponda y utiliza nombres claros en español para las columnas de resultados.
+
+[RESTRICCIONES]
+• Utiliza estrictamente pandas, sin numpy, matplotlib ni otras librerías.
+• Trabaja con los DataFrames df, vc y vn creados anteriormente. No vuelvas a cargar el archivo.
+• No modifiques los datos ni la estructura de los DataFrames originales.
+• No elimines registros ni corrijas valores.
+• Genera los datos sin formato científico sin decimales, formato número
+• No inventes nombres de variables: trabaja dinámicamente con las columnas existentes en vc y vn.
+• No interpretes automáticamente los valores atípicos como errores; únicamente identifícalos para su revisión.
+• Si una variable no tiene valores válidos, evita errores de cálculo e informa que no es posible calcular sus estadísticas.
+• Si no existen categorías en una variable, informa esta situación sin generar errores.
+• Mantén el código sencillo, legible y fácil de entender para una persona que está aprendiendo análisis de datos.
+• No redactes introducciones ni conclusiones.
+    </div>
+
+    <div class="callout callout-lede">
+        <div class="callout-title">✍️ Tarea - 3 min</div>
+        <p>Construyan un prompt rápido para que la IA construya un código que muestre los valores únicos de las variables categóricas que, según lo que hemos analizado y con su conocimiento de la Fundación, les parezcan raras o atípicas.</p>
+        <p><strong>Pista:</strong> <code>estado_final</code>, que hace referencia al estado académico de la iniciativa, tiene 4 valores únicos.</p>
+    </div>
+
+    <div class="callout callout-practice">
+        <div class="callout-title">Paso 3: Limpieza de los datos</div>
+        <p>Con toda la información que llevamos hasta ahora ya sabemos qué hacer con los datos. En este sentido, no podemos dejar datos con errores o con formatos que no esten estandarizados porque corremos el riesgo de obtener conclusiones erróneas.</p>
+    </div>
+
+    <div class="callout callout-warning">
+        <div class="callout-title">⚠️ Tres reglas antes de tocar un solo dato</div>
+        <p><strong>1. Nunca limpies la base original.</strong> Trabaja sobre una copia (<code>df_limpio = df.copy()</code>) y guarda el resultado en un archivo nuevo. Si te equivocas, siempre puedes volver a empezar.</p>
+        <p><strong>2. Limpia con código, no a mano en Excel.</strong> El código deja rastro de cada cambio y se puede repetir cuando llegue una base nueva.</p>
+        <p><strong>3. Cada decisión queda escrita.</strong> Lleva una bitácora: qué cambiaste, en cuántos registros y con qué criterio.</p>
+    </div>
+
+    <h4 style="margin-top: 30px;">Los mínimos de la limpieza</h4>
+    <p>Este es el recorrido mínimo, en el mismo orden de la auditoría. Recorre las pestañas, abre cada mínimo para ver su criterio y márcalo cuando lo hayas revisado en tu base.</p>
+
+    <div class="lp" id="limpieza">
+        <div class="lp-progress">
+            <div class="lp-bar"><span id="lpFill"></span></div>
+            <span class="lp-count" id="lpCount">0 / 11 revisados</span>
+        </div>
+
+        <div class="lp-tabs" role="tablist">
+            <button type="button" class="lp-tab active" role="tab" aria-selected="true" data-dim="unicidad" style="--c: var(--navy-mid);">Unicidad <span class="lp-n"></span></button>
+            <button type="button" class="lp-tab" role="tab" aria-selected="false" data-dim="completitud" style="--c: var(--lavender-deep);">Completitud <span class="lp-n"></span></button>
+            <button type="button" class="lp-tab" role="tab" aria-selected="false" data-dim="validez" style="--c: var(--coral-deep);">Validez <span class="lp-n"></span></button>
+            <button type="button" class="lp-tab" role="tab" aria-selected="false" data-dim="consistencia" style="--c: var(--lime-deep);">Consistencia <span class="lp-n"></span></button>
+            <button type="button" class="lp-tab" role="tab" aria-selected="false" data-dim="cierre" style="--c: var(--navy);">Cierre <span class="lp-n"></span></button>
+        </div>
+
+        <div class="lp-panel" role="tabpanel" data-dim="unicidad" style="--c: var(--navy-mid);">
+            <div class="lp-item">
+                <div class="lp-row"><input type="checkbox" class="lp-check" aria-label="Marcar como revisado"><button type="button" class="lp-toggle" aria-expanded="false"><span class="lp-t">Eliminar duplicados</span><span class="lp-chev">¿Cómo? ▾</span></button></div>
+                <div class="lp-body" hidden><p>Elimina solo las filas idénticas en todas sus columnas. Si un mismo identificador aparece dos veces con datos distintos, no borres: revisa cuál registro es el correcto.</p></div>
+            </div>
+        </div>
+
+        <div class="lp-panel" role="tabpanel" data-dim="completitud" style="--c: var(--lavender-deep);" hidden>
+            <div class="lp-item">
+                <div class="lp-row"><input type="checkbox" class="lp-check" aria-label="Marcar como revisado"><button type="button" class="lp-toggle" aria-expanded="false"><span class="lp-t">Respetar los faltantes estructurales</span><span class="lp-chev">¿Cómo? ▾</span></button></div>
+                <div class="lp-body" hidden><p>Si el dato no existe por diseño (por ejemplo, las variables de línea de comparación cuando <code>tiene_lc = 0</code>), se deja vacío. No se imputa.</p></div>
+            </div>
+            <div class="lp-item">
+                <div class="lp-row"><input type="checkbox" class="lp-check" aria-label="Marcar como revisado"><button type="button" class="lp-toggle" aria-expanded="false"><span class="lp-t">Imputar con criterio los faltantes reales</span><span class="lp-chev">¿Cómo? ▾</span></button></div>
+                <div class="lp-body" hidden><p>Hasta 5 % de nulos: imputa con la <em>mediana</em> (numéricas) o la <em>moda</em> (categóricas), o deja el vacío y exclúyelo del cálculo. Más de 5 %: no imputes a ciegas; reporta la limitación. Siempre crea una columna indicadora <code>_imputado</code> (1/0).</p></div>
+            </div>
+        </div>
+
+        <div class="lp-panel" role="tabpanel" data-dim="validez" style="--c: var(--coral-deep);" hidden>
+            <div class="lp-item">
+                <div class="lp-row"><input type="checkbox" class="lp-check" aria-label="Marcar como revisado"><button type="button" class="lp-toggle" aria-expanded="false"><span class="lp-t">Corregir tipos de dato</span><span class="lp-chev">¿Cómo? ▾</span></button></div>
+                <div class="lp-body" hidden><p>Convierte a número lo que es número y a fecha lo que es fecha (<code>pd.to_numeric</code>, <code>pd.to_datetime</code>). Un código categórico guardado como número (por ejemplo, 1, 2, 3) puede quedarse así.</p></div>
+            </div>
+            <div class="lp-item">
+                <div class="lp-row"><input type="checkbox" class="lp-check" aria-label="Marcar como revisado"><button type="button" class="lp-toggle" aria-expanded="false"><span class="lp-t">Anular valores imposibles</span><span class="lp-chev">¿Cómo? ▾</span></button></div>
+                <div class="lp-body" hidden><p>Define la regla antes de aplicarla (edad entre 18 y 100, días a la semana entre 0 y 7, ventas no negativas). El valor que la incumple se reemplaza por vacío; la fila no se borra.</p></div>
+            </div>
+            <div class="lp-item">
+                <div class="lp-row"><input type="checkbox" class="lp-check" aria-label="Marcar como revisado"><button type="button" class="lp-toggle" aria-expanded="false"><span class="lp-t">Marcar los atípicos, no borrarlos</span><span class="lp-chev">¿Cómo? ▾</span></button></div>
+                <div class="lp-body" hidden><p>Un valor extremo puede ser real (una emprendedora que vende mucho). Márcalo con una columna <code>_atipico</code> (1/0) según la regla IQR y decide en el análisis: usar la mediana, el logaritmo o comparar con y sin atípicos.</p></div>
+            </div>
+        </div>
+
+        <div class="lp-panel" role="tabpanel" data-dim="consistencia" style="--c: var(--lime-deep);" hidden>
+            <div class="lp-item">
+                <div class="lp-row"><input type="checkbox" class="lp-check" aria-label="Marcar como revisado"><button type="button" class="lp-toggle" aria-expanded="false"><span class="lp-t">Estandarizar el texto</span><span class="lp-chev">¿Cómo? ▾</span></button></div>
+                <div class="lp-body" hidden><p>Quita espacios al inicio y al final, reemplaza espacios dobles y usa un mismo formato de mayúsculas en cada variable.</p></div>
+            </div>
+            <div class="lp-item">
+                <div class="lp-row"><input type="checkbox" class="lp-check" aria-label="Marcar como revisado"><button type="button" class="lp-toggle" aria-expanded="false"><span class="lp-t">Reparar caracteres dañados</span><span class="lp-chev">¿Cómo? ▾</span></button></div>
+                <div class="lp-body" hidden><p>Las tildes y eñes que llegan como símbolos raros (<code>FundaciÃ³n</code> en lugar de <code>Fundación</code>) se corrigen con un diccionario de reemplazos revisado por una persona.</p></div>
+            </div>
+            <div class="lp-item">
+                <div class="lp-row"><input type="checkbox" class="lp-check" aria-label="Marcar como revisado"><button type="button" class="lp-toggle" aria-expanded="false"><span class="lp-t">Homologar categorías</span><span class="lp-chev">¿Cómo? ▾</span></button></div>
+                <div class="lp-body" hidden><p>Unifica las variantes de un mismo valor ("URBANA" y "URBANO"; "Retirado" y "retirado") con un diccionario explícito. Compara <code>value_counts()</code> antes y después.</p></div>
+            </div>
+        </div>
+
+        <div class="lp-panel" role="tabpanel" data-dim="cierre" style="--c: var(--navy);" hidden>
+            <div class="lp-item">
+                <div class="lp-row"><input type="checkbox" class="lp-check" aria-label="Marcar como revisado"><button type="button" class="lp-toggle" aria-expanded="false"><span class="lp-t">Recalcular las variables derivadas</span><span class="lp-chev">¿Cómo? ▾</span></button></div>
+                <div class="lp-body" hidden><p>Si corregiste una variable de origen, actualiza las que dependen de ella (por ejemplo, si cambias <code>edad</code>, revisa <code>edad_r</code>; si cambias <code>ventas_lb</code>, revisa <code>ln_ventas_lb</code>).</p></div>
+            </div>
+            <div class="lp-item">
+                <div class="lp-row"><input type="checkbox" class="lp-check" aria-label="Marcar como revisado"><button type="button" class="lp-toggle" aria-expanded="false"><span class="lp-t">Comparar y guardar</span><span class="lp-chev">¿Cómo? ▾</span></button></div>
+                <div class="lp-body" hidden><p>Imprime una tabla antes vs. después (filas, nulos, categorías, atípicos marcados) y guarda la base en un archivo nuevo, por ejemplo <code>BBDD_Curso_limpia.csv</code>.</p></div>
+            </div>
+        </div>
+
+        <div class="lp-done" id="lpDone" hidden>✅ ¡Base lista para analizar! Antes de seguir, responde las tres preguntas de abajo.</div>
+    </div>
+
+
+        <div class="callout callout-lede">
+        <div class="callout-title">💡 Siempre al terminar cada limpieza de datos, debes poder responder estas tres preguntas sin dudar:</div>
+        <p></p>
+<p>¿Cuántas filas eliminé y por qué?</p>
+<p>¿Qué valores imputé o corregí y con qué criterio?</p>
+<p>¿Qué columnas eliminé y por qué no aportaban?</p>
+    </div>
+
+    <div id="EDA" style="margin: 40px 0 30px; text-align: center;">
+        <button type="button" class="fiesta-cerrar" onclick="openModal('modal-eda')">📊 Análisis Exploratorio de Datos (EDA) →</button>
+    </div>
 </main>
+
+<div id="modal-eda" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-eda-title" onclick="if(event.target === this) closeModal('modal-eda')">
+    <div class="modal-box wide" style="max-width: 820px;">
+        <button type="button" class="modal-close" onclick="closeModal('modal-eda')" aria-label="Cerrar">✕</button>
+        <h3 id="modal-eda-title">6. Análisis Exploratorio de Datos (EDA)</h3>
+        <p>El Análisis Exploratorio de Datos (AED o EDA, por Exploratory Data Analysis) es el proceso de conocer, revisar y entender un conjunto de datos antes de hacer análisis estadístico, construir modelos o tomar decisiones.</p>
+
+        <div class="callout callout-lede">
+            <div class="callout-title">La EDA no es “hacer gráficos bonitos”</div>
+            <p>El objetivo de la EDA no es responder la pregunta de negocio final. Es entender la estructura, las distribuciones y las relaciones antes de comprometerte con un análisis o un modelo. Es el médico leyendo los exámenes ya validados, antes de diagnosticar.</p>
+        </div>
+
+        <p>La EDA busca cuatro cosas:</p>
+
+        <div class="ra-grid" style="margin-bottom: 10px;">
+            <div class="ra-card" style="border-top-color: var(--navy-mid);">
+                <div class="ra-badge" style="background: var(--navy-mid); display: flex; align-items: center; gap: 6px;">
+                    <span style="font-size: 16px;">📊</span> Distribuciones
+                </div>
+                <p><strong>¿Cómo se comporta cada variable por su cuenta?</strong><br>¿Simétrica, sesgada, con dos picos?</p>
+            </div>
+            <div class="ra-card" style="border-top-color: var(--lavender-deep);">
+                <div class="ra-badge" style="background: var(--lavender-deep); display: flex; align-items: center; gap: 6px;">
+                    <span style="font-size: 16px;">👥</span> Resúmenes por grupo
+                </div>
+                <p><strong>¿Hay diferencias reales?</strong><br>Compara entre regiones, categorías o trimestres.</p>
+            </div>
+            <div class="ra-card" style="border-top-color: var(--lime-deep);">
+                <div class="ra-badge" style="background: var(--lime-deep); display: flex; align-items: center; gap: 6px;">
+                    <span style="font-size: 16px;">🔗</span> Relaciones
+                </div>
+                <p><strong>¿Tienen algo que ver entre sí?</strong><br>Por ejemplo: ¿precio y cantidad se mueven juntos?</p>
+            </div>
+            <div class="ra-card" style="border-top-color: var(--coral-deep);">
+                <div class="ra-badge" style="background: var(--coral-deep); display: flex; align-items: center; gap: 6px;">
+                    <span style="font-size: 16px;">⚠️</span> Anomalías residuales
+                </div>
+                <p><strong>¿Quedó algo raro?</strong><br>Detecta casos extremos que el diagnóstico inicial no cazó.</p>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div id="modal-red-neuronal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-red-neuronal-title" onclick="if(event.target === this) closeModal('modal-red-neuronal')">
     <div class="modal-box">
@@ -1712,7 +1961,161 @@ Solo código Python comentado, con un bloque por sección (encabezados tipo "# =
     Fundación WWB Colombia · EQUIdata — Aprende. Analiza. Transforma.
 </footer>
 
+<canvas id="fiesta-canvas" aria-hidden="true"></canvas>
+<div class="fiesta-msg" id="fiestaMsg" role="dialog" aria-modal="false" aria-labelledby="fiestaTitulo">
+    <div class="fiesta-emoji" aria-hidden="true">🎉</div>
+    <h3 id="fiestaTitulo">¡Ya tenemos la base como la queremos!</h3>
+    <p>Si haces estos tres pasos, ya tendrás la base para trabajar y producir información relevante.</p>
+    <ul class="fiesta-pasos">
+        <li style="background: var(--navy-mid);">1. Setup</li>
+        <li style="background: var(--lavender-deep);">2. Revisión de calidad</li>
+        <li style="background: var(--coral-deep);">3. Limpieza</li>
+    </ul>
+    <button type="button" class="fiesta-cerrar" id="fiestaCerrar">¡A explorar los datos! →</button>
+</div>
+
 <script>
+    // --- CELEBRACIÓN AL LLEGAR AL EDA ---
+    (function () {
+        const target = document.getElementById('EDA');
+        const canvas = document.getElementById('fiesta-canvas');
+        const msg = document.getElementById('fiestaMsg');
+        if (!target || !canvas || !msg || !('IntersectionObserver' in window)) return;
+        const ctx = canvas.getContext('2d');
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const colores = ['#192962', '#534AB7', '#BEA4E8', '#4E8A1C', '#BBEF7F', '#C24634', '#D55947', '#FFC93C'];
+        let piezas = [];
+        let anim = null;
+        let cierreAuto = null;
+
+        function ajustar() {
+            canvas.width = window.innerWidth * devicePixelRatio;
+            canvas.height = window.innerHeight * devicePixelRatio;
+            ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+        }
+
+        // Dos cañones de confeti desde las esquinas inferiores
+        function lanzar() {
+            const w = window.innerWidth, h = window.innerHeight;
+            for (let i = 0; i < 160; i++) {
+                const izq = i % 2 === 0;
+                piezas.push({
+                    x: izq ? 0 : w, y: h,
+                    vx: (izq ? 1 : -1) * (4 + Math.random() * 9),
+                    vy: -(11 + Math.random() * 10),
+                    w: 6 + Math.random() * 7, h: 8 + Math.random() * 10,
+                    rot: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.35,
+                    color: colores[Math.floor(Math.random() * colores.length)],
+                    vida: 0
+                });
+            }
+        }
+
+        function dibujar() {
+            const w = window.innerWidth, h = window.innerHeight;
+            ctx.clearRect(0, 0, w, h);
+            piezas.forEach(function (p) {
+                p.vy += 0.28; p.vx *= 0.99; p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.vida++;
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.rot);
+                ctx.fillStyle = p.color;
+                ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h * Math.abs(Math.cos(p.vida * 0.1)));
+                ctx.restore();
+            });
+            piezas = piezas.filter(function (p) { return p.y < h + 40 && p.vida < 400; });
+            if (piezas.length) anim = requestAnimationFrame(dibujar);
+            else { ctx.clearRect(0, 0, w, h); anim = null; }
+        }
+
+        function cerrar() {
+            msg.classList.remove('show');
+            clearTimeout(cierreAuto);
+        }
+
+        function celebrar() {
+            msg.classList.add('show');
+            cierreAuto = setTimeout(cerrar, 9000);
+            if (reduce) return;
+            ajustar();
+            lanzar();
+            setTimeout(lanzar, 450);
+            setTimeout(lanzar, 900);
+            if (!anim) anim = requestAnimationFrame(dibujar);
+        }
+
+        document.getElementById('fiestaCerrar').addEventListener('click', function () {
+            cerrar();
+            openModal('modal-eda');
+        });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') cerrar(); });
+        window.addEventListener('resize', function () { if (anim) ajustar(); });
+
+        // Cada vez que el botón del EDA entra en pantalla bajando; se rearma al salir de ella
+        let armado = true;
+        const obs = new IntersectionObserver(function (entradas) {
+            const e = entradas[0];
+            if (!e.isIntersecting) { armado = true; return; }
+            const bajando = e.boundingClientRect.top > window.innerHeight / 2;
+            const edaAbierto = document.getElementById('modal-eda').classList.contains('active');
+            if (armado && bajando && !edaAbierto && !msg.classList.contains('show')) {
+                armado = false;
+                celebrar();
+            }
+        }, { threshold: 0.6 });
+        obs.observe(target);
+    })();
+
+    // --- CHECKLIST INTERACTIVO DE LIMPIEZA ---
+    (function () {
+        const root = document.getElementById('limpieza');
+        if (!root) return;
+        const tabs = root.querySelectorAll('.lp-tab');
+        const panels = root.querySelectorAll('.lp-panel');
+        const checks = root.querySelectorAll('.lp-check');
+
+        tabs.forEach(function (tab) {
+            tab.addEventListener('click', function () {
+                tabs.forEach(function (t) {
+                    t.classList.toggle('active', t === tab);
+                    t.setAttribute('aria-selected', t === tab ? 'true' : 'false');
+                });
+                panels.forEach(function (p) { p.hidden = p.dataset.dim !== tab.dataset.dim; });
+            });
+        });
+
+        root.querySelectorAll('.lp-toggle').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                const body = btn.closest('.lp-item').querySelector('.lp-body');
+                const open = body.hidden;
+                body.hidden = !open;
+                btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+                btn.querySelector('.lp-chev').textContent = open ? 'Cerrar ▴' : '¿Cómo? ▾';
+            });
+        });
+
+        function update() {
+            let done = 0;
+            checks.forEach(function (c) {
+                c.closest('.lp-item').classList.toggle('done', c.checked);
+                if (c.checked) done++;
+            });
+            document.getElementById('lpFill').style.width = (done / checks.length * 100) + '%';
+            document.getElementById('lpCount').textContent = done + ' / ' + checks.length + ' revisados';
+            panels.forEach(function (p) {
+                const cs = p.querySelectorAll('.lp-check');
+                const d = Array.prototype.filter.call(cs, function (c) { return c.checked; }).length;
+                const tab = root.querySelector('.lp-tab[data-dim="' + p.dataset.dim + '"]');
+                tab.querySelector('.lp-n').textContent = d + '/' + cs.length;
+                tab.classList.toggle('complete', d === cs.length);
+            });
+            document.getElementById('lpDone').hidden = done !== checks.length;
+        }
+
+        checks.forEach(function (c) { c.addEventListener('change', update); });
+        update();
+    })();
+
     // --- CARRUSEL DE EJEMPLOS: UNA TARJETA A LA VEZ ---
     let qIndex = 0;
     const qSlides = document.querySelectorAll('#q-carousel .q-slide');

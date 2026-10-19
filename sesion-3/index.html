@@ -300,6 +300,16 @@ footer.site-footer{background:var(--navy);color:#9AA2C6;padding:40px var(--gutte
 </style>
 </head>
 <body>
+<!-- Botón para volver a la página principal del curso -->
+<style>
+.back-home{position:fixed;left:16px;bottom:16px;z-index:1500;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;
+  border-radius:999px;background:#192962;color:#fff;font-family:"Inter","Segoe UI",system-ui,sans-serif;font-size:14px;font-weight:600;
+  line-height:1.2;text-decoration:none;box-shadow:0 6px 18px rgba(25,41,98,.28);transition:background .2s}
+.back-home:hover{background:#0F1C4D;color:#fff}
+.back-home:focus-visible{outline:2px solid #D55947;outline-offset:2px}
+@media print{.back-home{display:none}}
+</style>
+<a class="back-home" href="../index.html"><span aria-hidden="true">←</span> Página principal</a>
 
 <div id="progress-track"><div id="progress-fill"></div></div>
 
